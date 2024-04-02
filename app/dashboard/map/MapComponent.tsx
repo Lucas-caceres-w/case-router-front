@@ -29,8 +29,8 @@ function MapComponent({ casos }: { casos: Caso[] | [] }) {
   });
 
   const center = [18.251069, -66.470603] as LatLngExpression;
-  const layer =
-    "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png";
+  /* const layer =
+    "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"; */
   const layer2 = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 
   const MarkerMultiple = () => {
