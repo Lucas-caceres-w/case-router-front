@@ -1,12 +1,9 @@
 import { ThemeModeScript } from "flowbite-react";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import "@/app/globals.css";
 
 export const metadata: Metadata = {
-  title: "Casie Router",
+  title: "Casie Router | Mapa de casos",
   description: "Sistema creado por https://lucasdev.com.ar",
 };
 
@@ -20,9 +17,7 @@ export default function RootLayout({
       <head>
         <ThemeModeScript />
       </head>
-      <body className={inter.className + "bg-slate-200 dark:bg-slate-700"}>
-        {children}
-      </body>
+      <body className="bg-slate-200 dark:bg-slate-700">{children}</body>
     </html>
   );
 }
