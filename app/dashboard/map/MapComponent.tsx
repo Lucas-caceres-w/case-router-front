@@ -73,7 +73,7 @@ function MapComponent({ casos }: { casos: Caso[] | [] }) {
       center={center}
       style={{ height: "75vh", width: "70vw" }}
     >
-      <TileLayer url={layer} />
+      <TileLayer url={layer2} />
       <MarkerMultiple />
     </MapContainer>
   );
