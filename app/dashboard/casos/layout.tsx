@@ -1,7 +1,7 @@
 import { ThemeModeScript } from "flowbite-react";
 
 export const metadata = {
-  title: "Casie Router | Casos",
+  title: "Case Router | Casos",
   description: "Sistema creado por https://lucasdev.com.ar",
 };
 

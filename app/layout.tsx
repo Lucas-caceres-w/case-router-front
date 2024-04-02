@@ -6,7 +6,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Casie Router",
+  title: "Case Router",
   description: "Sistema creado por https://lucasdev.com.ar",
 };
 

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
-  title: "Casie Router | Mapa de casos",
+  title: "Case Router | Mapa de casos",
   description: "Sistema creado por https://lucasdev.com.ar",
 };
 

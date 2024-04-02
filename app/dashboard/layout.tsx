@@ -9,7 +9,7 @@ import SessionAuthProvider from "@/context/SessionProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Casie Router | Sistema",
+  title: "Case Router | Sistema",
   description: "Sistema creado por https://lucasdev.com.ar",
 };
 
