@@ -34,7 +34,7 @@ function MapComponent({ casos }: { casos: Caso[] | [] }) {
   const layer2 = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 
   const MarkerMultiple = () => {
-    return casos.map((e, idx) => {
+    return casos?.map((e, idx) => {
       const position = [e.latitud, e.longitud] as LatLngExpression;
       const icon =
         e.estatus === "iniciado"
