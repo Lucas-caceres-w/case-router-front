@@ -1,10 +1,11 @@
+"use client";
 import Leaflet from "leaflet";
 import { LatLngExpression } from "leaflet";
 import { Caso } from "@/utils/types";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
-async function MapComponent({ casos }: { casos: Caso[] | [] }) {
+function MapComponent({ casos }: { casos: Caso[] | [] }) {
   const iconSuccess = Leaflet.icon({
     iconSize: [35, 35],
     iconAnchor: [10, 41],
