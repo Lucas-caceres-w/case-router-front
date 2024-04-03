@@ -20,7 +20,7 @@ export default function RootLayout({
       <head>
         <ThemeModeScript />
       </head>
-      <body className={inter.className + "bg-slate-200 dark:bg-slate-700"}>
+      <body className={"bg-slate-200 dark:bg-slate-700"}>
         {children}
       </body>
     </html>

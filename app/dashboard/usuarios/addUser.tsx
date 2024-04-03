@@ -26,7 +26,7 @@ function AddUser({ cols }: { cols: Dispatch<SetStateAction<User[]>> }) {
     email: "",
     username: "",
     password: "",
-    rol: 2,
+    rol: 3,
   };
   const [show, setShow] = useState(false);
   const [formData, setFormData] = useState(initialForm);
@@ -108,6 +108,7 @@ function AddUser({ cols }: { cols: Dispatch<SetStateAction<User[]>> }) {
               <Select onChange={changeSelect} value={formData.rol} required>
                 <option value={1}>SUPERADMIN</option>
                 <option value={2}>ADMIN</option>
+                <option value={3}>USER</option>
               </Select>
             </div>
           </Modal.Body>

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 function SideBarComp() {
   const [collapsed, setCollapsed] = useState(false);
+  const { data } = useSession();
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== "undefined" && window.innerWidth
   );
@@ -40,9 +41,11 @@ function SideBarComp() {
           <Sidebar.Item href="/dashboard" icon={Home}>
             Inicio
           </Sidebar.Item>
-          <Sidebar.Item href="/dashboard/usuarios" icon={User}>
-            Usuarios
-          </Sidebar.Item>
+          {data?.user?.rol === 3 ? null : (
+            <Sidebar.Item href="/dashboard/usuarios" icon={User}>
+              Usuarios
+            </Sidebar.Item>
+          )}
           <Sidebar.Item href="/dashboard/casos" icon={Book}>
             Casos
           </Sidebar.Item>
@@ -51,6 +54,9 @@ function SideBarComp() {
           </Sidebar.Item>
         </Sidebar.ItemGroup>
       </Sidebar.Items>
+      <Sidebar.CTA className="absolute bottom-24 w-11/12">
+        <p className="text-slate-800 dark:text-slate-200">Swift Code ©</p>
+      </Sidebar.CTA>
     </Sidebar>
   );
 }

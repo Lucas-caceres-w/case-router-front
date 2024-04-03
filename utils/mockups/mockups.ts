@@ -135,3 +135,13 @@ export const casosMock = [
     },
   },
 ];
+
+export const options = [
+  { value: "iniciado", label: "Iniciado" },
+  { value: "verificacion", label: "Verificacion Inicial" },
+  { value: "reporteInicial", label: "Preparacion de reporte inicial" },
+  { value: "asignado", label: "Asignado a investigaciòn" },
+  { value: "reporteCompletado", label: "Preparaciòn de reporte completado" },
+  { value: "cartaRecomendacion", label: "Carta de recomendacion completada" },
+  { value: "completado", label: "Listo para trasferir a PPP" },
+];

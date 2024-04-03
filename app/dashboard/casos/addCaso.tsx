@@ -13,6 +13,7 @@ import {
   TextInput,
 } from "flowbite-react";
 import { FileUp, PlusCircle } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 import * as XLSX from "xlsx";
@@ -40,6 +41,7 @@ function AddCaso() {
   const [color, setColor] = useState("");
   const [text, setText] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const { data } = useSession();
 
   const callToast = (type: string, text: string) => {
     setShowToast(true);
@@ -132,7 +134,7 @@ function AddCaso() {
           })
           .filter((rowData: any) => rowData !== null) as ImportCaso;
         if (parsedData) {
-          setLoading(true);
+          /* setLoading(true);
           const res = await ImportData(parsedData);
           if (res === "AddCases") {
             setLoading(false);
@@ -143,7 +145,7 @@ function AddCaso() {
           } else {
             callToast("warning", "No se agregaron casos nuevos");
             setLoading(false);
-          }
+          } */
         } else {
           console.log("No hay archivo para importar");
         }
@@ -221,7 +223,7 @@ function AddCaso() {
             longitud: lng,
             "Asignado por": asignadoPor,
             "Nombre inspector": nombreInspector,
-            "Nro obpe sbp": ogpeSbp,
+            "Nro ogpe sbp": ogpeSbp,
             "Nro catastro": nroCatastro,
             "Fecha revision": fechaRevision,
             estatus,
@@ -286,9 +288,19 @@ function AddCaso() {
   return (
     <div className="w-full flex justify-end gap-4">
       {showToast && <ToastAttr color={color} text={text} />}
-      <Button onClick={() => setModal(true)}>
-        Agregar <PlusCircle className="ml-2" />
-      </Button>
+      {data?.user?.rol === 3 ? null : (
+        <>
+          <Button onClick={() => setModal(true)}>
+            Agregar <PlusCircle className="ml-2" />
+          </Button>
+          <Button onClick={() => setExportData(true)}>
+            Exportar datos <FileUp className="ml-2" />
+          </Button>
+          <Button outline onClick={() => setImportData(true)}>
+            Importar datos <FileUp className="ml-2" />
+          </Button>
+        </>
+      )}
       <Modal show={modal} onClose={() => setModal(false)}>
         <Modal.Header>Agregar caso</Modal.Header>
         <form onSubmit={onSubmit}>
@@ -323,9 +335,6 @@ function AddCaso() {
           </Modal.Footer>
         </form>
       </Modal>
-      <Button onClick={() => setExportData(true)}>
-        Exportar datos <FileUp className="ml-2" />
-      </Button>
       <Modal show={exportData} onClose={() => setExportData(false)}>
         <Modal.Header>Importar datos</Modal.Header>
         <form onSubmit={getCasosDates}>
@@ -373,9 +382,6 @@ function AddCaso() {
           </Modal.Body>
         </form>
       </Modal>
-      <Button outline onClick={() => setImportData(true)}>
-        Importar datos <FileUp className="ml-2" />
-      </Button>
       <Modal show={importData} onClose={() => setImportData(false)}>
         <Modal.Header>Importar datos</Modal.Header>
         <form onSubmit={SubmitFile}>

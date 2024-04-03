@@ -70,6 +70,12 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
             ADMIN
           </span>
         );
+      case 3:
+        return (
+          <span className="bg-slate-500 rounded-md border border-slate-400 p-2 text-slate-200 font-semibold">
+            USER
+          </span>
+        );
     }
   };
 
@@ -120,14 +126,16 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
                           Editar
                           <Edit className="w-4" />
                         </Dropdown.Item>
-                        <Dropdown.Item
-                          onClick={() =>
-                            router.push("/dashboard/usuarios?delete=" + e.id)
-                          }
-                          className="flex justify-between gap-2"
-                        >
-                          Eliminar <Trash className="w-4" />
-                        </Dropdown.Item>
+                        {e.rol === 1 ? null : (
+                          <Dropdown.Item
+                            onClick={() =>
+                              router.push("/dashboard/usuarios?delete=" + e.id)
+                            }
+                            className="flex justify-between gap-2"
+                          >
+                            Eliminar <Trash className="w-4" />
+                          </Dropdown.Item>
+                        )}
                       </Dropdown>
                     </Table.Cell>
                   )}

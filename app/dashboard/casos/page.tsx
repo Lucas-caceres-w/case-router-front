@@ -11,6 +11,7 @@ import ChangeStatus from "./changeStatus";
 import CommentsModal from "./comments";
 import UploadImages from "./uploadImages";
 import ImagesModal from "./getFotos";
+import { getServerSession } from "next-auth";
 
 async function CasosPage() {
   const data = await getCasos();
@@ -19,9 +20,9 @@ async function CasosPage() {
     <div className="ml-24 lg:ml-72 mt-10 !w-[calc(100% - 60px)]">
       <div className="flex justify-between items-center">
         <Tittle>Casos</Tittle>
-        <AddCaso />
         <UploadModal />
         <EditCaso />
+        <AddCaso />
         <DeleteCaso />
         <RegionEdit />
         <ChangeStatus />

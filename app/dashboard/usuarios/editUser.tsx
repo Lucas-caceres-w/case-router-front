@@ -56,7 +56,6 @@ function EditUser() {
     e.preventDefault();
     try {
       setLoading(true);
-      alert("edit en proceso");
     } catch (err) {
       console.log(err);
     } finally {
@@ -118,6 +117,7 @@ function EditUser() {
               <Select onChange={changeSelect} value={formData.rol} required>
                 <option value={1}>SUPERADMIN</option>
                 <option value={2}>ADMIN</option>
+                <option value={3}>USER</option>
               </Select>
             </div>
           </Modal.Body>

@@ -2,12 +2,14 @@
 import { Caso } from "@/utils/types";
 import {
   Dropdown,
+  Datepicker,
   Label,
   Pagination,
   Radio,
   Table,
   TextInput,
   Tooltip,
+  Button,
 } from "flowbite-react";
 import {
   Book,
@@ -19,9 +21,11 @@ import {
   Upload,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { format } from "date-fns";
+import { format, isWithinInterval, parse } from "date-fns";
 import { ChangeEvent, useEffect, useState } from "react";
 import { staticsPdf } from "@/utils/routes";
+import { options } from "@/utils/mockups/mockups";
+import { useSession } from "next-auth/react";
 
 function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
   const router = useRouter();
@@ -29,6 +33,9 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
   const [filteredCasos, setFilteredCasos] = useState<Caso[] | []>(cols);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Número de elementos por página
+  const { data } = useSession();
+  const [startDate, setstartDate] = useState<Date | null>();
+  const [endDate, setEndDate] = useState<Date | null>();
 
   // Función para manejar el cambio de página
   const handlePageChange = (pageNumber: number) => {
@@ -40,10 +47,9 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value.toLowerCase();
+    const value = event.target.value.toString().toLowerCase();
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-
     if (value.trim() === "") {
       // Si el valor está vacío, mostrar todos los casos nuevamente
       setFilteredCasos(initialCols.slice(startIndex, endIndex));
@@ -51,65 +57,34 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
       // Filtrar los casos según el valor ingresado
       const filtered = initialCols?.filter(
         (e) =>
-          e.nombreInspector.toLowerCase().includes(value) ||
-          e.asignadoPor.toLowerCase().includes(value) ||
-          e.pueblo.toLowerCase().includes(value) ||
-          e.areaOperacional.toLowerCase().includes(value) ||
-          e.region.toLowerCase().includes(value)
+          e?.nombreInspector?.toString().toLowerCase().includes(value) ||
+          e?.asignadoPor?.toString().toLowerCase().includes(value) ||
+          e?.nroCatastro?.toString().toLowerCase().includes(value) ||
+          e?.latitud?.toString().toLowerCase().includes(value) ||
+          e?.longitud?.toString().toLowerCase().includes(value) ||
+          e?.estatus?.toString().toLowerCase().includes(value) ||
+          e?.nroOgpeSbp?.toString().toLowerCase().includes(value) ||
+          e?.pueblo?.toString().toLowerCase().includes(value) ||
+          e?.areaOperacional?.toString().toLowerCase().includes(value) ||
+          e?.region?.toString().toLowerCase().includes(value)
       );
-      setFilteredCasos(filtered.slice(0, 5));
+      console.log(filtered);
+      setFilteredCasos(filtered);
     }
     setCurrentPage(1);
   };
 
-  const selectCompletados = () => {
-    const value = "completados";
+  const selectCasosByStatus = (status: string) => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
 
-    if (value.trim() === "") {
+    if (status.trim() === "") {
       // Si el valor está vacío, mostrar todos los casos nuevamente
       setFilteredCasos(initialCols.slice(startIndex, endIndex));
     } else {
-      // Filtrar los casos según el valor ingresado
+      // Filtrar los casos según el valor de estatus ingresado
       const filtered = initialCols?.filter((e) =>
-        e.estatus.toLowerCase().includes(value)
-      );
-      setFilteredCasos(filtered.slice(0, 5));
-    }
-    setCurrentPage(1);
-  };
-
-  const selectProceso = () => {
-    const value = "en proceso";
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-
-    if (value.trim() === "") {
-      // Si el valor está vacío, mostrar todos los casos nuevamente
-      setFilteredCasos(initialCols.slice(startIndex, endIndex));
-    } else {
-      // Filtrar los casos según el valor ingresado
-      const filtered = initialCols?.filter((e) =>
-        e.estatus.toLowerCase().includes(value)
-      );
-      setFilteredCasos(filtered.slice(0, 5));
-    }
-    setCurrentPage(1);
-  };
-
-  const selectIniciados = () => {
-    const value = "iniciado";
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-
-    if (value.trim() === "") {
-      // Si el valor está vacío, mostrar todos los casos nuevamente
-      setFilteredCasos(initialCols.slice(startIndex, endIndex));
-    } else {
-      // Filtrar los casos según el valor ingresado
-      const filtered = initialCols?.filter((e) =>
-        e.estatus.toLowerCase().includes(value)
+        e.estatus.toLowerCase().includes(status.toLowerCase())
       );
       setFilteredCasos(filtered.slice(0, 5));
     }
@@ -143,23 +118,88 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
     return res;
   };
 
+  const filterCasosPorFecha = () => {
+    const startDateObj = parse(startDate, "dd-MM-yyyy", new Date());
+    const endDateObj = parse(endDate, "dd-MM-yyyy", new Date());
+    // Filtra los casos por el rango de fechas seleccionado
+    const casosFiltrados = initialCols.filter((caso) => {
+      // Convierte la fecha del caso en objeto Date
+      const casoDate = new Date(caso.createdAt);
+      // Verifica si la fecha del caso está dentro del rango seleccionado
+      return isWithinInterval(casoDate, {
+        start: startDateObj,
+        end: endDateObj,
+      });
+    });
+    console.log(casosFiltrados);
+    // Actualiza el estado con los casos filtrados
+    setFilteredCasos(casosFiltrados);
+  };
+
+  useEffect(() => {
+    if (startDate && endDate) {
+      filterCasosPorFecha();
+    } else {
+      setFilteredCasos(initialCols.slice(0, 5));
+    }
+  }, [startDate, endDate]);
+
   return (
     <>
       <div className="flex flex-row items-center gap-4">
-        <TextInput
-          className="my-2 w-48"
-          onChange={handleChange}
-          type="search"
-          placeholder="Buscar..."
-        />
-        <fieldset>
-          <legend className="text-slate-800 dark:text-slate-200">
+        <div>
+          <Label>Buqueda gral</Label>
+          <TextInput
+            className="w-40"
+            onChange={handleChange}
+            type="search"
+            placeholder="Buscar..."
+          />
+        </div>
+        <div>
+          <Label>Rango de fechas</Label>
+          <section className="flex flex-row gap-2 items-center">
+            <Datepicker
+              showClearButton={false}
+              className="w-36"
+              language="es-ES"
+              showTodayButton={false}
+              autoHide={false}
+              value={startDate}
+              onSelectedDateChanged={(startDate) => {
+                setstartDate(format(startDate, "dd-MM-yyyy"));
+              }}
+            />
+            <p className="text-slate-800 dark:text-slate-200 text-nowrap">-</p>
+            <Datepicker
+              showClearButton={false}
+              className="w-36"
+              language="es-ES"
+              disabled={!startDate ? true : false}
+              showTodayButton={false}
+              value={endDate}
+              onSelectedDateChanged={(endDate) => {
+                setEndDate(format(endDate, "dd-MM-yyyy"));
+              }}
+            />
+            <Button
+              onClick={() => {
+                setstartDate("");
+                setEndDate("");
+              }}
+            >
+              Limpiar
+            </Button>
+          </section>
+        </div>
+        <fieldset className="w-7/12">
+          <legend className="text-slate-800 dark:text-slate-200 font-semibold">
             Estado:
           </legend>
-          <section className="flex flex-row gap-2 items-center">
+          <section className="flex flex-row flex-wrap gap-x-4 items-center">
             <div className="flex gap-2 items-center">
               <Radio
-                onClick={selectIniciados}
+                onClick={() => selectCasosByStatus("iniciado")}
                 name="estatus"
                 value="iniciado"
                 id="iniciados"
@@ -168,21 +208,59 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
             </div>
             <div className="flex gap-2 items-center">
               <Radio
-                onClick={selectProceso}
+                onClick={() => selectCasosByStatus("verificacion")}
                 name="estatus"
-                value="en proceso"
-                id="proceso"
+                value="verificacion"
+                id="verificacion"
               />
-              <Label htmlFor="proceso">En proceso</Label>
+              <Label htmlFor="verificacion">Verificacion inicial</Label>
             </div>
             <div className="flex gap-2 items-center">
               <Radio
-                onClick={selectCompletados}
+                onClick={() => selectCasosByStatus("reporteInicial")}
+                name="estatus"
+                value="reporteInicial"
+                id="reporteInicial"
+              />
+              <Label htmlFor="reporteInicial">Reporte inicial</Label>
+            </div>
+            <div className="flex gap-2 items-center">
+              <Radio
+                onClick={() => selectCasosByStatus("asignado")}
+                name="estatus"
+                value="asignado"
+                id="asignado"
+              />
+              <Label htmlFor="asignado">Asignado a investigacion</Label>
+            </div>
+            <div className="flex gap-2 items-center">
+              <Radio
+                onClick={() => selectCasosByStatus("reporteCompletado")}
+                name="estatus"
+                value="reporteCompletado"
+                id="reporteCompletado"
+              />
+              <Label htmlFor="reporteCompletado">Reporte completado</Label>
+            </div>
+            <div className="flex gap-2 items-center">
+              <Radio
+                onClick={() => selectCasosByStatus("cartaRecomendacion")}
+                name="estatus"
+                value="cartaRecomendacion"
+                id="cartaRecomendacion"
+              />
+              <Label htmlFor="cartaRecomendacion">
+                Carta de recomendacion completada
+              </Label>
+            </div>
+            <div className="flex gap-2 items-center">
+              <Radio
+                onClick={() => selectCasosByStatus("completado")}
                 name="estatus"
                 value="completado"
-                id="completados"
+                id="completado"
               />
-              <Label htmlFor="completados">Completados</Label>
+              <Label htmlFor="completado">Completados</Label>
             </div>
             <div className="flex gap-2 items-center p-1">
               <Radio
@@ -197,14 +275,14 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
         </fieldset>
       </div>
       <div className="my-4 min-h-[450px] overflow-x-auto">
-        <Table>
+        <Table striped>
           <Table.Head>
             <Table.HeadCell>Nombre Inspector</Table.HeadCell>
-            <Table.HeadCell>Nro. catastro</Table.HeadCell>
+            <Table.HeadCell>catastro</Table.HeadCell>
             <Table.HeadCell>Asignado por AAA</Table.HeadCell>
             <Table.HeadCell>Latitud</Table.HeadCell>
             <Table.HeadCell>Longitud</Table.HeadCell>
-            <Table.HeadCell>Nro. Ogbp Sbp</Table.HeadCell>
+            <Table.HeadCell>Ogbp Sbp</Table.HeadCell>
             <Table.HeadCell>Estatus</Table.HeadCell>
             <Table.HeadCell>Escrituras</Table.HeadCell>
             <Table.HeadCell>Evidencia servicio</Table.HeadCell>
@@ -229,10 +307,24 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
             <Table.HeadCell>Carta recomendación</Table.HeadCell>
             <Table.HeadCell>Fotos</Table.HeadCell>
             <Table.HeadCell>Observaciones</Table.HeadCell>
-            <Table.HeadCell>Acciones</Table.HeadCell>
+            {data?.user?.rol === 3 ? null : (
+              <Table.HeadCell>Acciones</Table.HeadCell>
+            )}
           </Table.Head>
           <Table.Body>
             {filteredCasos?.map((e: Caso) => {
+              const Estatus = () => {
+                const estatus =
+                  options.find((option) => option.value === e.estatus)?.label ||
+                  "";
+                let cn =
+                  e.estatus === "iniciado"
+                    ? ""
+                    : e.estatus === "completado"
+                    ? "text-green-500"
+                    : "text-yellow-500";
+                return <p className={`${cn} font-semibold`}>{`${estatus}`}</p>;
+              };
               return (
                 <Table.Row
                   key={e.id}
@@ -243,8 +335,12 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                   <Table.Cell>{e.asignadoPor}</Table.Cell>
                   <Table.Cell>{e.latitud}</Table.Cell>
                   <Table.Cell>{e.longitud}</Table.Cell>
-                  <Table.Cell>{e.nroOgpeSbp}</Table.Cell>
-                  <Table.Cell>{e.estatus}</Table.Cell>
+                  <Table.Cell className="text-nowrap">
+                    {e.nroOgpeSbp}
+                  </Table.Cell>
+                  <Table.Cell className="text-nowrap">
+                    <Estatus />
+                  </Table.Cell>
                   <Table.Cell>{getValue(e.documento?.escrituras)}</Table.Cell>
                   <Table.Cell>
                     {getValue(e.documento?.evidenciaServicio)}
@@ -319,7 +415,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                     )}
                   </Table.Cell>
                   <Table.Cell className="overflow-x-hidden overflow-ellipsis whitespace-nowrap !w-14 !max-w-14">
-                    {e.estatus === "completados" ? (
+                    {e.estatus === "completado" ? (
                       e.observaciones ? (
                         <span>{e.observaciones}</span>
                       ) : (
@@ -329,70 +425,72 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                       "-"
                     )}
                   </Table.Cell>
-                  <Table.Cell className="z-30">
-                    <Dropdown className="z-30" label="Acciones">
-                      <Dropdown.Item
-                        onClick={() =>
-                          router.push("/dashboard/casos?edit=" + e.id)
-                        }
-                        className="flex justify-between gap-2"
-                      >
-                        Editar
-                        <Edit className="w-4" />
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() =>
-                          router.push("/dashboard/casos?estatus=" + e.id)
-                        }
-                        className="flex justify-between gap-2"
-                      >
-                        Estado
-                        <RefreshCcw className="w-4" />
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() =>
-                          router.push("/dashboard/casos?area=" + e.id)
-                        }
-                        className="flex justify-between gap-2"
-                      >
-                        Asignar areas <Map className="w-4" />
-                      </Dropdown.Item>
-                      {e.estatus === "completados" && (
+                  {data?.user?.rol === 3 ? null : (
+                    <Table.Cell className="z-30">
+                      <Dropdown className="z-30" label="Acciones">
                         <Dropdown.Item
                           onClick={() =>
-                            router.push("/dashboard/casos?coments=" + e.id)
+                            router.push("/dashboard/casos?edit=" + e.id)
                           }
                           className="flex justify-between gap-2"
                         >
-                          Observaciones <Book className="w-4" />
+                          Editar
+                          <Edit className="w-4" />
                         </Dropdown.Item>
-                      )}
-                      <Dropdown.Item
-                        onClick={() =>
-                          router.push("/dashboard/casos?upload=" + e.id)
-                        }
-                        className="flex justify-between gap-2"
-                      >
-                        Subir documento <Upload className="w-4" />
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() =>
-                          router.push("/dashboard/casos?fotos=" + e.id)
-                        }
-                        className="flex justify-between gap-2"
-                      >
-                        Subir fotos <Upload className="w-4" />
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() =>
-                          router.push("/dashboard/casos?delete=" + e.id)
-                        }
-                        className="flex justify-between gap-2"
-                      >
-                        Eliminar <Trash className="w-4" />
-                      </Dropdown.Item>
-                    </Dropdown>
-                  </Table.Cell>
+                        <Dropdown.Item
+                          onClick={() =>
+                            router.push("/dashboard/casos?estatus=" + e.id)
+                          }
+                          className="flex justify-between gap-2"
+                        >
+                          Estado
+                          <RefreshCcw className="w-4" />
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() =>
+                            router.push("/dashboard/casos?area=" + e.id)
+                          }
+                          className="flex justify-between gap-2"
+                        >
+                          Asignar areas <Map className="w-4" />
+                        </Dropdown.Item>
+                        {e.estatus === "completado" && (
+                          <Dropdown.Item
+                            onClick={() =>
+                              router.push("/dashboard/casos?coments=" + e.id)
+                            }
+                            className="flex justify-between gap-2"
+                          >
+                            Observaciones <Book className="w-4" />
+                          </Dropdown.Item>
+                        )}
+                        <Dropdown.Item
+                          onClick={() =>
+                            router.push("/dashboard/casos?upload=" + e.id)
+                          }
+                          className="flex justify-between gap-2"
+                        >
+                          Subir documento <Upload className="w-4" />
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() =>
+                            router.push("/dashboard/casos?fotos=" + e.id)
+                          }
+                          className="flex justify-between gap-2"
+                        >
+                          Subir fotos <Upload className="w-4" />
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() =>
+                            router.push("/dashboard/casos?delete=" + e.id)
+                          }
+                          className="flex justify-between gap-2"
+                        >
+                          Eliminar <Trash className="w-4" />
+                        </Dropdown.Item>
+                      </Dropdown>
+                    </Table.Cell>
+                  )}
                 </Table.Row>
               );
             })}

@@ -24,7 +24,7 @@ export default async function RootLayout({
         <ThemeModeScript />
       </head>
       <SessionAuthProvider>
-        <body className={inter.className + "bg-slate-200 dark:bg-slate-700 "}>
+        <body className={"bg-slate-200 dark:bg-slate-700"}>
           <NavbarComp />
           <SideBarComp />
           {children}

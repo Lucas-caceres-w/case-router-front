@@ -36,12 +36,7 @@ function MapComponent({ casos }: { casos: Caso[] | [] }) {
   const MarkerMultiple = () => {
     return casos?.map((e, idx) => {
       const position = [e.latitud, e.longitud] as LatLngExpression;
-      const icon =
-        e.estatus === "iniciado"
-          ? iconInit
-          : e.estatus === "completados"
-          ? iconSuccess
-          : iconProgress;
+      const icon = e.estatus !== "completado" ? iconInit : iconSuccess;
       return (
         <Marker key={idx} position={position} icon={icon}>
           <Popup>
@@ -71,7 +66,7 @@ function MapComponent({ casos }: { casos: Caso[] | [] }) {
     <MapContainer
       zoom={10}
       center={center}
-      style={{ height: "75vh", width: "70vw" }}
+      style={{ height: "75vh", width: "70vw", borderRadius: "5px" }}
     >
       <TileLayer url={layer2} />
       <MarkerMultiple />

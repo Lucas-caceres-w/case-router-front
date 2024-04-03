@@ -1,5 +1,6 @@
 "use client";
 import { cambiarEstatus, getOne } from "@/utils/api/casos";
+import { options } from "@/utils/mockups/mockups";
 import { Caso } from "@/utils/types";
 import { Alert, Button, Modal, Select, Spinner } from "flowbite-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -89,11 +90,13 @@ function ChangeStatus() {
         <form onSubmit={OnSubmit}>
           <Modal.Body>
             <Select onChange={handleChange} value={edit}>
-              {originalEstatus === "iniciado" && (
-                <option value={"iniciado"}>Iniciado</option>
-              )}
-              <option value={"en proceso"}>En proceso</option>
-              <option value={"completados"}>Completado</option>
+              {options.map((e, idx) => {
+                return (
+                  <option value={e.value} key={idx}>
+                    {e.label}
+                  </option>
+                );
+              })}
             </Select>
           </Modal.Body>
           <Modal.Footer className="flex justify-end">

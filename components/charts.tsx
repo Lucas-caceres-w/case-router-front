@@ -59,7 +59,11 @@ function ChartsSection({ data }: { data: Caso[] }) {
         conteo[key]++;
       }
     });
-    return conteo;
+    if (conteo.length > 0) {
+      return conteo;
+    } else {
+      return 0;
+    }
   }
 
   function contarCasosPorArea() {
@@ -72,23 +76,66 @@ function ChartsSection({ data }: { data: Caso[] }) {
         conteo[key]++;
       }
     });
-    return conteo as number;
+    if (conteo.length > 0) {
+      return conteo as number;
+    } else {
+      return 0;
+    }
   }
 
   function contarCasosEnProcesoCompletados() {
-    let enProceso = 0;
-    let completados = 0;
+    let iniciado = 0;
+    let verificacion = 0;
+    let reporte = 0;
+    let asignado = 0;
+    let reporteCompletado = 0;
+    let cartaRecomendacion = 0;
+    let completado = 0;
 
     data?.forEach((caso) => {
-      if (caso.estatus === "en proceso") {
-        enProceso++;
-      } else if (caso.estatus === "completados") {
-        completados++;
+      switch (caso.estatus) {
+        case "iniciado":
+          return (iniciado += 1);
+        case "verificacion":
+          return (verificacion += 1);
+        case "reporteInicial":
+          return (reporte += 1);
+        case "asignado":
+          return (asignado += 1);
+        case "reporteCompletado":
+          return (reporteCompletado += 1);
+        case "cartaRecomendacion":
+          return (cartaRecomendacion += 1);
+        case "completado":
+          return (completado += 1);
+
+        default:
+          break;
       }
     });
 
-    return { enProceso, completados };
+    return {
+      iniciado,
+      verificacion,
+      reporte,
+      asignado,
+      reporteCompletado,
+      cartaRecomendacion,
+      completado,
+    };
   }
+
+  const casosSinCarta = () => {
+    const sinCarta = data.map((e) => {
+      if (!e.documento.cartaRecomendacion) {
+        return e;
+      }
+    }).length;
+
+    return { sinCarta };
+  };
+
+  const { sinCarta } = casosSinCarta();
 
   function obtenerCantidadCasosPorMes() {
     const datos = {} as any;
@@ -111,7 +158,15 @@ function ChartsSection({ data }: { data: Caso[] }) {
 
   const { labels, cantidadMensual } = obtenerCantidadCasosPorMes();
 
-  const { enProceso, completados } = contarCasosEnProcesoCompletados();
+  const {
+    iniciado,
+    verificacion,
+    reporte,
+    asignado,
+    reporteCompletado,
+    cartaRecomendacion,
+    completado,
+  } = contarCasosEnProcesoCompletados();
 
   const conteoCasos = contarCasosPorPuebloRegion();
 
@@ -232,8 +287,8 @@ function ChartsSection({ data }: { data: Caso[] }) {
 
   return (
     <section className="grid grid-cols-auto-fit place-content-center gap-2">
-      <Card className="w-full !bg-slate-600">
-        <div className="flex flex-row items-center justify-around">
+      <Card className="w-full !bg-slate-500 h-24">
+        <div className="flex flex-row items-center justify-between w-11/12 lg:w-10/12 m-auto">
           <div className="flex flex-col justify-between gap-6">
             <h2 className="text-slate-200 font-semibold text-lg">
               Cantidad de casos total:
@@ -242,20 +297,20 @@ function ChartsSection({ data }: { data: Caso[] }) {
           </div>
           <Image
             className="filter backdrop:blur-sm p-1"
-            width={70}
-            height={60}
+            width={65}
+            height={65}
             src={"/assets/chart.png"}
             alt="icon"
           />
         </div>
       </Card>
-      <Card className="w-full !bg-blue-600/80">
-        <div className="flex flex-row items-center justify-around">
+      <Card className="w-full !bg-slate-600 h-24">
+        <div className="flex flex-row items-center justify-between w-11/12 lg:w-10/12 m-auto">
           <div className="flex flex-col justify-between gap-6">
             <h2 className="text-slate-200 font-semibold text-lg">
-              Casos en procesos:
+              Casos recien creados:
             </h2>
-            <p className="text-slate-300 font-semibold">{enProceso}</p>
+            <p className="text-slate-300 font-semibold">{iniciado}</p>
           </div>
           <Image
             className="filter backdrop:blur-sm p-1"
@@ -266,19 +321,121 @@ function ChartsSection({ data }: { data: Caso[] }) {
           />
         </div>
       </Card>
-      <Card className="w-full !bg-green-500">
-        <div className="flex flex-row items-center justify-around">
+      <Card className="w-full !bg-teal-600 h-24">
+        <div className="flex flex-row items-center justify-between w-11/12 lg:w-10/12 m-auto">
           <div className="flex flex-col justify-between gap-6">
             <h2 className="text-slate-200 font-semibold text-lg">
-              Casos completados:
+              Casos en verificacion inicial:
             </h2>
-            <p className="text-green-100 font-semibold">{completados}</p>
+            <p className="text-slate-200 font-semibold">{verificacion}</p>
           </div>
           <Image
             className="filter backdrop:blur-sm p-1"
             width={80}
             height={80}
+            src={"/assets/process.png"}
+            alt="icon"
+          />
+        </div>
+      </Card>
+      <Card className="w-full !bg-teal-500 h-24">
+        <div className="flex flex-row items-center justify-between w-11/12 lg:w-10/12 m-auto">
+          <div className="flex flex-col justify-between gap-6">
+            <h2 className="text-slate-200 font-semibold text-lg">
+              Casos en preparacion de reporte:
+            </h2>
+            <p className="text-slate-300 font-semibold">{reporte}</p>
+          </div>
+          <Image
+            className="filter backdrop:blur-sm p-1"
+            width={80}
+            height={80}
+            src={"/assets/process.png"}
+            alt="icon"
+          />
+        </div>
+      </Card>
+      <Card className="w-full !bg-blue-500 h-24">
+        <div className="flex flex-row items-center justify-between w-11/12 lg:w-10/12 m-auto">
+          <div className="flex flex-col justify-between gap-6">
+            <h2 className="text-slate-200 font-semibold text-lg">
+              Casos asignados a investicación:
+            </h2>
+            <p className="text-green-100 font-semibold">{asignado}</p>
+          </div>
+          <Image
+            className="filter backdrop:blur-sm p-1"
+            width={80}
+            height={80}
+            src={"/assets/process.png"}
+            alt="icon"
+          />
+        </div>
+      </Card>
+      <Card className="w-full !bg-green-400 h-24">
+        <div className="flex flex-row items-center justify-between w-11/12 lg:w-10/12 m-auto">
+          <div className="flex flex-col justify-between gap-6">
+            <h2 className="text-slate-200 font-semibold text-lg">
+              Casos con reporte completado:
+            </h2>
+            <p className="text-green-100 font-semibold">{reporteCompletado}</p>
+          </div>
+          <Image
+            className="filter backdrop:blur-sm p-1"
+            width={75}
+            height={75}
             src={"/assets/success.png"}
+            alt="icon"
+          />
+        </div>
+      </Card>
+      <Card className="w-full !bg-blue-600 h-24">
+        <div className="flex flex-row items-center justify-between w-11/12 lg:w-10/12 m-auto">
+          <div className="flex flex-col justify-between gap-6">
+            <h2 className="text-slate-200 font-semibold text-lg">
+              Casos con carta de recomendación:
+            </h2>
+            <p className="text-green-100 font-semibold">{cartaRecomendacion}</p>
+          </div>
+          <Image
+            className="filter backdrop:blur-sm p-1"
+            width={80}
+            height={80}
+            src={"/assets/process.png"}
+            alt="icon"
+          />
+        </div>
+      </Card>
+      <Card className="w-full !bg-green-500 h-24">
+        <div className="flex flex-row items-center justify-between w-11/12 lg:w-10/12 m-auto">
+          <div className="flex flex-col justify-between gap-6">
+            <h2 className="text-slate-200 font-semibold text-lg">
+              Casos completados:
+            </h2>
+            <p className="text-green-100 font-semibold">{completado}</p>
+          </div>
+          <Image
+            className="filter backdrop:blur-sm p-1"
+            width={75}
+            height={75}
+            src={"/assets/success.png"}
+            alt="icon"
+          />
+        </div>
+      </Card>
+      <Card className="w-full !bg-red-500 h-24">
+        <div className="flex flex-row items-center justify-between w-11/12 lg:w-10/12 m-auto">
+          <div className="flex flex-col justify-between gap-6">
+            <h2 className="text-slate-200 font-semibold text-lg">
+              Casos sin carta de recomendacion:
+            </h2>
+            <p className="text-green-100 font-semibold">{sinCarta}</p>
+          </div>
+          <Image
+            className="filter backdrop:blur-sm p-1"
+            width={80}
+            height={80}
+            src={"/assets/init.png"}
             alt="icon"
           />
         </div>
