@@ -52,7 +52,6 @@ function AddUser({ cols }: { cols: Dispatch<SetStateAction<User[]>> }) {
         cols(await getUsers());
         router.refresh();
       }
-      console.log(res);
     } catch (err) {
       console.log(err);
     } finally {

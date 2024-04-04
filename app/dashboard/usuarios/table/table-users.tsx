@@ -138,6 +138,14 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
                             Eliminar <Trash className="w-4" />
                           </Dropdown.Item>
                         )}
+                          {/* <Dropdown.Item
+                            onClick={() =>
+                              router.push("/dashboard/usuarios?delete=" + e.id)
+                            }
+                            className="flex justify-between gap-2"
+                          >
+                            Eliminar <Trash className="w-4" />
+                          </Dropdown.Item> */}
                       </Dropdown>
                     </Table.Cell>
                   )}
