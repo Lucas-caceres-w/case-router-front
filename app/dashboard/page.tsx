@@ -10,7 +10,7 @@ export default async function Home() {
     <main className="ml-24 lg:ml-72 py-4">
       <Tittle>Estadisticas generales</Tittle>
       <div className="w-[95%] mt-4">
-        <ChartsSection data={data} />
+        <ChartsSection data={data ?? []} />
       </div>
     </main>
   );
