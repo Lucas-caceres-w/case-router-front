@@ -138,17 +138,15 @@ function AddCaso() {
           setLoading(true);
           const res = await ImportData(parsedData);
           console.log(res);
-          if (res.ok) {
-            if (res === "AddCases") {
-              setLoading(false);
-              setImportData(false);
-              router.replace("/dashboard/casos");
-              router.refresh();
-              callToast("success", "Casos importados agregados");
-            } else {
-              callToast("warning", "No se agregaron casos nuevos");
-              setLoading(false);
-            }
+          if (res === "AddCases") {
+            setLoading(false);
+            setImportData(false);
+            router.replace("/dashboard/casos");
+            router.refresh();
+            callToast("success", "Casos importados agregados");
+          } else if (res === "noAdd") {
+            callToast("warning", "No se agregaron casos nuevos");
+            setLoading(false);
           } else {
             callToast(
               "failure",
