@@ -14,7 +14,7 @@ export const authOptions = {
       credentials: {},
       async authorize(credentials) {
         try {
-          /* const res = await fetch(apiUrl + "/users/login", {
+          const res = await fetch(apiUrl + "/users/login", {
             method: "POST",
             body: JSON.stringify({ credentials }),
             headers: { "Content-Type": "application/json" },
@@ -24,7 +24,7 @@ export const authOptions = {
           if (res.ok && user) {
             return user;
           }
-          return null; */
+          return null;
           return credentials;
         } catch (err) {
           console.log(err);

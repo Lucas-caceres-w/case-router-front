@@ -126,7 +126,7 @@ function ChartsSection({ data }: { data: Caso[] }) {
   }
 
   const casosSinCarta = () => {
-    const sinCarta = data.map((e) => {
+    const sinCarta = data?.map((e) => {
       if (!e.documento.cartaRecomendacion) {
         return e;
       }
@@ -234,7 +234,7 @@ function ChartsSection({ data }: { data: Caso[] }) {
   };
 
   const dataLine = {
-    labels: labels.map((e) => e.slice(0, 3)),
+    labels: labels?.map((e) => e.slice(0, 3)),
     datasets: [
       {
         tension: 0.5,
