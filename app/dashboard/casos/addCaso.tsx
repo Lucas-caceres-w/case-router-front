@@ -106,17 +106,17 @@ function AddCaso() {
         const workbook = XLSX.read(binaryString, { type: "binary" });
         const worksheet = workbook.Sheets["Casos Nuevos PPP"];
         const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
+        //console.log(jsonData)
         const customKeys = [
           "nombreInspector",
-          "nroCatastro",
           "asignadoPor",
+          "nroCatastro",
+          "nroOgpeSbp",
           "latitud",
           "longitud",
-          "nroOgpeSbp",
           "estatus",
-          "areaOperacional",
           "region",
+          "areaOperacional",
           "pueblo",
         ];
         const dataRows = jsonData.slice(1);
@@ -133,21 +133,32 @@ function AddCaso() {
             return null;
           })
           .filter((rowData: any) => rowData !== null) as ImportCaso;
+        console.log(parsedData);
         if (parsedData) {
-          /* setLoading(true);
+          setLoading(true);
           const res = await ImportData(parsedData);
-          if (res === "AddCases") {
-            setLoading(false);
-            setImportData(false);
-            router.replace("/dashboard/casos");
-            router.refresh();
-            callToast("success", "Casos importados agregados");
+          console.log(res);
+          if (res.ok) {
+            if (res === "AddCases") {
+              setLoading(false);
+              setImportData(false);
+              router.replace("/dashboard/casos");
+              router.refresh();
+              callToast("success", "Casos importados agregados");
+            } else {
+              callToast("warning", "No se agregaron casos nuevos");
+              setLoading(false);
+            }
           } else {
-            callToast("warning", "No se agregaron casos nuevos");
+            callToast(
+              "failure",
+              `Error al agregar casos, verifique no dejar ningun campo vacio`
+            );
             setLoading(false);
-          } */
+          }
         } else {
-          console.log("No hay archivo para importar");
+          callToast("error", "No hay archivo para importar");
+          setLoading(false);
         }
       }
     };

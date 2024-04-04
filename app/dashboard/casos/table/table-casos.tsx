@@ -313,187 +313,190 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
           </Table.Head>
           <Table.Body>
             {filteredCasos?.map((e: Caso) => {
-              const Estatus = () => {
-                const estatus =
-                  options.find((option) => option.value === e.estatus)?.label ||
-                  "";
-                let cn =
-                  e.estatus === "iniciado"
-                    ? ""
-                    : e.estatus === "completado"
-                    ? "text-green-500"
-                    : "text-yellow-500";
-                return <p className={`${cn} font-semibold`}>{`${estatus}`}</p>;
-              };
-              return (
-                <Table.Row
-                  key={e.id}
-                  className="dark:bg-slate-800 bg-slate-100"
-                >
-                  <Table.Cell>{e.nombreInspector}</Table.Cell>
-                  <Table.Cell>{e.nroCatastro}</Table.Cell>
-                  <Table.Cell>{e.asignadoPor}</Table.Cell>
-                  <Table.Cell>{e.latitud}</Table.Cell>
-                  <Table.Cell>{e.longitud}</Table.Cell>
-                  <Table.Cell className="text-nowrap">
-                    {e.nroOgpeSbp}
-                  </Table.Cell>
-                  <Table.Cell className="text-nowrap">
-                    <Estatus />
-                  </Table.Cell>
-                  <Table.Cell>{getValue(e.documento?.escrituras)}</Table.Cell>
-                  <Table.Cell>
-                    {getValue(e.documento?.evidenciaServicio)}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {getValue(e.documento?.evidenciaTitularidad)}
-                  </Table.Cell>
-                  <Table.Cell>{getValue(e.documento?.plano)}</Table.Cell>
-                  <Table.Cell>
-                    {getValue(e.documento?.planoInscripcion)}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {getValue(e.documento?.planoSituacion)}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {getValue(e.documento?.fotoPredioArea)}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {getValue(e.documento?.memorialSubsanacion)}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {getValue(e.documento?.memoExplicativo)}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {getValue(e.documento?.mapaEsquematico)}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {getValue(e.documento?.credencialIngArq)}
-                  </Table.Cell>
-                  <Table.Cell>{getValue(e.documento?.crtAut)}</Table.Cell>
-                  <Table.Cell>{getValue(e.documento?.AAA1190)}</Table.Cell>
-                  <Table.Cell>
-                    {format(e.fechaRevision, "dd/MM/yyyy")}
-                  </Table.Cell>
-                  <Table.Cell>{format(e.createdAt, "dd/MM/yyyy")}</Table.Cell>
-                  {/* Cuando esta habilitado */}
-                  <Table.Cell>
-                    {e.estatus !== "iniciado"
-                      ? e.fechaRecibido && format(e.fechaRecibido, "dd/MM/yyyy")
-                      : "-"}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {e.estatus !== "iniciado" ? e.areaOperacional : "-"}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {e.estatus !== "iniciado" ? e.region : "-"}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {e.estatus !== "iniciado" ? e.pueblo : "-"}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {e.estatus !== "iniciado"
-                      ? getValue(e.documento?.cartaRecomendacion)
-                      : "-"}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {e.estatus !== "iniciado" ? (
-                      e.Foto?.fotosGrales ? (
-                        <div
-                          className="p-2 hover:bg-slate-500/30 rounded-md cursor-pointer"
-                          onClick={() =>
-                            router.push("/dashboard/casos?getFotos=" + e.id)
-                          }
-                        >
-                          <Camera />
-                        </div>
+                const Estatus = () => {
+                  const estatus =
+                    options.find((option) => option.value === e.estatus)
+                      ?.label || "";
+                  let cn =
+                    e.estatus === "iniciado"
+                      ? ""
+                      : e.estatus === "completado"
+                      ? "text-green-500"
+                      : "text-yellow-500";
+                  return (
+                    <p className={`${cn} font-semibold`}>{`${estatus}`}</p>
+                  );
+                };
+                return (
+                  <Table.Row
+                    key={e.id}
+                    className="dark:bg-slate-800 bg-slate-100"
+                  >
+                    <Table.Cell>{e.nombreInspector}</Table.Cell>
+                    <Table.Cell>{e.nroCatastro}</Table.Cell>
+                    <Table.Cell>{e.asignadoPor}</Table.Cell>
+                    <Table.Cell>{e.latitud}</Table.Cell>
+                    <Table.Cell>{e.longitud}</Table.Cell>
+                    <Table.Cell className="text-nowrap">
+                      {e.nroOgpeSbp}
+                    </Table.Cell>
+                    <Table.Cell className="text-nowrap">
+                      <Estatus />
+                    </Table.Cell>
+                    <Table.Cell>{getValue(e.documento?.escrituras)}</Table.Cell>
+                    <Table.Cell>
+                      {getValue(e.documento?.evidenciaServicio)}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {getValue(e.documento?.evidenciaTitularidad)}
+                    </Table.Cell>
+                    <Table.Cell>{getValue(e.documento?.plano)}</Table.Cell>
+                    <Table.Cell>
+                      {getValue(e.documento?.planoInscripcion)}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {getValue(e.documento?.planoSituacion)}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {getValue(e.documento?.fotoPredioArea)}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {getValue(e.documento?.memorialSubsanacion)}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {getValue(e.documento?.memoExplicativo)}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {getValue(e.documento?.mapaEsquematico)}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {getValue(e.documento?.credencialIngArq)}
+                    </Table.Cell>
+                    <Table.Cell>{getValue(e.documento?.crtAut)}</Table.Cell>
+                    <Table.Cell>{getValue(e.documento?.AAA1190)}</Table.Cell>
+                    <Table.Cell>
+                      {format(e.fechaRevision, "dd/MM/yyyy")}
+                    </Table.Cell>
+                    <Table.Cell>{format(e.createdAt, "dd/MM/yyyy")}</Table.Cell>
+                    {/* Cuando esta habilitado */}
+                    <Table.Cell>
+                      {e.estatus !== "iniciado"
+                        ? e.fechaRecibido &&
+                          format(e.fechaRecibido, "dd/MM/yyyy")
+                        : "-"}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {e.estatus !== "iniciado" ? e.areaOperacional : "-"}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {e.estatus !== "iniciado" ? e.region : "-"}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {e.estatus !== "iniciado" ? e.pueblo : "-"}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {e.estatus !== "iniciado"
+                        ? getValue(e.documento?.cartaRecomendacion)
+                        : "-"}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {e.estatus !== "iniciado" ? (
+                        e.Foto?.fotosGrales ? (
+                          <div
+                            className="p-2 hover:bg-slate-500/30 rounded-md cursor-pointer"
+                            onClick={() =>
+                              router.push("/dashboard/casos?getFotos=" + e.id)
+                            }
+                          >
+                            <Camera />
+                          </div>
+                        ) : (
+                          "No hay fotos"
+                        )
                       ) : (
-                        "No hay fotos"
-                      )
-                    ) : (
-                      "-"
-                    )}
-                  </Table.Cell>
-                  <Table.Cell className="overflow-x-hidden overflow-ellipsis whitespace-nowrap !w-14 !max-w-14">
-                    {e.estatus === "completado" ? (
-                      e.observaciones ? (
-                        <span>{e.observaciones}</span>
+                        "-"
+                      )}
+                    </Table.Cell>
+                    <Table.Cell className="overflow-x-hidden overflow-ellipsis whitespace-nowrap !w-14 !max-w-14">
+                      {e.estatus === "completado" ? (
+                        e.observaciones ? (
+                          <span>{e.observaciones}</span>
+                        ) : (
+                          "No tiene"
+                        )
                       ) : (
-                        "No tiene"
-                      )
-                    ) : (
-                      "-"
-                    )}
-                  </Table.Cell>
-                  {data?.user?.rol === 3 ? null : (
-                    <Table.Cell className="z-30">
-                      <Dropdown className="z-30" label="Acciones">
-                        <Dropdown.Item
-                          onClick={() =>
-                            router.push("/dashboard/casos?edit=" + e.id)
-                          }
-                          className="flex justify-between gap-2"
-                        >
-                          Editar
-                          <Edit className="w-4" />
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          onClick={() =>
-                            router.push("/dashboard/casos?estatus=" + e.id)
-                          }
-                          className="flex justify-between gap-2"
-                        >
-                          Estado
-                          <RefreshCcw className="w-4" />
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          onClick={() =>
-                            router.push("/dashboard/casos?area=" + e.id)
-                          }
-                          className="flex justify-between gap-2"
-                        >
-                          Asignar areas <Map className="w-4" />
-                        </Dropdown.Item>
-                        {e.estatus === "completado" && (
+                        "-"
+                      )}
+                    </Table.Cell>
+                    {data?.user?.rol === 3 ? null : (
+                      <Table.Cell className="z-30">
+                        <Dropdown className="z-30" label="Acciones">
                           <Dropdown.Item
                             onClick={() =>
-                              router.push("/dashboard/casos?coments=" + e.id)
+                              router.push("/dashboard/casos?edit=" + e.id)
                             }
                             className="flex justify-between gap-2"
                           >
-                            Observaciones <Book className="w-4" />
+                            Editar
+                            <Edit className="w-4" />
                           </Dropdown.Item>
-                        )}
-                        <Dropdown.Item
-                          onClick={() =>
-                            router.push("/dashboard/casos?upload=" + e.id)
-                          }
-                          className="flex justify-between gap-2"
-                        >
-                          Subir documento <Upload className="w-4" />
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          onClick={() =>
-                            router.push("/dashboard/casos?fotos=" + e.id)
-                          }
-                          className="flex justify-between gap-2"
-                        >
-                          Subir fotos <Upload className="w-4" />
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          onClick={() =>
-                            router.push("/dashboard/casos?delete=" + e.id)
-                          }
-                          className="flex justify-between gap-2"
-                        >
-                          Eliminar <Trash className="w-4" />
-                        </Dropdown.Item>
-                      </Dropdown>
-                    </Table.Cell>
-                  )}
-                </Table.Row>
-              );
-            })}
+                          <Dropdown.Item
+                            onClick={() =>
+                              router.push("/dashboard/casos?estatus=" + e.id)
+                            }
+                            className="flex justify-between gap-2"
+                          >
+                            Estado
+                            <RefreshCcw className="w-4" />
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() =>
+                              router.push("/dashboard/casos?area=" + e.id)
+                            }
+                            className="flex justify-between gap-2"
+                          >
+                            Asignar areas <Map className="w-4" />
+                          </Dropdown.Item>
+                          {e.estatus === "completado" && (
+                            <Dropdown.Item
+                              onClick={() =>
+                                router.push("/dashboard/casos?coments=" + e.id)
+                              }
+                              className="flex justify-between gap-2"
+                            >
+                              Observaciones <Book className="w-4" />
+                            </Dropdown.Item>
+                          )}
+                          <Dropdown.Item
+                            onClick={() =>
+                              router.push("/dashboard/casos?upload=" + e.id)
+                            }
+                            className="flex justify-between gap-2"
+                          >
+                            Subir documento <Upload className="w-4" />
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() =>
+                              router.push("/dashboard/casos?fotos=" + e.id)
+                            }
+                            className="flex justify-between gap-2"
+                          >
+                            Subir fotos <Upload className="w-4" />
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() =>
+                              router.push("/dashboard/casos?delete=" + e.id)
+                            }
+                            className="flex justify-between gap-2"
+                          >
+                            Eliminar <Trash className="w-4" />
+                          </Dropdown.Item>
+                        </Dropdown>
+                      </Table.Cell>
+                    )}
+                  </Table.Row>
+                );
+              })}
           </Table.Body>
         </Table>
       </div>

@@ -78,7 +78,7 @@ export const createCaso = async (data: CreateCaso) => {
     console.log(json);
     return json;
   } catch (err) {
-    console.log(err);
+    return err;
   }
 };
 
