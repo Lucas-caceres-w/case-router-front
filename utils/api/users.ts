@@ -5,6 +5,7 @@ export const getUsers = async () => {
   try {
     const response = await fetch(`${apiUrl}/users`, { cache: "no-store" });
     const json = await response.json();
+    
     return json;
   } catch (err) {
     console.log(err);

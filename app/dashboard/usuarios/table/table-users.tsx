@@ -15,6 +15,7 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Número de elementos por página
   const { data } = useSession();
+  console.log(data)
 
   // Función para manejar el cambio de página
   const handlePageChange = (pageNumber: number) => {
@@ -32,7 +33,7 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
 
     if (value.trim() === "") {
       // Si el valor está vacío, mostrar todos los casos nuevamente
-      setFilteredCasos(initialCols.slice(startIndex, endIndex));
+      setFilteredCasos(initialCols?.slice(startIndex, endIndex));
     } else {
       // Filtrar los casos según el valor ingresado
       const filtered = initialCols?.filter(
@@ -90,6 +91,7 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
             placeholder="Buscar..."
           />
           {data?.user?.rol === 1 && <AddUser cols={setCols} />}
+          {/* <AddUser cols={setCols} /> */}
         </div>
         <Table>
           <Table.Head>
