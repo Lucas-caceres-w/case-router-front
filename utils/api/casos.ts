@@ -6,7 +6,11 @@ export const getCasos = async () => {
     const res = await fetch(apiUrl + "/casos", { cache: "no-store" });
     const json = await res.json();
 
-    return json;
+    if (res.ok) {
+      return json;
+    } else {
+      return [];
+    }
   } catch (err) {
     console.log(err);
   }

@@ -36,6 +36,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
   const { data } = useSession();
   const [startDate, setstartDate] = useState<Date | null>();
   const [endDate, setEndDate] = useState<Date | null>();
+  const [expandEstatus, setExpandEstatus] = useState(false);
 
   // Función para manejar el cambio de página
   const handlePageChange = (pageNumber: number) => {
@@ -196,123 +197,193 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
           <legend className="text-slate-800 dark:text-slate-200 font-semibold">
             Estado:
           </legend>
-          <section className="flex flex-row flex-wrap gap-x-4 items-center">
-            <div className="flex gap-2 items-center">
-              <Radio
-                onClick={() => selectCasosByStatus("iniciado")}
-                name="estatus"
-                value="iniciado"
-                id="iniciados"
-              />
-              <Label htmlFor="iniciados">Iniciados</Label>
-            </div>
-            <div className="flex gap-2 items-center">
-              <Radio
-                onClick={() => selectCasosByStatus("verificacion")}
-                name="estatus"
-                value="verificacion"
-                id="verificacion"
-              />
-              <Label htmlFor="verificacion">Verificacion inicial</Label>
-            </div>
-            <div className="flex gap-2 items-center">
-              <Radio
-                onClick={() => selectCasosByStatus("reporteInicial")}
-                name="estatus"
-                value="reporteInicial"
-                id="reporteInicial"
-              />
-              <Label htmlFor="reporteInicial">Reporte inicial</Label>
-            </div>
-            <div className="flex gap-2 items-center">
-              <Radio
-                onClick={() => selectCasosByStatus("asignado")}
-                name="estatus"
-                value="asignado"
-                id="asignado"
-              />
-              <Label htmlFor="asignado">Asignado a investigacion</Label>
-            </div>
-            <div className="flex gap-2 items-center">
-              <Radio
-                onClick={() => selectCasosByStatus("reporteCompletado")}
-                name="estatus"
-                value="reporteCompletado"
-                id="reporteCompletado"
-              />
-              <Label htmlFor="reporteCompletado">Reporte completado</Label>
-            </div>
-            <div className="flex gap-2 items-center">
-              <Radio
-                onClick={() => selectCasosByStatus("cartaRecomendacion")}
-                name="estatus"
-                value="cartaRecomendacion"
-                id="cartaRecomendacion"
-              />
-              <Label htmlFor="cartaRecomendacion">
-                Carta de recomendacion completada
-              </Label>
-            </div>
-            <div className="flex gap-2 items-center">
-              <Radio
-                onClick={() => selectCasosByStatus("completado")}
-                name="estatus"
-                value="completado"
-                id="completado"
-              />
-              <Label htmlFor="completado">Completados</Label>
-            </div>
-            <div className="flex gap-2 items-center p-1">
-              <Radio
-                onClick={() => setFilteredCasos(initialCols.slice(0, 5))}
-                name="estatus"
-                value="clean"
-                id="clean"
-              />
-              <Label htmlFor="clean">Limpiar</Label>
-            </div>
-          </section>
+          <Button
+            onClick={() => setExpandEstatus(!expandEstatus)}
+            className="my-2"
+          >
+            {expandEstatus ? "Hide" : "Expand"}
+          </Button>
+          {expandEstatus && (
+            <section className="flex flex-row flex-wrap gap-x-4 items-center my-4">
+              <div className="flex gap-2 items-center">
+                <Radio
+                  onClick={() => selectCasosByStatus("iniciado")}
+                  name="estatus"
+                  value="iniciado"
+                  id="iniciados"
+                />
+                <Label htmlFor="iniciados">Iniciados</Label>
+              </div>
+              <div className="flex gap-2 items-center">
+                <Radio
+                  onClick={() => selectCasosByStatus("verificacion")}
+                  name="estatus"
+                  value="verificacion"
+                  id="verificacion"
+                />
+                <Label htmlFor="verificacion">Verificacion inicial</Label>
+              </div>
+              <div className="flex gap-2 items-center">
+                <Radio
+                  onClick={() => selectCasosByStatus("reporteInicial")}
+                  name="estatus"
+                  value="reporteInicial"
+                  id="reporteInicial"
+                />
+                <Label htmlFor="reporteInicial">Reporte inicial</Label>
+              </div>
+              <div className="flex gap-2 items-center">
+                <Radio
+                  onClick={() => selectCasosByStatus("asignado")}
+                  name="estatus"
+                  value="asignado"
+                  id="asignado"
+                />
+                <Label htmlFor="asignado">Asignado a investigacion</Label>
+              </div>
+              <div className="flex gap-2 items-center">
+                <Radio
+                  onClick={() => selectCasosByStatus("reporteCompletado")}
+                  name="estatus"
+                  value="reporteCompletado"
+                  id="reporteCompletado"
+                />
+                <Label htmlFor="reporteCompletado">Reporte completado</Label>
+              </div>
+              <div className="flex gap-2 items-center">
+                <Radio
+                  onClick={() => selectCasosByStatus("cartaRecomendacion")}
+                  name="estatus"
+                  value="cartaRecomendacion"
+                  id="cartaRecomendacion"
+                />
+                <Label htmlFor="cartaRecomendacion">
+                  Carta de recomendacion completada
+                </Label>
+              </div>
+              <div className="flex gap-2 items-center">
+                <Radio
+                  onClick={() => selectCasosByStatus("completado")}
+                  name="estatus"
+                  value="completado"
+                  id="completado"
+                />
+                <Label htmlFor="completado">Completados</Label>
+              </div>
+              <div className="flex gap-2 items-center p-1">
+                <Radio
+                  onClick={() => setFilteredCasos(initialCols.slice(0, 5))}
+                  name="estatus"
+                  value="clean"
+                  id="clean"
+                />
+                <Label htmlFor="clean">Limpiar</Label>
+              </div>
+            </section>
+          )}
         </fieldset>
       </div>
-      <div className="my-4 min-h-[450px] overflow-x-auto">
+      <div className="my-4 min-h-[450px] max-h-[600px] overflow-x-auto">
         <Table striped>
-          <Table.Head>
-            <Table.HeadCell>Nombre Inspector</Table.HeadCell>
-            <Table.HeadCell>catastro</Table.HeadCell>
-            <Table.HeadCell>Asignado por AAA</Table.HeadCell>
-            <Table.HeadCell>Latitud</Table.HeadCell>
-            <Table.HeadCell>Longitud</Table.HeadCell>
-            <Table.HeadCell>Ogbp Sbp</Table.HeadCell>
-            <Table.HeadCell>Estatus</Table.HeadCell>
-            <Table.HeadCell>Escrituras</Table.HeadCell>
-            <Table.HeadCell>Evidencia servicio</Table.HeadCell>
-            <Table.HeadCell>Evidencia titularidad</Table.HeadCell>
-            <Table.HeadCell>Plano</Table.HeadCell>
-            <Table.HeadCell>Plano incripción</Table.HeadCell>
-            <Table.HeadCell>Plano situación</Table.HeadCell>
-            <Table.HeadCell>Foto predio / area</Table.HeadCell>
-            <Table.HeadCell>Memorial subsanación</Table.HeadCell>
-            <Table.HeadCell>Memorial explicativo</Table.HeadCell>
-            <Table.HeadCell>Mapa esquematico</Table.HeadCell>
-            <Table.HeadCell>Credenciales</Table.HeadCell>
-            <Table.HeadCell>Crt. Autorizado</Table.HeadCell>
-            <Table.HeadCell>Formulario 1190</Table.HeadCell>
-            <Table.HeadCell>Fecha de revisión</Table.HeadCell>
-            <Table.HeadCell>Fecha de creación</Table.HeadCell>
-            <Table.HeadCell>Fecha recibido</Table.HeadCell>
+          <Table.Head className="sticky top-0 z-40">
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Nombre Inspector
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Asignado por AAA
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              catastro
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Ogbp Sbp
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Latitud
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Longitud
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Estatus
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Escrituras
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Evidencia servicio
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Evidencia titularidad
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Plano
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Plano incripción
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Plano situación
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Foto predio / area
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Memorial subsanación
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Memorial explicativo
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Mapa esquematico
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Credenciales
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Crt. Autorizado
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Formulario 1190
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Fecha de revisión
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Fecha de creación
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Fecha recibido
+            </Table.HeadCell>
             {/* Si esta habilitado */}
-            <Table.HeadCell>Region</Table.HeadCell>
-            <Table.HeadCell>Area operacional</Table.HeadCell>
-            <Table.HeadCell>Pueblo</Table.HeadCell>
-            <Table.HeadCell>Carta recomendación</Table.HeadCell>
-            <Table.HeadCell>Fotos</Table.HeadCell>
-            <Table.HeadCell>Observaciones</Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Region
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Area operacional
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Pueblo
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Carta recomendación
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Fotos
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Observaciones
+            </Table.HeadCell>
             {data?.user?.rol === 3 ? null : (
-              <Table.HeadCell>Acciones</Table.HeadCell>
+              <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+                Acciones
+              </Table.HeadCell>
             )}
           </Table.Head>
-          <Table.Body>
-            {filteredCasos?.map((e: Caso) => {
+          <Table.Body className="overflow-y-scroll">
+            {filteredCasos &&
+              Array.isArray(filteredCasos) &&
+              filteredCasos?.map((e: Caso) => {
                 const Estatus = () => {
                   const estatus =
                     options.find((option) => option.value === e.estatus)
@@ -333,13 +404,13 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                     className="dark:bg-slate-800 bg-slate-100"
                   >
                     <Table.Cell>{e.nombreInspector}</Table.Cell>
-                    <Table.Cell>{e.nroCatastro}</Table.Cell>
                     <Table.Cell>{e.asignadoPor}</Table.Cell>
-                    <Table.Cell>{e.latitud}</Table.Cell>
-                    <Table.Cell>{e.longitud}</Table.Cell>
+                    <Table.Cell>{e.nroCatastro}</Table.Cell>
                     <Table.Cell className="text-nowrap">
                       {e.nroOgpeSbp}
                     </Table.Cell>
+                    <Table.Cell>{e.latitud}</Table.Cell>
+                    <Table.Cell>{e.longitud}</Table.Cell>
                     <Table.Cell className="text-nowrap">
                       <Estatus />
                     </Table.Cell>
@@ -446,7 +517,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                             }
                             className="flex justify-between gap-2"
                           >
-                            Estado
+                            Estatus
                             <RefreshCcw className="w-4" />
                           </Dropdown.Item>
                           <Dropdown.Item
@@ -457,16 +528,14 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                           >
                             Asignar areas <Map className="w-4" />
                           </Dropdown.Item>
-                          {e.estatus === "completado" && (
-                            <Dropdown.Item
-                              onClick={() =>
-                                router.push("/dashboard/casos?coments=" + e.id)
-                              }
-                              className="flex justify-between gap-2"
-                            >
-                              Observaciones <Book className="w-4" />
-                            </Dropdown.Item>
-                          )}
+                          <Dropdown.Item
+                            onClick={() =>
+                              router.push("/dashboard/casos?coments=" + e.id)
+                            }
+                            className="flex justify-between gap-2"
+                          >
+                            Observaciones <Book className="w-4" />
+                          </Dropdown.Item>
                           <Dropdown.Item
                             onClick={() =>
                               router.push("/dashboard/casos?upload=" + e.id)

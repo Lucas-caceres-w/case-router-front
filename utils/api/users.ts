@@ -6,7 +6,11 @@ export const getUsers = async () => {
     const response = await fetch(`${apiUrl}/users`, { cache: "no-store" });
     const json = await response.json();
     
-    return json;
+    if (response.ok) {
+      return json;
+    } else {
+      return [];
+    }
   } catch (err) {
     console.log(err);
   }

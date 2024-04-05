@@ -17,8 +17,8 @@ export default function MapCasie() {
   }, []);
 
   return (
-    <main className="ml-72 mt-24 grid place-items-center w-[82%] h-[450px]">
-      <Map casos={casos} />
+    <main className="ml-24 lg:ml-52 mt-24 grid place-items-center w-[85%] h-[450px]">
+      <Map casos={casos ?? []} />
     </main>
   );
 }

@@ -35,7 +35,7 @@ function SideBarComp() {
   }, [windowWidth]);
 
   return (
-    <Sidebar className="h-screen rounded-none fixed z-10" collapsed={collapsed}>
+    <Sidebar className="h-screen rounded-none fixed z-10 max-w-40" collapsed={collapsed}>
       <Sidebar.Items>
         <Sidebar.ItemGroup>
           <Sidebar.Item href="/dashboard" icon={Home}>

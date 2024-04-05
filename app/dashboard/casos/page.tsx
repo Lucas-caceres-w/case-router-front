@@ -16,7 +16,7 @@ async function CasosPage() {
   const data = await getCasos();
   
   return (
-    <div className="ml-24 lg:ml-72 mt-10 !w-[calc(100% - 60px)]">
+    <div className="ml-24 lg:ml-52 mt-10 !w-[calc(100% - 60px)]">
       <div className="flex justify-between items-center">
         <Tittle>Casos</Tittle>
         <UploadModal />
@@ -30,7 +30,7 @@ async function CasosPage() {
         <ImagesModal />
       </div>
       <React.Suspense fallback="Cargando...">
-        <TableComp initialCols={data || []} />
+        <TableComp initialCols={data || [null]} />
       </React.Suspense>
     </div>
   );

@@ -49,21 +49,18 @@ const months = [
 ];
 
 function ChartsSection({ data }: { data: Caso[] }) {
+  console.log(data);
   function contarCasosPorPuebloRegion() {
     const conteo = {} as any;
     data?.map((caso: any) => {
-      const key = `${caso.areaOperacional}`;
+      const key = `${caso?.areaOperacional}`;
       if (!conteo[key]) {
         conteo[key] = 1;
       } else {
         conteo[key]++;
       }
     });
-    if (conteo.length > 0) {
-      return conteo;
-    } else {
-      return 0;
-    }
+    return conteo;
   }
 
   function contarCasosPorArea() {
@@ -76,11 +73,7 @@ function ChartsSection({ data }: { data: Caso[] }) {
         conteo[key]++;
       }
     });
-    if (conteo.length > 0) {
-      return conteo as number;
-    } else {
-      return 0;
-    }
+    return conteo as number;
   }
 
   function contarCasosEnProcesoCompletados() {

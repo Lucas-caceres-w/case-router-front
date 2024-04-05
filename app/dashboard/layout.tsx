@@ -1,12 +1,9 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "../globals.css";
-import { ThemeModeScript } from "flowbite-react";
-import SideBarComp from "@/components/sidebar";
 import NavbarComp from "@/components/navbar";
+import SideBarComp from "@/components/sidebar";
 import SessionAuthProvider from "@/context/SessionProvider";
-
-const inter = Inter({ subsets: ["latin"] });
+import { ThemeModeScript } from "flowbite-react";
+import type { Metadata } from "next";
+import "../globals.css";
 
 export const metadata: Metadata = {
   title: "Case Router | Sistema",
