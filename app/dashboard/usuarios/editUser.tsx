@@ -1,5 +1,5 @@
 "use client";
-import { getOneUser, userCreate } from "@/utils/api/users";
+import { getOneUser } from "@/utils/api/users";
 import {
   Button,
   Label,

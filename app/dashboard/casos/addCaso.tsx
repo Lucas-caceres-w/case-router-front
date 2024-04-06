@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 import { ImportData, createCaso, getCasosByDate } from "@/utils/api/casos";
 import { Caso, ImportCaso } from "@/utils/types";

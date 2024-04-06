@@ -3,13 +3,10 @@ import { deleteCaso } from "@/utils/api/casos";
 import {
   Alert,
   Button,
-  Label,
   Modal,
-  Spinner,
-  TextInput,
+  Spinner
 } from "flowbite-react";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 function DeleteCaso() {

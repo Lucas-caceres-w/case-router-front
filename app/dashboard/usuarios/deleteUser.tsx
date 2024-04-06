@@ -8,7 +8,6 @@ import {
   ModalHeader,
   Spinner,
 } from "flowbite-react";
-import { Loader } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 

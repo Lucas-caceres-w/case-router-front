@@ -2,14 +2,12 @@
 import { getUsers, userCreate } from "@/utils/api/users";
 import { User } from "@/utils/types";
 import {
-  Alert,
   Button,
   Label,
   Modal,
-  ModalBody,
   Select,
   Spinner,
-  TextInput,
+  TextInput
 } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import {

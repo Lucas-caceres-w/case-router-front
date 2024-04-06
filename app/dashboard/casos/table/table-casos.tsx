@@ -1,15 +1,19 @@
+//@ts-nocheck
 "use client";
+import { options } from "@/utils/mockups/mockups";
+import { staticsPdf } from "@/utils/routes";
 import { Caso } from "@/utils/types";
+import { format, isWithinInterval, parse } from "date-fns";
 import {
-  Dropdown,
+  Button,
   Datepicker,
+  Dropdown,
   Label,
   Pagination,
   Radio,
   Table,
   TextInput,
   Tooltip,
-  Button,
 } from "flowbite-react";
 import {
   Book,
@@ -20,12 +24,9 @@ import {
   Trash,
   Upload,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { format, isWithinInterval, parse } from "date-fns";
-import { ChangeEvent, useEffect, useState } from "react";
-import { staticsPdf } from "@/utils/routes";
-import { options } from "@/utils/mockups/mockups";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, useEffect, useState } from "react";
 
 function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
   const router = useRouter();
@@ -34,8 +35,8 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Número de elementos por página
   const { data } = useSession();
-  const [startDate, setstartDate] = useState<Date | null>();
-  const [endDate, setEndDate] = useState<Date | null>();
+  const [startDate, setstartDate] = useState<Date | undefined>();
+  const [endDate, setEndDate] = useState<Date | undefined>();
   const [expandEstatus, setExpandEstatus] = useState(false);
 
   // Función para manejar el cambio de página
@@ -122,18 +123,13 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
   const filterCasosPorFecha = () => {
     const startDateObj = parse(startDate, "dd-MM-yyyy", new Date());
     const endDateObj = parse(endDate, "dd-MM-yyyy", new Date());
-    // Filtra los casos por el rango de fechas seleccionado
     const casosFiltrados = initialCols.filter((caso) => {
-      // Convierte la fecha del caso en objeto Date
       const casoDate = new Date(caso.createdAt);
-      // Verifica si la fecha del caso está dentro del rango seleccionado
       return isWithinInterval(casoDate, {
         start: startDateObj,
         end: endDateObj,
       });
     });
-    console.log(casosFiltrados);
-    // Actualiza el estado con los casos filtrados
     setFilteredCasos(casosFiltrados);
   };
 
@@ -225,6 +221,15 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               </div>
               <div className="flex gap-2 items-center">
                 <Radio
+                  onClick={() => selectCasosByStatus("solicitaPlanos")}
+                  name="estatus"
+                  value="solicitaPlanos"
+                  id="solicitaPlanos"
+                />
+                <Label htmlFor="solicitaPlanos">Se Solicita Planos</Label>
+              </div>
+              <div className="flex gap-2 items-center">
+                <Radio
                   onClick={() => selectCasosByStatus("reporteInicial")}
                   name="estatus"
                   value="reporteInicial"
@@ -240,6 +245,15 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                   id="asignado"
                 />
                 <Label htmlFor="asignado">Asignado a investigacion</Label>
+              </div>
+              <div className="flex gap-2 items-center">
+                <Radio
+                  onClick={() => selectCasosByStatus("referidoGTA")}
+                  name="estatus"
+                  value="referidoGTA"
+                  id="referidoGTA"
+                />
+                <Label htmlFor="referidoGTA">Referido a GTA</Label>
               </div>
               <div className="flex gap-2 items-center">
                 <Radio

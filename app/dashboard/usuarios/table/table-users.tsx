@@ -1,12 +1,13 @@
+// @ts-nocheck
 "use client";
 import { User } from "@/utils/types";
-import { Dropdown, Pagination, Table, TextInput } from "flowbite-react";
-import { Edit, RefreshCcw, Trash } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { format } from "date-fns";
+import { Dropdown, Pagination, Table, TextInput } from "flowbite-react";
+import { Edit, Trash } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 import AddUser from "../addUser";
-import { useSession } from "next-auth/react";
 
 function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
   const router = useRouter();

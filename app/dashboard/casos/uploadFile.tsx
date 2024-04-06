@@ -10,7 +10,7 @@ import {
   Spinner,
 } from "flowbite-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 function UploadModal() {
   const selects = [
