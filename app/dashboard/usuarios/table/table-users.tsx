@@ -78,6 +78,12 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
             USER
           </span>
         );
+      case 4:
+        return (
+          <span className="bg-sky-600 rounded-md border border-sky-400 p-2 text-slate-200 font-semibold">
+            DEV
+          </span>
+        );
     }
   };
 
@@ -123,18 +129,20 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
                       {data?.user?.rol === 1 && (
                         <Table.Cell className="z-30">
                           <Dropdown className="z-30" label="Acciones">
-                            <Dropdown.Item
-                              onClick={() =>
-                                router.push(
-                                  "/dashboard/usuarios?user_edit=" + e.id
-                                )
-                              }
-                              className="flex justify-between gap-2"
-                            >
-                              Editar
-                              <Edit className="w-4" />
-                            </Dropdown.Item>
-                            {e.rol === 1 ? null : (
+                            {e.rol === 4 || e.rol === 1 ? null : (
+                              <Dropdown.Item
+                                onClick={() =>
+                                  router.push(
+                                    "/dashboard/usuarios?user_edit=" + e.id
+                                  )
+                                }
+                                className="flex justify-between gap-2"
+                              >
+                                Editar
+                                <Edit className="w-4" />
+                              </Dropdown.Item>
+                            )}
+                            {e.rol === 4 || e.rol === 1 ? null : (
                               <Dropdown.Item
                                 onClick={() =>
                                   router.push(
@@ -146,14 +154,6 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
                                 Eliminar <Trash className="w-4" />
                               </Dropdown.Item>
                             )}
-                            {/* <Dropdown.Item
-                            onClick={() =>
-                              router.push("/dashboard/usuarios?delete=" + e.id)
-                            }
-                            className="flex justify-between gap-2"
-                          >
-                            Eliminar <Trash className="w-4" />
-                          </Dropdown.Item> */}
                           </Dropdown>
                         </Table.Cell>
                       )}
