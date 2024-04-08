@@ -418,7 +418,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                     className="dark:bg-slate-800 bg-slate-100"
                   >
                     <Table.Cell>{e.nombreInspector}</Table.Cell>
-                    <Table.Cell>{e.asignadoPor}</Table.Cell>
+                    <Table.Cell className="text-nowrap">{e.asignadoPor}</Table.Cell>
                     <Table.Cell className="text-nowrap">
                       {e.nroCatastro}
                     </Table.Cell>
