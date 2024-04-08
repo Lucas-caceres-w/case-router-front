@@ -1,13 +1,9 @@
 "use client";
-import { deleteCaso } from "@/utils/api/casos";
-import {
-  Alert,
-  Button,
-  Modal,
-  Spinner
-} from "flowbite-react";
+import { deleteCaso, getOne } from "@/utils/api/casos";
+import { Caso } from "@/utils/types";
+import { Alert, Button, Modal, Spinner } from "flowbite-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function DeleteCaso() {
   const params = useSearchParams();
@@ -16,6 +12,7 @@ function DeleteCaso() {
   const [color, setColor] = useState("");
   const [text, setText] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const [casoActual, setCasoActual] = useState<string>();
 
   const callToast = (type: string, text: string) => {
     setShowToast(true);
@@ -39,6 +36,13 @@ function DeleteCaso() {
   if (!idCaso) {
     return;
   }
+
+  const getCasoData = async () => {
+    const res = await getOne(idCaso);
+    setCasoActual(res.asignadoPor);
+  };
+
+  getCasoData();
 
   const handleDelete = async () => {
     setLoading(true);
@@ -67,10 +71,10 @@ function DeleteCaso() {
         show={idCaso ? true : false}
         onClose={() => router.push("/dashboard/casos")}
       >
-        <Modal.Header>Editar caso</Modal.Header>
+        <Modal.Header>Eliminar caso</Modal.Header>
         <Modal.Body>
           <p className="text-slate-800 font-semibold dark:text-slate-200">
-            Estas seguro de eliminar el caso id: {idCaso}
+            Estas seguro de eliminar el caso: {casoActual}
           </p>
         </Modal.Body>
         <Modal.Footer className="flex items-center justify-end">

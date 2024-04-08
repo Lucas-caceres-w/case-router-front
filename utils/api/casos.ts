@@ -187,7 +187,7 @@ export const uploadImages = async (id: string, file: FormData) => {
       body: file,
     });
     const json = await res.json();
-    console.log(json);
+    //console.log(json);
     return json;
   } catch (err) {
     console.log(err);
@@ -198,7 +198,7 @@ export const getImagesById = async (id: string) => {
   try {
     const res = await fetch(apiUrl + "/fotos/" + id);
     const json = await res.json();
-
+    console.log(json)
     return json;
   } catch (err) {
     console.log(err);

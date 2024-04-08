@@ -57,7 +57,7 @@ function CommentsModal() {
   return (
     <>
       <Modal show={idCaso ? true : false}>
-        <Modal.Header>Subir documento</Modal.Header>
+        <Modal.Header>Añadir comentarios</Modal.Header>
         <form onSubmit={OnSubmit}>
           <Modal.Body>
             <article className="flex flex-col items-end">

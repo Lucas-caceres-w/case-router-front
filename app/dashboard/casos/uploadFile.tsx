@@ -40,7 +40,7 @@ function UploadModal() {
     },
     {
       name: "fotoPredioArea",
-      label: "Foto de Predio / Area",
+      label: "Foto de Predio",
     },
     {
       name: "memorialSubsanacion",
@@ -48,7 +48,11 @@ function UploadModal() {
     },
     {
       name: "memoExplicativo",
-      label: "mapaEsquematico",
+      label: "Memo Explicativo",
+    },
+    {
+      name: "mapaEsquematico",
+      label: "Mapa Esquematico",
     },
     {
       name: "credencialIngArq",

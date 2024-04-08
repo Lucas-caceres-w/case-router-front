@@ -33,16 +33,11 @@ function ImagesModal() {
   }
 
   const getFotos = async () => {
-    try {
-      const res = (await getImagesById(idCaso)) as any;
-
-      if (res.fotosGrales) {
-        const fotos = JSON.parse(res.fotosGrales);
-        console.log(fotos);
-        setImages(fotos);
-      }
-    } catch (err) {
-      console.log(err);
+    const res = await getImagesById(idCaso);
+    if (res) {
+      const fotos = res.fotosGrales;
+      //console.log(fotos);
+      setImages(fotos);
     }
   };
 

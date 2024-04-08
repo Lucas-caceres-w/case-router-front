@@ -8,6 +8,12 @@ const nextConfig = {
         port: "3001",
         pathname: "/fotos_casos/*",
       },
+      {
+        protocol: "https",
+        hostname: "caseroute.io",
+        port: "",
+        pathname: "/fotos_casos/*",
+      },
     ],
   },
   typescript: {

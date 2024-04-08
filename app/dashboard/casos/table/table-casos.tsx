@@ -419,7 +419,9 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                   >
                     <Table.Cell>{e.nombreInspector}</Table.Cell>
                     <Table.Cell>{e.asignadoPor}</Table.Cell>
-                    <Table.Cell>{e.nroCatastro}</Table.Cell>
+                    <Table.Cell className="text-nowrap">
+                      {e.nroCatastro}
+                    </Table.Cell>
                     <Table.Cell className="text-nowrap">
                       {e.nroOgpeSbp}
                     </Table.Cell>
@@ -470,11 +472,11 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                           format(e.fechaRecibido, "dd/MM/yyyy")
                         : "-"}
                     </Table.Cell>
-                    <Table.Cell>
-                      {e.estatus !== "iniciado" ? e.areaOperacional : "-"}
+                    <Table.Cell className="text-nowrap">
+                      {e.estatus !== "iniciado" ? e.region : "-"}
                     </Table.Cell>
                     <Table.Cell>
-                      {e.estatus !== "iniciado" ? e.region : "-"}
+                      {e.estatus !== "iniciado" ? e.areaOperacional : "-"}
                     </Table.Cell>
                     <Table.Cell>
                       {e.estatus !== "iniciado" ? e.pueblo : "-"}
@@ -484,7 +486,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                         ? getValue(e.documento?.cartaRecomendacion)
                         : "-"}
                     </Table.Cell>
-                    <Table.Cell>
+                    <Table.Cell className="text-nowrap">
                       {e.estatus !== "iniciado" ? (
                         e.Foto?.fotosGrales ? (
                           <div
@@ -515,7 +517,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                     </Table.Cell>
                     {data?.user?.rol === 3 ? null : (
                       <Table.Cell className="z-30">
-                        <Dropdown className="z-30" label="Acciones">
+                        <Dropdown className="z-50" label="Acciones">
                           <Dropdown.Item
                             onClick={() =>
                               router.push("/dashboard/casos?edit=" + e.id)
@@ -548,7 +550,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                             }
                             className="flex justify-between gap-2"
                           >
-                            Observaciones <Book className="w-4" />
+                            Comentarios <Book className="w-4" />
                           </Dropdown.Item>
                           <Dropdown.Item
                             onClick={() =>

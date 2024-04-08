@@ -90,8 +90,8 @@ function RegionEdit() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = {
-      areaOperacional: selectedArea,
-      region: selectedRegion,
+      areaOperacional: selectedRegion,
+      region: selectedArea,
       pueblo: selectedMunicipio,
     };
     try {
