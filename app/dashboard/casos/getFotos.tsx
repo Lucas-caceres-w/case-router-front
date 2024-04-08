@@ -47,7 +47,7 @@ function ImagesModal() {
         show={idCaso ? true : false}
         onClose={() => router.push("/dashboard/casos")}
       >
-        <ModalHeader>Subir documento</ModalHeader>
+        <ModalHeader>Imagenes del caso</ModalHeader>
         <ModalBody>
           <div className="flex flex-row gap-2 w-full h-full">
             {images

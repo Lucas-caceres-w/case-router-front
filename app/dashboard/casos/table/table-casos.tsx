@@ -297,7 +297,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
           )}
         </fieldset>
       </div>
-      <div className="my-4 min-h-[450px] max-h-[600px] overflow-x-auto">
+      <div className="my-4 min-h-[480px] max-h-[500px] overflow-x-auto">
         <Table striped>
           <Table.Head className="sticky top-0 z-40">
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
@@ -516,8 +516,8 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                       )}
                     </Table.Cell>
                     {data?.user?.rol === 3 ? null : (
-                      <Table.Cell className="z-30">
-                        <Dropdown className="z-50" label="Acciones">
+                      <Table.Cell className="relative">
+                        <Dropdown className="absolute z-50" label="Acciones">
                           <Dropdown.Item
                             onClick={() =>
                               router.push("/dashboard/casos?edit=" + e.id)
