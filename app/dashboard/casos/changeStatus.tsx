@@ -85,7 +85,7 @@ function ChangeStatus() {
   return (
     <>
       {showToast && <ToastAttr color={color} text={text} />}
-      <Modal show={idCaso ? true : false}>
+      <Modal show={idCaso ? true : false} onClose={() => router.push("/dashboard/casos")}>
         <Modal.Header>Cambiar estatus</Modal.Header>
         <form onSubmit={OnSubmit}>
           <Modal.Body>

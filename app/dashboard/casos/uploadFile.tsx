@@ -143,7 +143,7 @@ function UploadModal() {
   return (
     <>
       {showToast && <ToastAttr color={color} text={text} />}
-      <Modal show={idCaso ? true : false}>
+      <Modal show={idCaso ? true : false} onClose={() => router.push("/dashboard/casos")}>
         <Modal.Header>Subir documento</Modal.Header>
         <form encType="multipart/form-data" onSubmit={handleSubmit}>
           <Modal.Body>

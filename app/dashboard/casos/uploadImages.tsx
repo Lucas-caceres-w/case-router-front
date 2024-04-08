@@ -86,7 +86,7 @@ function UploadImages() {
   return (
     <>
       {showToast && <ToastAttr color={color} text={text} />}
-      <Modal show={idCaso ? true : false}>
+      <Modal show={idCaso ? true : false} onClose={() => router.push("/dashboard/casos")}>
         <Modal.Header>Subir fotos</Modal.Header>
         <form onSubmit={handleSubmit}>
           <Modal.Body>

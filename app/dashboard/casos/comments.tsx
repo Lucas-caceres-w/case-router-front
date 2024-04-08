@@ -56,7 +56,7 @@ function CommentsModal() {
 
   return (
     <>
-      <Modal show={idCaso ? true : false}>
+      <Modal show={idCaso ? true : false} onClose={() => router.push("/dashboard/casos")}>
         <Modal.Header>Añadir comentarios</Modal.Header>
         <form onSubmit={OnSubmit}>
           <Modal.Body>
