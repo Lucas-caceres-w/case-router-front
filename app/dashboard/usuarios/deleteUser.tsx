@@ -28,7 +28,7 @@ export const DeleteUser = async () => {
       const res = await deleteUser(id);
       if (res === "usuario eliminado") {
         router.replace("/dashboard/usuarios");
-        router.refresh();
+        //router.refresh();
       }
     } catch (err) {
       console.log(err);
