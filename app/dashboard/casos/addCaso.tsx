@@ -107,7 +107,7 @@ function AddCaso() {
         const workbook = XLSX.read(binaryString, { type: "binary" });
         const worksheet = workbook.Sheets["Casos Nuevos PPP"];
         const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-        console.log(jsonData)
+
         const customKeys = [
           "nombreInspector",
           "asignadoPor",
@@ -134,11 +134,9 @@ function AddCaso() {
             return null;
           })
           .filter((rowData: any) => rowData !== null) as ImportCaso;
-        console.log(parsedData);
         if (parsedData) {
           setLoading(true);
           const res = await ImportData(parsedData);
-          console.log(res);
           if (res === "AddCases") {
             setLoading(false);
             setImportData(false);

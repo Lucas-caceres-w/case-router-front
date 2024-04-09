@@ -310,7 +310,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
           )}
         </fieldset>
       </div>
-      <div className="my-4 min-h-[480px] max-h-[500px] overflow-x-auto">
+      <div className="my-4 min-h-[480px] overflow-x-scroll">
         <Table striped>
           <Table.Head className="sticky top-0 z-40">
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
