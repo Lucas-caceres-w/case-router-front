@@ -5,7 +5,6 @@ export const getCasos = async () => {
   try {
     const res = await fetch(apiUrl + "/casos", { cache: "no-store" });
     const json = await res.json();
-
     if (res.ok) {
       return json;
     } else {

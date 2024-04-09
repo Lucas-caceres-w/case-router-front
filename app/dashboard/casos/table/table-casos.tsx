@@ -38,7 +38,6 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
   const [startDate, setstartDate] = useState<Date | undefined>();
   const [endDate, setEndDate] = useState<Date | undefined>();
   const [expandEstatus, setExpandEstatus] = useState(false);
-
   // Función para manejar el cambio de página
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -132,6 +131,20 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
     });
     setFilteredCasos(casosFiltrados);
   };
+
+  function getStatusLabel(status: string) {
+    const estatus =
+      options.find(
+        (option) => option.value.toLowerCase() === status.toLowerCase()
+      )?.label || "";
+    let cn =
+      status === "iniciado"
+        ? "text-white"
+        : status === "completado"
+        ? "text-green-500"
+        : "text-yellow-500";
+    return <p className={`${cn} font-semibold`}>{estatus}</p>;
+  }
 
   useEffect(() => {
     if (startDate && endDate) {
@@ -398,27 +411,15 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
             {filteredCasos &&
               Array.isArray(filteredCasos) &&
               filteredCasos?.map((e: Caso) => {
-                const Estatus = () => {
-                  const estatus =
-                    options.find((option) => option.value === e.estatus)
-                      ?.label || "";
-                  let cn =
-                    e.estatus === "iniciado"
-                      ? ""
-                      : e.estatus === "completado"
-                      ? "text-green-500"
-                      : "text-yellow-500";
-                  return (
-                    <p className={`${cn} font-semibold`}>{`${estatus}`}</p>
-                  );
-                };
                 return (
                   <Table.Row
                     key={e.id}
                     className="dark:bg-slate-800 bg-slate-100"
                   >
                     <Table.Cell>{e.nombreInspector}</Table.Cell>
-                    <Table.Cell className="text-nowrap">{e.asignadoPor}</Table.Cell>
+                    <Table.Cell className="text-nowrap">
+                      {e.asignadoPor}
+                    </Table.Cell>
                     <Table.Cell className="text-nowrap">
                       {e.nroCatastro}
                     </Table.Cell>
@@ -428,7 +429,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                     <Table.Cell>{e.latitud}</Table.Cell>
                     <Table.Cell>{e.longitud}</Table.Cell>
                     <Table.Cell className="text-nowrap">
-                      <Estatus />
+                      {getStatusLabel(e.estatus)}
                     </Table.Cell>
                     <Table.Cell>{getValue(e.documento?.escrituras)}</Table.Cell>
                     <Table.Cell>
