@@ -36,11 +36,10 @@ function ImagesModal() {
     const res = await getImagesById(idCaso);
     if (res) {
       const fotos = res.fotosGrales;
-      //console.log(fotos);
       setImages(fotos);
     }
   };
-
+  console.log(images)
   return (
     <>
       <Modal

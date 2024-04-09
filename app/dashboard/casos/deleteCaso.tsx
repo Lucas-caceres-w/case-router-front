@@ -39,7 +39,7 @@ function DeleteCaso() {
 
   const getCasoData = async () => {
     const res = await getOne(idCaso);
-    setCasoActual(res.asignadoPor);
+    setCasoActual(res?.asignadoPor);
   };
 
   getCasoData();
@@ -52,13 +52,12 @@ function DeleteCaso() {
         callToast("success", "El caso fue eliminado");
         setTimeout(() => {
           router.push("/dashboard/casos");
-          router.refresh();
         }, 1000);
       } else {
-        callToast("error", "Error  al eliminar el caso");
+        callToast("failure", "Error  al eliminar el caso");
       }
     } catch (err) {
-      callToast("error", "Error del servidor");
+      callToast("failure", "Error del servidor");
     } finally {
       setLoading(false);
     }

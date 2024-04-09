@@ -11,10 +11,11 @@ import ChangeStatus from "./changeStatus";
 import CommentsModal from "./comments";
 import UploadImages from "./uploadImages";
 import ImagesModal from "./getFotos";
+import DatesModal from "./datesCaso";
 
 async function CasosPage() {
   const data = await getCasos();
-  
+  //console.log(data)
   return (
     <div className="ml-24 lg:ml-52 mt-10 !w-[calc(100% - 60px)]">
       <div className="flex justify-between items-center">
@@ -26,6 +27,7 @@ async function CasosPage() {
         <RegionEdit />
         <ChangeStatus />
         <CommentsModal />
+        <DatesModal />
         <UploadImages />
         <ImagesModal />
       </div>

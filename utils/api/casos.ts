@@ -1,3 +1,4 @@
+import { DatabaseBackup } from "lucide-react";
 import { apiUrl } from "../routes";
 import { CreateCaso, ImportCaso } from "../types";
 
@@ -79,6 +80,24 @@ export const createCaso = async (data: CreateCaso) => {
     });
     const json = await res.json();
     console.log(json);
+    return json;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const changeDates = async (
+  id: string,
+  data: { fechaRecibido: Date; fechaRevision: Date }
+) => {
+  try {
+    const res = await fetch(apiUrl + "/casos/" + id, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    });
+    const json = await res.json();
+
     return json;
   } catch (err) {
     return err;
@@ -186,7 +205,7 @@ export const uploadImages = async (id: string, file: FormData) => {
       body: file,
     });
     const json = await res.json();
-    //console.log(json);
+
     return json;
   } catch (err) {
     console.log(err);
@@ -197,7 +216,7 @@ export const getImagesById = async (id: string) => {
   try {
     const res = await fetch(apiUrl + "/fotos/" + id);
     const json = await res.json();
-    console.log(json)
+    console.log(json);
     return json;
   } catch (err) {
     console.log(err);

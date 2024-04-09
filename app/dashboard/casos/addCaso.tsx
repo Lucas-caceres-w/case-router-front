@@ -154,7 +154,7 @@ function AddCaso() {
             setLoading(false);
           }
         } else {
-          callToast("error", "No hay archivo para importar");
+          callToast("failure", "No hay archivo para importar");
           setLoading(false);
         }
       }

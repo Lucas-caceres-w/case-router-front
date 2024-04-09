@@ -8,7 +8,8 @@ type Documento = {
   escrituras: string;
   evidenciaServicio: string;
   evidenciaTitularidad: string;
-  fotoPredioArea: string;
+  fotoPredio: string;
+  fotoArea: string;
   mapaEsquematico: string;
   memoExplicativo: string;
   memorialSubsanacion: string;

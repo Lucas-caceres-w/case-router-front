@@ -4,6 +4,12 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "http",
+        hostname: "localhost",
+        port: "3001",
+        pathname: "/fotos_casos/*",
+      },
+      {
+        protocol: "http",
         hostname: "77.37.62.52",
         port: "3001",
         pathname: "/fotos_casos/*",
@@ -11,7 +17,6 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "caseroute.io",
-        port: "",
         pathname: "/fotos_casos/*",
       },
     ],

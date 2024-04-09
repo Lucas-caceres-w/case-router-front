@@ -39,8 +39,12 @@ function UploadModal() {
       label: "Plano situación",
     },
     {
-      name: "fotoPredioArea",
-      label: "Foto de Predio",
+      name: "fotoPredio",
+      label: "Foto del Predio",
+    },
+    {
+      name: "fotoArea",
+      label: "Foto del Area",
     },
     {
       name: "memorialSubsanacion",
@@ -114,7 +118,15 @@ function UploadModal() {
       console.log("No hay archivo");
       return;
     }
-    //const blob = new Blob([file], { type: file?.type });
+    const allowedExtensions = ["pdf"]; // Extensiones permitidas
+    // Obtener la extensión del archivo
+    const fileName = file.name;
+    const fileExtension = fileName.split(".").pop().toLowerCase();
+    // Verificar si la extensión está permitida
+    if (!allowedExtensions.includes(fileExtension)) {
+      callToast("failure", "El archivo no esta permitido, asegurese de que sean archivos .pdf");
+      return;
+    }
     const formData = new FormData();
     formData.append("Blob", file, file.name);
     formData.append("option", selectedOption);
@@ -134,7 +146,7 @@ function UploadModal() {
         callToast("warning", "Error al guardar el documento");
       }
     } catch (err) {
-      callToast("error", "Error del servidor");
+      callToast("failure", "Error del servidor");
     } finally {
       setLoading(false);
     }
@@ -143,7 +155,10 @@ function UploadModal() {
   return (
     <>
       {showToast && <ToastAttr color={color} text={text} />}
-      <Modal show={idCaso ? true : false} onClose={() => router.push("/dashboard/casos")}>
+      <Modal
+        show={idCaso ? true : false}
+        onClose={() => router.push("/dashboard/casos")}
+      >
         <Modal.Header>Subir documento</Modal.Header>
         <form encType="multipart/form-data" onSubmit={handleSubmit}>
           <Modal.Body>

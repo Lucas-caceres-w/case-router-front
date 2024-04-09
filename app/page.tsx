@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
-
+  
   useEffect(() => {
     async function redirectUser() {
       const session = await getSession();

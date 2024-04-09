@@ -26,7 +26,7 @@ function UploadImages() {
     setText(text);
     setTimeout(() => {
       setShowToast(false);
-    }, 1500);
+    }, 2000);
   };
 
   const ToastAttr = ({ color, text }: { color: string; text: string }) => {
@@ -60,8 +60,20 @@ function UploadImages() {
       console.log("No hay archivo");
       return;
     }
+    const allowedExtensions = ["jpg", "jpeg", "png", "webp"];
+
     const formData = new FormData();
     for (var i = 0; i < file.length; i++) {
+      const fileName = file[i].name;
+      const fileExtension = fileName?.split(".").pop().toLowerCase();
+      console.log(fileExtension);
+      if (!allowedExtensions.includes(fileExtension)) {
+        callToast(
+          "warning",
+          `El archivo ${fileName} tiene una extensión no permitida`
+        );
+        return;
+      }
       formData.append("photos", file[i], file[i].name);
     }
     try {
@@ -86,7 +98,10 @@ function UploadImages() {
   return (
     <>
       {showToast && <ToastAttr color={color} text={text} />}
-      <Modal show={idCaso ? true : false} onClose={() => router.push("/dashboard/casos")}>
+      <Modal
+        show={idCaso ? true : false}
+        onClose={() => router.push("/dashboard/casos")}
+      >
         <Modal.Header>Subir fotos</Modal.Header>
         <form onSubmit={handleSubmit}>
           <Modal.Body>

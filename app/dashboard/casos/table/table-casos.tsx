@@ -17,6 +17,7 @@ import {
 } from "flowbite-react";
 import {
   Book,
+  Calendar,
   Camera,
   Edit,
   Map,
@@ -33,7 +34,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
   const [cols, setCols] = useState(initialCols);
   const [filteredCasos, setFilteredCasos] = useState<Caso[] | []>(cols);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // Número de elementos por página
+  const itemsPerPage = 6; // Número de elementos por página
   const { data } = useSession();
   const [startDate, setstartDate] = useState<Date | undefined>();
   const [endDate, setEndDate] = useState<Date | undefined>();
@@ -153,6 +154,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
       setFilteredCasos(initialCols.slice(0, 5));
     }
   }, [startDate, endDate]);
+  console.log(cols)
 
   return (
     <>
@@ -310,7 +312,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
           )}
         </fieldset>
       </div>
-      <div className="my-4 min-h-[480px] overflow-x-scroll">
+      <div className="w-[98%] h-full min-h-[450px] overflow-x-scroll">
         <Table striped>
           <Table.Head className="sticky top-0 z-40">
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
@@ -323,7 +325,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               catastro
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Ogbp Sbp
+              Ogpe Sbp
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
               Latitud
@@ -353,7 +355,10 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               Plano situación
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Foto predio / area
+              Foto area
+            </Table.HeadCell>
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Foto predio
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
               Memorial subsanación
@@ -374,10 +379,10 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               Formulario 1190
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Fecha de revisión
+              Fecha de creación
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Fecha de creación
+              Fecha de revisión
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
               Fecha recibido
@@ -407,7 +412,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               </Table.HeadCell>
             )}
           </Table.Head>
-          <Table.Body className="overflow-y-scroll">
+          <Table.Body className="overflow-scroll">
             {filteredCasos &&
               Array.isArray(filteredCasos) &&
               filteredCasos?.map((e: Caso) => {
@@ -445,9 +450,8 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                     <Table.Cell>
                       {getValue(e.documento?.planoSituacion)}
                     </Table.Cell>
-                    <Table.Cell>
-                      {getValue(e.documento?.fotoPredioArea)}
-                    </Table.Cell>
+                    <Table.Cell>{getValue(e.documento?.fotoArea)}</Table.Cell>
+                    <Table.Cell>{getValue(e.documento?.fotoPredio)}</Table.Cell>
                     <Table.Cell>
                       {getValue(e.documento?.memorialSubsanacion)}
                     </Table.Cell>
@@ -462,10 +466,10 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                     </Table.Cell>
                     <Table.Cell>{getValue(e.documento?.crtAut)}</Table.Cell>
                     <Table.Cell>{getValue(e.documento?.AAA1190)}</Table.Cell>
-                    <Table.Cell>
-                      {format(e.fechaRevision, "dd/MM/yyyy")}
-                    </Table.Cell>
                     <Table.Cell>{format(e.createdAt, "dd/MM/yyyy")}</Table.Cell>
+                    <Table.Cell>
+                      {e.fechaRevision && format(e.fechaRevision, "dd/MM/yyyy")}
+                    </Table.Cell>
                     {/* Cuando esta habilitado */}
                     <Table.Cell>
                       {e.estatus !== "iniciado"
@@ -491,7 +495,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                       {e.estatus !== "iniciado" ? (
                         e.Foto?.fotosGrales ? (
                           <div
-                            className="p-2 hover:bg-slate-500/30 rounded-md cursor-pointer"
+                            className="p-2 hover:bg-slate-500/30 rounded-md cursor-pointer w-max"
                             onClick={() =>
                               router.push("/dashboard/casos?getFotos=" + e.id)
                             }
@@ -517,67 +521,77 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                       )}
                     </Table.Cell>
                     {data?.user?.rol === 3 ? null : (
-                      <Table.Cell className="relative">
-                        <Dropdown className="absolute z-50" label="Acciones">
-                          <Dropdown.Item
-                            onClick={() =>
-                              router.push("/dashboard/casos?edit=" + e.id)
-                            }
-                            className="flex justify-between gap-2"
-                          >
-                            Editar
-                            <Edit className="w-4" />
-                          </Dropdown.Item>
-                          <Dropdown.Item
-                            onClick={() =>
-                              router.push("/dashboard/casos?estatus=" + e.id)
-                            }
-                            className="flex justify-between gap-2"
-                          >
-                            Estatus
-                            <RefreshCcw className="w-4" />
-                          </Dropdown.Item>
-                          <Dropdown.Item
-                            onClick={() =>
-                              router.push("/dashboard/casos?area=" + e.id)
-                            }
-                            className="flex justify-between gap-2"
-                          >
-                            Asignar areas <Map className="w-4" />
-                          </Dropdown.Item>
-                          <Dropdown.Item
-                            onClick={() =>
-                              router.push("/dashboard/casos?coments=" + e.id)
-                            }
-                            className="flex justify-between gap-2"
-                          >
-                            Comentarios <Book className="w-4" />
-                          </Dropdown.Item>
-                          <Dropdown.Item
-                            onClick={() =>
-                              router.push("/dashboard/casos?upload=" + e.id)
-                            }
-                            className="flex justify-between gap-2"
-                          >
-                            Subir documento <Upload className="w-4" />
-                          </Dropdown.Item>
-                          <Dropdown.Item
-                            onClick={() =>
-                              router.push("/dashboard/casos?fotos=" + e.id)
-                            }
-                            className="flex justify-between gap-2"
-                          >
-                            Subir fotos <Upload className="w-4" />
-                          </Dropdown.Item>
-                          <Dropdown.Item
-                            onClick={() =>
-                              router.push("/dashboard/casos?delete=" + e.id)
-                            }
-                            className="flex justify-between gap-2"
-                          >
-                            Eliminar <Trash className="w-4" />
-                          </Dropdown.Item>
-                        </Dropdown>
+                      <Table.Cell>
+                        <div>
+                          <Dropdown className="z-50" placement="left-bottom" label="Acciones">
+                            <Dropdown.Item
+                              onClick={() =>
+                                router.push("/dashboard/casos?edit=" + e.id)
+                              }
+                              className="flex justify-between gap-2"
+                            >
+                              Editar
+                              <Edit className="w-4" />
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() =>
+                                router.push("/dashboard/casos?estatus=" + e.id)
+                              }
+                              className="flex justify-between gap-2"
+                            >
+                              Estatus
+                              <RefreshCcw className="w-4" />
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() =>
+                                router.push("/dashboard/casos?area=" + e.id)
+                              }
+                              className="flex justify-between gap-2"
+                            >
+                              Asignar areas <Map className="w-4" />
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() =>
+                                router.push("/dashboard/casos?coments=" + e.id)
+                              }
+                              className="flex justify-between gap-2"
+                            >
+                              Comentarios <Book className="w-4" />
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() =>
+                                router.push("/dashboard/casos?upload=" + e.id)
+                              }
+                              className="flex justify-between gap-2"
+                            >
+                              Subir documento <Upload className="w-4" />
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() =>
+                                router.push("/dashboard/casos?fotos=" + e.id)
+                              }
+                              className="flex justify-between gap-2"
+                            >
+                              Subir fotos <Upload className="w-4" />
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() =>
+                                router.push("/dashboard/casos?fechas=" + e.id)
+                              }
+                              className="flex justify-between gap-2"
+                            >
+                              Fecha rec/rev <Calendar className="w-4" />
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() =>
+                                router.push("/dashboard/casos?delete=" + e.id)
+                              }
+                              className="flex justify-between gap-2"
+                            >
+                              Eliminar <Trash className="w-4" />
+                            </Dropdown.Item>
+                          </Dropdown>
+                        </div>
                       </Table.Cell>
                     )}
                   </Table.Row>
