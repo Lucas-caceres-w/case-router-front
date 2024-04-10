@@ -154,7 +154,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
       setFilteredCasos(initialCols.slice(0, 5));
     }
   }, [startDate, endDate]);
-  console.log(cols)
+  console.log(cols);
 
   return (
     <>
@@ -384,10 +384,10 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
               Fecha de revisión
             </Table.HeadCell>
-            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Fecha recibido
-            </Table.HeadCell>
             {/* Si esta habilitado */}
+            <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
+              Fecha de completado
+            </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
               Region
             </Table.HeadCell>
@@ -404,7 +404,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               Fotos
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Observaciones
+              Comentarios
             </Table.HeadCell>
             {data?.user?.rol === 3 ? null : (
               <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
@@ -470,13 +470,13 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                     <Table.Cell>
                       {e.fechaRevision && format(e.fechaRevision, "dd/MM/yyyy")}
                     </Table.Cell>
-                    {/* Cuando esta habilitado */}
                     <Table.Cell>
                       {e.estatus !== "iniciado"
                         ? e.fechaRecibido &&
                           format(e.fechaRecibido, "dd/MM/yyyy")
                         : "-"}
                     </Table.Cell>
+                    {/* Cuando esta habilitado */}
                     <Table.Cell className="text-nowrap">
                       {e.estatus !== "iniciado" ? e.region : "-"}
                     </Table.Cell>
@@ -510,20 +510,20 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                       )}
                     </Table.Cell>
                     <Table.Cell className="overflow-x-hidden overflow-ellipsis whitespace-nowrap !w-14 !max-w-14">
-                      {e.estatus === "completado" ? (
-                        e.observaciones ? (
-                          <span>{e.observaciones}</span>
-                        ) : (
-                          "No tiene"
-                        )
+                      {e.observaciones ? (
+                        <span>{e.observaciones}</span>
                       ) : (
-                        "-"
+                        "No tiene"
                       )}
                     </Table.Cell>
                     {data?.user?.rol === 3 ? null : (
                       <Table.Cell>
                         <div>
-                          <Dropdown className="z-50" placement="left-bottom" label="Acciones">
+                          <Dropdown
+                            className="z-50"
+                            placement="left-bottom"
+                            label="Acciones"
+                          >
                             <Dropdown.Item
                               onClick={() =>
                                 router.push("/dashboard/casos?edit=" + e.id)
