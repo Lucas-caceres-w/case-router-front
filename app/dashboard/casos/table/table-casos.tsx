@@ -154,7 +154,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
       setFilteredCasos(initialCols.slice(0, 5));
     }
   }, [startDate, endDate]);
-  console.log(cols);
+  //console.log(cols);
 
   return (
     <>
@@ -509,11 +509,11 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                         "-"
                       )}
                     </Table.Cell>
-                    <Table.Cell className="overflow-x-hidden overflow-ellipsis whitespace-nowrap !w-14 !max-w-14">
+                    <Table.Cell>
                       {e.observaciones ? (
                         <span>{e.observaciones}</span>
                       ) : (
-                        "No tiene"
+                        <span className="text-red-500">Sin comentarios</span>
                       )}
                     </Table.Cell>
                     {data?.user?.rol === 3 ? null : (
