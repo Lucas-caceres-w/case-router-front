@@ -85,7 +85,7 @@ function AddCaso() {
         callToast("warning", "Error inesperado");
       }
     } catch (err) {
-      callToast("error", "Ocurrio un error al guardar el caso");
+      callToast("failure", "Ocurrio un error al guardar el caso");
       console.log(err);
     } finally {
       setLoading(false);
@@ -296,7 +296,7 @@ function AddCaso() {
   return (
     <div className="w-full flex justify-end gap-4">
       {showToast && <ToastAttr color={color} text={text} />}
-      {data?.user?.rol === 3 ? null : (
+      {data?.user?.rol === 3 || data?.user?.rol === 3 ? null : (
         <>
           <Button onClick={() => setModal(true)}>
             Agregar <PlusCircle className="ml-2" />

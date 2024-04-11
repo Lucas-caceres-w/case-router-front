@@ -39,7 +39,7 @@ function ImagesModal() {
       setImages(fotos);
     }
   };
-  console.log(images)
+  //console.log(images)
   return (
     <>
       <Modal

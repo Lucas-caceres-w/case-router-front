@@ -91,7 +91,7 @@ function UploadImages() {
         callToast("warning", "Error al guardar el documento");
       }
     } catch (err) {
-      callToast("error", "Error del servidor");
+      callToast("failure", "Error del servidor");
     }
   };
 

@@ -109,7 +109,7 @@ function RegionEdit() {
         callToast("warn", "Error al actualizar la region");
       }
     } catch (err) {
-      callToast("error", "Error del servidor");
+      callToast("failure", "Error del servidor");
     }
   };
 

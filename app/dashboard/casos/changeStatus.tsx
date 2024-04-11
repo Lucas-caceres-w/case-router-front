@@ -76,7 +76,7 @@ function ChangeStatus() {
         callToast("warn", "Error al cambiar el estado");
       }
     } catch (err) {
-      callToast("error", "Error del servidor");
+      callToast("failure", "Error del servidor");
     } finally {
       setLoading(false);
     }
@@ -85,7 +85,10 @@ function ChangeStatus() {
   return (
     <>
       {showToast && <ToastAttr color={color} text={text} />}
-      <Modal show={idCaso ? true : false} onClose={() => router.push("/dashboard/casos")}>
+      <Modal
+        show={idCaso ? true : false}
+        onClose={() => router.push("/dashboard/casos")}
+      >
         <Modal.Header>Cambiar estatus</Modal.Header>
         <form onSubmit={OnSubmit}>
           <Modal.Body>

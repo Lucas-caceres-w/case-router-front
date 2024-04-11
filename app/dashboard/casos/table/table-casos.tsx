@@ -135,8 +135,11 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
 
   function getStatusLabel(est: string) {
     const estatus =
-      options.find((option) => option.label.toLowerCase() === est.toLowerCase())
-        ?.label || "";
+      options.find(
+        (option) =>
+          option.value.toLowerCase() === est.toLowerCase() ||
+          option.label.toLowerCase() === est.toLowerCase()
+      )?.label || "";
     console.log(est);
     let cn =
       est === "iniciado"

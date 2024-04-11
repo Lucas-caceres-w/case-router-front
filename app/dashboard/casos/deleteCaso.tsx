@@ -52,7 +52,8 @@ function DeleteCaso() {
         callToast("success", "El caso fue eliminado");
         setTimeout(() => {
           router.push("/dashboard/casos");
-        }, 1000);
+          router.refresh();
+        }, 1500);
       } else {
         callToast("failure", "Error  al eliminar el caso");
       }

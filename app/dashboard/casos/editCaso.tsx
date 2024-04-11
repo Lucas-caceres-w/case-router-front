@@ -99,7 +99,7 @@ function EditCaso() {
           router.refresh();
         }, 1000);
       } else {
-        callToast("error", "Error al actualizar el caso");
+        callToast("failure", "Error al actualizar el caso");
       }
     } catch (err) {
       console.log(err);

@@ -81,7 +81,7 @@ function DatesModal() {
         router.refresh();
       }, 1000);
     } catch (err) {
-      callToast("error", "Ocurrio un error al guardar el caso");
+      callToast("failure", "Ocurrio un error al guardar el caso");
       console.log(err);
     } finally {
       setLoading(false);
@@ -95,7 +95,7 @@ function DatesModal() {
         show={idCaso ? true : false}
         onClose={() => router.push("/dashboard/casos")}
       >
-        <Modal.Header>Añadir comentarios</Modal.Header>
+        <Modal.Header>Modificar Fecha de revision / recibido</Modal.Header>
         <form onSubmit={OnSubmit}>
           <Modal.Body className="flex flex-row gap-2 justify-around pr-32">
             <div className="pb-12">
