@@ -133,15 +133,15 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
     setFilteredCasos(casosFiltrados);
   };
 
-  function getStatusLabel(status: string) {
+  function getStatusLabel(est: string) {
     const estatus =
-      options.find(
-        (option) => option.value.toLowerCase() === status.toLowerCase()
-      )?.label || "";
+      options.find((option) => option.label.toLowerCase() === est.toLowerCase())
+        ?.label || "";
+    console.log(est);
     let cn =
-      status === "iniciado"
+      est === "iniciado"
         ? "text-white"
-        : status === "completado"
+        : est === "completado"
         ? "text-green-500"
         : "text-yellow-500";
     return <p className={`${cn} font-semibold`}>{estatus}</p>;
@@ -154,7 +154,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
       setFilteredCasos(initialCols.slice(0, 5));
     }
   }, [startDate, endDate]);
-  //console.log(cols);
+  console.log(cols);
 
   return (
     <>
