@@ -294,7 +294,7 @@ function AddCaso() {
   };
 
   return (
-    <div className="w-full flex justify-end gap-4">
+    <div className="w-full flex justify-end gap-4 mr-10">
       {showToast && <ToastAttr color={color} text={text} />}
       {data?.user?.rol === 3 || data?.user?.rol === 3 ? null : (
         <>

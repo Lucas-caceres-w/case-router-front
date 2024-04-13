@@ -17,7 +17,7 @@ async function CasosPage() {
   const data = await getCasos();
   //console.log(data)
   return (
-    <div className="ml-24 lg:ml-52 mt-10 !w-[calc(100% - 100px)]">
+    <div className="ml-24 lg:ml-52 mt-10 !w-[calc(100% - 200px)]">
       <div className="flex justify-between items-center">
         <Tittle>Casos</Tittle>
         <UploadModal />
