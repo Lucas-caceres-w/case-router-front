@@ -39,10 +39,10 @@ function AddCaso() {
   const [exportData, setExportData] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { data } = useSession();
   const [color, setColor] = useState("");
   const [text, setText] = useState("");
   const [showToast, setShowToast] = useState(false);
-  const { data } = useSession();
 
   const callToast = (type: string, text: string) => {
     setShowToast(true);
@@ -233,13 +233,13 @@ function AddCaso() {
             "Nombre inspector": nombreInspector,
             "Nro ogpe sbp": ogpeSbp,
             "Nro catastro": nroCatastro,
-            "Fecha revision": fechaRevision,
+            "Fecha revision": fechaRevision ?? null,
             estatus,
             "Area operacional": region,
             Region: areaOperacional,
             pueblo,
-            "Fecha recibido": fechaRecibido,
-            Observaciones: observaciones,
+            "Fecha recibido": fechaRecibido ?? null,
+            Comentarios: observaciones,
             "Fecha de creacion": creado,
             "Ultima actualizacion": ultimaActualizacion,
             Escrituras: escrituras ? "SI" : "NO",
