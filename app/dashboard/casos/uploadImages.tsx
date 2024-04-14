@@ -57,7 +57,7 @@ function UploadImages() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!file) {
-      console.log("No hay archivo");
+      //console.log("No hay archivo");
       return;
     }
     const allowedExtensions = ["jpg", "jpeg", "png", "webp"];
@@ -66,7 +66,6 @@ function UploadImages() {
     for (var i = 0; i < file.length; i++) {
       const fileName = file[i].name;
       const fileExtension = fileName?.split(".").pop().toLowerCase();
-      console.log(fileExtension);
       if (!allowedExtensions.includes(fileExtension)) {
         callToast(
           "warning",

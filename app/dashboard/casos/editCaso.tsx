@@ -91,7 +91,7 @@ function EditCaso() {
     setLoading(true);
     try {
       const res = await updateCaso(idCaso, edit);
-      console.log(res);
+      //console.log(res);
       if (res === "Caso actualizado") {
         callToast("success", "Caso actualizado");
         setTimeout(() => {

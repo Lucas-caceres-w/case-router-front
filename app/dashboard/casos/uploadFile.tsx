@@ -115,7 +115,7 @@ function UploadModal() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!file) {
-      console.log("No hay archivo");
+      //console.log("No hay archivo");
       return;
     }
     const allowedExtensions = ["pdf"]; // Extensiones permitidas

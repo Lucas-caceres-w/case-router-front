@@ -67,7 +67,7 @@ function AddCaso() {
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
     setFileData(e.target.files?.[0]);
-    console.log(e);
+    //console.log(e);
   };
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -258,7 +258,7 @@ function AddCaso() {
           };
         });
 
-        console.log(dataExcel);
+        //console.log(dataExcel);
         const workbook = XLSX.utils.book_new();
         const worksheet = XLSX.utils.json_to_sheet(dataExcel);
 

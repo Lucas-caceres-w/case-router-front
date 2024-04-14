@@ -42,7 +42,7 @@ function CommentsModal() {
     setLoading(true);
     try {
       const res = await addComents(idCaso, edit);
-      console.log(res);
+      //console.log(res);
       if (res) {
         router.push("/dashboard/casos");
         router.refresh();

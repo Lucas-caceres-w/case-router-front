@@ -496,7 +496,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                     </Table.Cell>
                     <Table.Cell className="text-nowrap">
                       {e.estatus !== "iniciado" ? (
-                        e.Foto?.fotosGrales ? (
+                        e.Foto?.fotosGrales?.length > 0 ? (
                           <div
                             className="p-2 hover:bg-slate-500/30 rounded-md cursor-pointer w-max"
                             onClick={() =>

@@ -222,3 +222,20 @@ export const getImagesById = async (id: string) => {
     console.log(err);
   }
 };
+
+export const DeleteImage = async (id: string, path: string) => {
+  try {
+    const res = await fetch(apiUrl + "/fotos/" + id, {
+      method: "DELETE",
+      body: JSON.stringify({ path }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await res.json();
+    //console.log(json);
+    return json;
+  } catch (err) {
+    console.log(err);
+  }
+};

@@ -48,7 +48,7 @@ function ChangeStatus() {
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setEdit(e.target.value);
-    console.log(e.target.value);
+    //console.log(e.target.value);
   };
 
   const getCaso = async () => {
@@ -65,7 +65,7 @@ function ChangeStatus() {
     setLoading(true);
     try {
       const res = await cambiarEstatus(edit, idCaso);
-      console.log(res);
+      //console.log(res);
       if (res) {
         callToast("success", "Se cambio el estado a  " + edit);
         setTimeout(() => {
