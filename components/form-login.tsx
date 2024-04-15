@@ -48,7 +48,7 @@ function FormLogin() {
           height={100}
           alt="logo"
           className="mx-auto"
-          src={mode === "light" ? "/assets/favicon.png" : "/assets/login-dark.png"}
+          src={mode !== "dark" ? "/assets/favicon.png" : "/assets/login-dark.png"}
         />
       </div>
       <div className="flex flex-col gap-2">
