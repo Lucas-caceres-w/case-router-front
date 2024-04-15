@@ -3,9 +3,8 @@ import { Button, Label, TextInput, useThemeMode } from "flowbite-react";
 import { LogIn } from "lucide-react";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 const initialForm = {
   user: "",
@@ -15,7 +14,7 @@ const initialForm = {
 function FormLogin() {
   const [formData, setFormData] = useState(initialForm);
   const router = useRouter();
-  const { mode } = useThemeMode();
+  const { mode, setMode } = useThemeMode();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -48,7 +47,9 @@ function FormLogin() {
           height={100}
           alt="logo"
           className="mx-auto"
-          src={mode === "light" ? "/assets/favicon.png" : "/assets/login-dark.png"}
+          src={
+            mode !== "light" ? "/assets/login-dark.png" : "/assets/favicon.png"
+          }
         />
       </div>
       <div className="flex flex-col gap-2">
