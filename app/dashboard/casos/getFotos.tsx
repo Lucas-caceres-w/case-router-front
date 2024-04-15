@@ -67,7 +67,7 @@ function ImagesModal() {
     if (res === "Imagen eliminada") {
       callToast("success", "Imagen eliminada correctamente");
       setTimeout(() => {
-        getFotos()
+        getFotos();
       }, 2000);
     } else {
       callToast("failure", "Ocurrio un error");
@@ -79,7 +79,10 @@ function ImagesModal() {
       {showToast && <ToastAttr color={color} text={text} />}
       <Modal
         show={idCaso ? true : false}
-        onClose={() => router.push("/dashboard/casos")}
+        onClose={() => {
+          router.push("/dashboard/casos");
+          router.refresh();
+        }}
       >
         <ModalHeader>Imagenes del caso</ModalHeader>
         <ModalBody>

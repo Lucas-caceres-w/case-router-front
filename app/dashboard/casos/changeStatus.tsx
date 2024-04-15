@@ -103,7 +103,9 @@ function ChangeStatus() {
             </Select>
           </Modal.Body>
           <Modal.Footer className="flex justify-end">
-            <Button type="submit">{loading ? <Spinner /> : "Enviar"}</Button>
+            <Button disabled={loading} type="submit">
+              {loading ? <Spinner /> : "Enviar"}
+            </Button>
             <Button onClick={() => router.push("/dashboard/casos")}>
               Cancelar
             </Button>
