@@ -67,8 +67,7 @@ function ImagesModal() {
     if (res === "Imagen eliminada") {
       callToast("success", "Imagen eliminada correctamente");
       setTimeout(() => {
-        router.push("/dashboard/casos");
-        router.refresh();
+        getFotos()
       }, 2000);
     } else {
       callToast("failure", "Ocurrio un error");

@@ -140,7 +140,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
           option.value.toLowerCase() === est.toLowerCase() ||
           option.label.toLowerCase() === est.toLowerCase()
       )?.label || "";
-    console.log(est);
+    //console.log(est);
     let cn =
       est === "iniciado"
         ? "text-white"
@@ -157,13 +157,13 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
       setFilteredCasos(initialCols.slice(0, 5));
     }
   }, [startDate, endDate]);
-  console.log(cols);
+  //console.log(cols);
 
   return (
     <>
       <div className="flex flex-row items-center gap-4">
         <div>
-          <Label>Buqueda gral</Label>
+          <Label>Busqueda gral.</Label>
           <TextInput
             className="w-40"
             onChange={handleChange}
@@ -480,14 +480,14 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                         : "-"}
                     </Table.Cell>
                     {/* Cuando esta habilitado */}
-                    <Table.Cell className="text-nowrap">
-                      {e.estatus !== "iniciado" ? e.region : "-"}
+                    <Table.Cell className="text-nowrap capitalize">
+                      {e.estatus !== "iniciado" ? e.region.toLowerCase() : "-"}
                     </Table.Cell>
-                    <Table.Cell>
-                      {e.estatus !== "iniciado" ? e.areaOperacional : "-"}
+                    <Table.Cell className="capitalize">
+                      {e.estatus !== "iniciado" ? e.areaOperacional.toLocaleLowerCase() : "-"}
                     </Table.Cell>
-                    <Table.Cell>
-                      {e.estatus !== "iniciado" ? e.pueblo : "-"}
+                    <Table.Cell className="capitalize">
+                      {e.estatus !== "iniciado" ? e.pueblo.toLocaleLowerCase() : "-"}
                     </Table.Cell>
                     <Table.Cell>
                       {e.estatus !== "iniciado"
