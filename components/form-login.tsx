@@ -1,7 +1,8 @@
 "use client";
-import { Button, Label, TextInput } from "flowbite-react";
+import { Button, Label, TextInput, useThemeMode } from "flowbite-react";
 import { LogIn } from "lucide-react";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
@@ -14,6 +15,7 @@ const initialForm = {
 function FormLogin() {
   const [formData, setFormData] = useState(initialForm);
   const router = useRouter();
+  const { mode } = useThemeMode();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -41,7 +43,13 @@ function FormLogin() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-8 w-72 p-4">
       <div className="text-center text-lg font-bold text-slate-800 dark:text-slate-200">
-        LOGO
+        <Image
+          width={100}
+          height={100}
+          alt="logo"
+          className="mx-auto"
+          src={mode === "light" ? "/assets/favicon.png" : "/assets/login-dark.png"}
+        />
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="user">Usuario / Email</Label>

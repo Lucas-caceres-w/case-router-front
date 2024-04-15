@@ -95,7 +95,7 @@ function DatesModal() {
         show={idCaso ? true : false}
         onClose={() => router.push("/dashboard/casos")}
       >
-        <Modal.Header>Modificar Fecha de revision / recibido</Modal.Header>
+        <Modal.Header>Modificar Fecha de revision / completado</Modal.Header>
         <form onSubmit={OnSubmit}>
           <Modal.Body className="flex flex-row gap-2 justify-around pr-32">
             <div className="pb-12">
@@ -107,7 +107,7 @@ function DatesModal() {
               />
             </div>
             <div>
-              <Label>Fecha recibido</Label>
+              <Label>Fecha completado</Label>
               <Datepicker
                 value={format(edit.fechaRecibido, "dd-MM-yyyy")}
                 onSelectedDateChanged={(e) => handleChange(e, "fechaRecibido")}
