@@ -28,11 +28,10 @@ function FormLogin() {
         password: formData.password,
         redirect: false,
       });
-
-      if (res?.error) {
-        alert(res.error);
-      } else {
+      if (res?.ok) {
         router.replace("/dashboard");
+      } else {
+        alert('Error de ingreso');
       }
     } catch (err) {
       console.log(err);

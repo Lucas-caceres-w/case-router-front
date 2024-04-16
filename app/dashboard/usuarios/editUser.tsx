@@ -8,6 +8,7 @@ import {
   Spinner,
   TextInput,
 } from "flowbite-react";
+import { Eye, EyeOff } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
@@ -24,6 +25,7 @@ function EditUser() {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [visiblePass, setVisiblePass] = useState(false);
   const [formData, setFormData] = useState(initialForm);
 
   useEffect(() => {
@@ -50,6 +52,10 @@ function EditUser() {
   const changeSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     const value: string | number = e.target.value;
     setFormData((prev) => ({ ...prev, rol: Number(value) }));
+  };
+
+  const togglePasswordVisibility = () => {
+    setVisiblePass(!visiblePass);
   };
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -104,13 +110,26 @@ function EditUser() {
             </div>
             <div className="flex flex-col gap-y-2">
               <Label>Contraseña</Label>
-              <TextInput
-                type="password"
-                required
-                onChange={handleChange}
-                name="password"
-                value={formData.password || ""}
-              />
+              <div className="relative">
+                <TextInput
+                  type={visiblePass ? "text" : "password"}
+                  required
+                  onChange={handleChange}
+                  name="password"
+                  value={formData.password || ""}
+                />
+                {!visiblePass ? (
+                  <Eye
+                    className="absolute right-3 top-2 text-slate-400 cursor-pointer"
+                    onClick={togglePasswordVisibility}
+                  />
+                ) : (
+                  <EyeOff
+                    className="absolute right-3 top-2 text-slate-400 cursor-pointer"
+                    onClick={togglePasswordVisibility}
+                  />
+                )}
+              </div>
             </div>
             <div className="flex flex-col gap-y-4">
               <Label>Seleccionar rol</Label>

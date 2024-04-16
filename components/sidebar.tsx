@@ -1,15 +1,29 @@
 "use client";
 import { Sidebar } from "flowbite-react";
 import { ArrowBigLeft, Book, Home, Map, User } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-function SideBarComp() {
+function SideBarComp({ expiro }) {
   const [collapsed, setCollapsed] = useState(false);
   const { data } = useSession();
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== "undefined" && window.innerWidth
   );
+
+  // Función para manejar el logout
+  const handleLogout = async () => {
+    try {
+      // Llamar a la función de signOut
+      await signOut();
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
+  };
+
+  if (expiro) {
+    handleLogout();
+  }
 
   useEffect(() => {
     // Función para actualizar windowWidth cuando cambie el tamaño de la ventana
@@ -35,7 +49,10 @@ function SideBarComp() {
   }, [windowWidth]);
 
   return (
-    <Sidebar className="h-screen rounded-none fixed z-10 max-w-40" collapsed={collapsed}>
+    <Sidebar
+      className="h-screen rounded-none fixed z-10 max-w-40"
+      collapsed={collapsed}
+    >
       <Sidebar.Items>
         <Sidebar.ItemGroup>
           <Sidebar.Item href="/dashboard" icon={Home}>

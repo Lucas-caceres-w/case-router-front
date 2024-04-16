@@ -7,8 +7,9 @@ import {
   Modal,
   Select,
   Spinner,
-  TextInput
+  TextInput,
 } from "flowbite-react";
+import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
   ChangeEvent,
@@ -29,6 +30,7 @@ function AddUser({ cols }: { cols: Dispatch<SetStateAction<User[]>> }) {
   const [show, setShow] = useState(false);
   const [formData, setFormData] = useState(initialForm);
   const [loading, setLoading] = useState(false);
+  const [visiblePass, setVisiblePass] = useState(false);
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +47,7 @@ function AddUser({ cols }: { cols: Dispatch<SetStateAction<User[]>> }) {
     try {
       setLoading(true);
       const res = await userCreate(formData);
-      console.log(res)
+      console.log(res);
       if (res === "usuario creado") {
         setShow(false);
         cols(await getUsers());
@@ -56,6 +58,10 @@ function AddUser({ cols }: { cols: Dispatch<SetStateAction<User[]>> }) {
     } finally {
       setLoading(false);
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setVisiblePass(!visiblePass);
   };
 
   return (
@@ -94,12 +100,25 @@ function AddUser({ cols }: { cols: Dispatch<SetStateAction<User[]>> }) {
             </div>
             <div className="flex flex-col gap-y-2">
               <Label>Contraseña</Label>
-              <TextInput
-                type="password"
-                required
-                onChange={handleChange}
-                name="password"
-              />
+              <div className="relative">
+                <TextInput
+                  type={visiblePass ? "text" : "password"}
+                  required
+                  onChange={handleChange}
+                  name="password"
+                />
+                {!visiblePass ? (
+                  <Eye
+                    className="absolute right-3 top-2 text-slate-400 cursor-pointer"
+                    onClick={togglePasswordVisibility}
+                  />
+                ) : (
+                  <EyeOff
+                    className="absolute right-3 top-2 text-slate-400 cursor-pointer"
+                    onClick={togglePasswordVisibility}
+                  />
+                )}
+              </div>
             </div>
             <div className="flex flex-col gap-y-4">
               <Label>Seleccionar rol</Label>

@@ -97,7 +97,9 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
             type="search"
             placeholder="Buscar..."
           />
-          {data?.user?.rol === 1 && <AddUser cols={setCols} />}
+          {(data?.user?.rol === 1 || data?.user?.rol === 4) && (
+            <AddUser cols={setCols} />
+          )}
           {/* <AddUser cols={setCols} /> */}
         </div>
         <Table>
@@ -108,7 +110,9 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
             <Table.HeadCell>Usuario</Table.HeadCell>
             <Table.HeadCell>Rol</Table.HeadCell>
             <Table.HeadCell>Fecha creacion</Table.HeadCell>
-            {data?.user?.rol === 1 && <Table.HeadCell>Acciones</Table.HeadCell>}
+            {(data?.user?.rol === 1 || data?.user?.rol === 4) && (
+              <Table.HeadCell>Acciones</Table.HeadCell>
+            )}
           </Table.Head>
           <Table.Body>
             {filteredCasos
@@ -126,7 +130,7 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
                       <Table.Cell>
                         {format(e.createdAt, "dd/MM/yyyy")}
                       </Table.Cell>
-                      {data?.user?.rol === 1 && (
+                      {(data?.user?.rol === 1 || data?.user?.rol === 4) && (
                         <Table.Cell className="z-30">
                           <Dropdown className="z-30" label="Acciones">
                             {e.rol === 4 || e.rol === 1 ? null : (

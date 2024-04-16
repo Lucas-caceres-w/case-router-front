@@ -40,6 +40,7 @@ export const authOptions = {
         token.email = user.email;
         token.id = user.id;
         token.rol = user.rol;
+        token.accessToken = new Date();
       }
       return token;
     },
