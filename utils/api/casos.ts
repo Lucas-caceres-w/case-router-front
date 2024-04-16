@@ -1,4 +1,3 @@
-import { DatabaseBackup } from "lucide-react";
 import { apiUrl } from "../routes";
 import { CreateCaso, ImportCaso } from "../types";
 
@@ -79,7 +78,7 @@ export const createCaso = async (data: CreateCaso) => {
       headers: { "Content-Type": "application/json" },
     });
     const json = await res.json();
-    console.log(json);
+    
     return json;
   } catch (err) {
     return err;
@@ -111,7 +110,6 @@ export const asignarAreas = async ({
   data: { areaOperacional: string; region: string; pueblo: string };
   id: string;
 }) => {
-  console.log(data, id);
   try {
     const res = await fetch(apiUrl + "/casos/" + id, {
       method: "PATCH",
@@ -149,7 +147,6 @@ export const cambiarEstatus = async (estatus: string, id: string) => {
 
 export const addComents = async (id: string, comentario: string) => {
   try {
-    console.log(comentario);
     const res = await fetch(apiUrl + "/casos/" + id, {
       method: "PATCH",
       body: JSON.stringify({ observaciones: comentario }),
@@ -216,7 +213,7 @@ export const getImagesById = async (id: string) => {
   try {
     const res = await fetch(apiUrl + "/fotos/" + id);
     const json = await res.json();
-    console.log(json);
+    
     return json;
   } catch (err) {
     console.log(err);

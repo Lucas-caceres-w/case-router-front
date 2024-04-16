@@ -49,7 +49,6 @@ const months = [
 ];
 
 function ChartsSection({ data }: { data: Caso[] }) {
-  console.log(data);
   function contarCasosPorPuebloRegion() {
     const conteo = {} as any;
     data?.map((caso: any) => {

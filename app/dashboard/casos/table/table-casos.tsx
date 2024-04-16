@@ -70,7 +70,6 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
           e?.areaOperacional?.toString().toLowerCase().includes(value) ||
           e?.region?.toString().toLowerCase().includes(value)
       );
-      console.log(filtered);
       setFilteredCasos(filtered);
     }
     setCurrentPage(1);

@@ -47,7 +47,6 @@ function AddUser({ cols }: { cols: Dispatch<SetStateAction<User[]>> }) {
     try {
       setLoading(true);
       const res = await userCreate(formData);
-      console.log(res);
       if (res === "usuario creado") {
         setShow(false);
         cols(await getUsers());

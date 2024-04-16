@@ -1,6 +1,6 @@
 "use client";
 import { Sidebar } from "flowbite-react";
-import { ArrowBigLeft, Book, Home, Map, User } from "lucide-react";
+import { Book, Home, Map, User } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 

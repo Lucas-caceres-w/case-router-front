@@ -5,8 +5,7 @@ import {
   Button,
   FileInput,
   Modal,
-  Select,
-  Spinner,
+  Spinner
 } from "flowbite-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";

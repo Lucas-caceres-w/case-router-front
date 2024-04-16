@@ -16,7 +16,6 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Número de elementos por página
   const { data } = useSession();
-  console.log(data);
 
   // Función para manejar el cambio de página
   const handlePageChange = (pageNumber: number) => {

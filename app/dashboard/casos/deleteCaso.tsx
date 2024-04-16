@@ -1,9 +1,8 @@
 "use client";
 import { deleteCaso, getOne } from "@/utils/api/casos";
-import { Caso } from "@/utils/types";
 import { Alert, Button, Modal, Spinner } from "flowbite-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function DeleteCaso() {
   const params = useSearchParams();

@@ -1,17 +1,15 @@
 "use client";
 import { DeleteImage, getImagesById } from "@/utils/api/casos";
-import { apiUrl, staticsUrl } from "@/utils/routes";
-import { Fotos } from "@/utils/types";
+import { staticsUrl } from "@/utils/routes";
 import {
   Alert,
   Button,
   Modal,
   ModalBody,
   ModalFooter,
-  ModalHeader,
-  Spinner,
+  ModalHeader
 } from "flowbite-react";
-import { Delete, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
