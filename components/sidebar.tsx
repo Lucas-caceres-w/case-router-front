@@ -4,7 +4,7 @@ import { Book, Home, Map, User } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-function SideBarComp({ expiro }) {
+function SideBarComp({ expiro }: { expiro: boolean }) {
   const [collapsed, setCollapsed] = useState(false);
   const { data } = useSession();
   const [windowWidth, setWindowWidth] = useState(

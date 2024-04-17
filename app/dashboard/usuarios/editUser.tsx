@@ -1,5 +1,5 @@
 "use client";
-import { getOneUser } from "@/utils/api/users";
+import { getOneUser, updateUser } from "@/utils/api/users";
 import {
   Button,
   Label,
@@ -58,9 +58,10 @@ function EditUser() {
   };
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
     try {
-      setLoading(true);
+      await updateUser(paramId, formData);
     } catch (err) {
       console.log(err);
     } finally {

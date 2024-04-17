@@ -5,7 +5,7 @@ export const getUsers = async () => {
   try {
     const response = await fetch(`${apiUrl}/users`, { cache: "no-store" });
     const json = await response.json();
-    
+
     if (response.ok) {
       return json;
     } else {
@@ -37,7 +37,7 @@ export const userCreate = async (body: createUser) => {
       },
     });
     const json = await res.json();
-    
+
     return json;
   } catch (err) {
     console.log(err);
@@ -52,6 +52,23 @@ export const deleteUser = async (id: string) => {
       return json;
     } else {
       throw new Error("Error al eliminar");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const updateUser = async (id: string, data: createUser) => {
+  try {
+    const res = await fetch(apiUrl + "/users/" + id, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    });
+    const json = await res.json();
+    if (res.ok) {
+      return json;
+    } else {
+      throw new Error("Error al actualizar");
     }
   } catch (err) {
     console.log(err);
