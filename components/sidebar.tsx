@@ -21,15 +21,15 @@ function SideBarComp({ expiro }: { expiro: boolean }) {
     }
   };
 
-  if (expiro) {
-    handleLogout();
-  }
-
   useEffect(() => {
     // Función para actualizar windowWidth cuando cambie el tamaño de la ventana
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
+
+    if (expiro) {
+      handleLogout();
+    }
 
     // Suscribirse al evento resize
     window.addEventListener("resize", handleResize);
