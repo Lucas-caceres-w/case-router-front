@@ -62,7 +62,6 @@ function EditUser() {
   const getUser = async () => {
     const user = await getOneUser(paramId);
     setFormData(user);
-    console.log(user)
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
