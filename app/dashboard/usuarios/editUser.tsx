@@ -22,7 +22,6 @@ function EditUser() {
   };
   const params = useSearchParams();
   const paramId = params.get("user_edit");
-  const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [visiblePass, setVisiblePass] = useState(false);
