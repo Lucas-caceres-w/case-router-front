@@ -1,6 +1,7 @@
 "use client";
 import { getOneUser, updateUser } from "@/utils/api/users";
 import {
+  Alert,
   Button,
   Label,
   Modal,
@@ -26,6 +27,26 @@ function EditUser() {
   const router = useRouter();
   const [visiblePass, setVisiblePass] = useState(false);
   const [formData, setFormData] = useState(initialForm);
+  const [color, setColor] = useState("");
+  const [text, setText] = useState("");
+  const [showToast, setShowToast] = useState(false);
+
+  const callToast = (type: string, text: string) => {
+    setShowToast(true);
+    setColor(type);
+    setText(text);
+    setTimeout(() => {
+      setShowToast(false);
+    }, 1500);
+  };
+
+  const ToastAttr = ({ color, text }: { color: string; text: string }) => {
+    return (
+      <Alert className="absolute top-5 right-5 z-[99999]" color={color}>
+        <span>{text}</span>
+      </Alert>
+    );
+  };
 
   useEffect(() => {
     if (!paramId) {
@@ -41,6 +62,7 @@ function EditUser() {
   const getUser = async () => {
     const user = await getOneUser(paramId);
     setFormData(user);
+    console.log(user)
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +83,13 @@ function EditUser() {
     e.preventDefault();
     try {
       await updateUser(paramId, formData);
+      callToast("success", "User actualizado");
+      setTimeout(() => {
+        router.replace("/dashboard/usuarios");
+        router.refresh();
+      }, 2000);
     } catch (err) {
+      callToast("failure", "Error al actualizar");
       console.log(err);
     } finally {
       setLoading(false);
@@ -70,6 +98,7 @@ function EditUser() {
 
   return (
     <>
+      {showToast && <ToastAttr color={color} text={text} />}
       <Modal
         show={paramId ? true : false}
         onClose={() => router.replace("/dashboard/usuarios")}

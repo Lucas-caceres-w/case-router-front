@@ -63,8 +63,12 @@ export const updateUser = async (id: string, data: createUser) => {
     const res = await fetch(apiUrl + "/users/" + id, {
       method: "PATCH",
       body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     const json = await res.json();
+    console.log(data, json);
     if (res.ok) {
       return json;
     } else {
