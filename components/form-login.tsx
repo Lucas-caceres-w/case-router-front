@@ -162,17 +162,19 @@ function FormLogin() {
             </span>
           )}
         </Button>
-        <div className="text-center">
-          {submit && validLogin ? (
-            <span className="text-sm text-center my-0 text-green-500">
-              Login exitoso
-            </span>
-          ) : (
-            <span className="text-sm text-center my-0 text-red-500">
-              Usuario o contraseña incorrectos
-            </span>
-          )}
-        </div>
+        {submit && (
+          <div className="text-center">
+            {validLogin ? (
+              <span className="text-sm text-center my-0 text-green-500">
+                Login exitoso
+              </span>
+            ) : (
+              <span className="text-sm text-center my-0 text-red-500">
+                Usuario o contraseña incorrectos
+              </span>
+            )}
+          </div>
+        )}
         <p
           onClick={() => setRecovery(true)}
           className="text-blue-500 hover:underline my-0 text-center text-sm cursor-pointer"
