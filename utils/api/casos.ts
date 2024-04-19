@@ -78,7 +78,7 @@ export const createCaso = async (data: CreateCaso) => {
       headers: { "Content-Type": "application/json" },
     });
     const json = await res.json();
-    
+
     return json;
   } catch (err) {
     return err;
@@ -87,7 +87,7 @@ export const createCaso = async (data: CreateCaso) => {
 
 export const changeDates = async (
   id: string,
-  data: { fechaRecibido: Date; fechaRevision: Date }
+  data: { fechaRecibido: Date | undefined; fechaRevision: Date | undefined }
 ) => {
   try {
     const res = await fetch(apiUrl + "/casos/" + id, {
@@ -213,7 +213,7 @@ export const getImagesById = async (id: string) => {
   try {
     const res = await fetch(apiUrl + "/fotos/" + id);
     const json = await res.json();
-    
+
     return json;
   } catch (err) {
     console.log(err);

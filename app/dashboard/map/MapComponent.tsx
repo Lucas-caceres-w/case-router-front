@@ -1,9 +1,8 @@
 "use client";
-import Leaflet from "leaflet";
-import { LatLngExpression } from "leaflet";
 import { Caso } from "@/utils/types";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import Leaflet, { LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
 function MapComponent({ casos }: { casos: Caso[] | [] }) {
   const iconSuccess = Leaflet.icon({
@@ -12,13 +11,6 @@ function MapComponent({ casos }: { casos: Caso[] | [] }) {
     popupAnchor: [2, -40],
     iconUrl:
       "https://static.vecteezy.com/system/resources/previews/017/350/123/original/green-check-mark-icon-in-round-shape-design-png.png",
-  });
-
-  const iconProgress = Leaflet.icon({
-    iconSize: [35, 35],
-    iconAnchor: [10, 41],
-    popupAnchor: [2, -40],
-    iconUrl: "https://cdn.icon-icons.com/icons2/272/PNG/512/Clock_30023.png",
   });
 
   const iconInit = Leaflet.icon({

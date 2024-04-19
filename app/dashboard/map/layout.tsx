@@ -4,7 +4,10 @@ import "@/app/globals.css";
 
 export const metadata: Metadata = {
   title: "Case Route | Mapa de casos",
-  description: "Sistema creado por https://lucasdev.com.ar",
+  description: "Sistema desarrollado por https://lucasdev.com.ar",
+  icons: {
+    icon: "/assets/favicon.png",
+  },
 };
 
 export default function RootLayout({

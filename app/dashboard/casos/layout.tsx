@@ -2,7 +2,10 @@ import { ThemeModeScript } from "flowbite-react";
 
 export const metadata = {
   title: "Case Router | Casos",
-  description: "Sistema creado por https://lucasdev.com.ar",
+  description: "Sistema desarrollado por https://lucasdev.com.ar",
+  icons: {
+    icon: "/assets/favicon.png",
+  },
 };
 
 export default function RootLayout({

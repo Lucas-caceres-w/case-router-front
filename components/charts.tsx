@@ -317,7 +317,7 @@ function ChartsSection({ data }: { data: Caso[] }) {
         <div className="flex flex-row items-center justify-between w-11/12 lg:w-10/12 m-auto">
           <div className="flex flex-col justify-between gap-6">
             <h2 className="text-slate-200 font-semibold text-lg">
-              Casos en verificacion inicial:
+              Casos en verificación inicial:
             </h2>
             <p className="text-slate-200 font-semibold">{verificacion}</p>
           </div>
@@ -334,7 +334,7 @@ function ChartsSection({ data }: { data: Caso[] }) {
         <div className="flex flex-row items-center justify-between w-11/12 lg:w-10/12 m-auto">
           <div className="flex flex-col justify-between gap-6">
             <h2 className="text-slate-200 font-semibold text-lg">
-              Casos en preparacion de reporte:
+              Casos en preparación de reporte:
             </h2>
             <p className="text-slate-300 font-semibold">{reporte}</p>
           </div>
@@ -419,7 +419,7 @@ function ChartsSection({ data }: { data: Caso[] }) {
         <div className="flex flex-row items-center justify-between w-11/12 lg:w-10/12 m-auto">
           <div className="flex flex-col justify-between gap-6">
             <h2 className="text-slate-200 font-semibold text-lg">
-              Casos sin carta de recomendacion:
+              Casos sin carta de recomendación:
             </h2>
             <p className="text-green-100 font-semibold">{sinCarta}</p>
           </div>

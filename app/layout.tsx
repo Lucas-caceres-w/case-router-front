@@ -7,7 +7,10 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Case Router",
-  description: "Sistema creado por https://lucasdev.com.ar",
+  description: "Sistema desarrollado por https://lucasdev.com.ar",
+  icons: {
+    icon: "/assets/favicon.png",
+  },
 };
 
 export default async function RootLayout({

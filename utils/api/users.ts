@@ -78,3 +78,19 @@ export const updateUser = async (id: string, data: createUser) => {
     console.log(err);
   }
 };
+
+export const recuperarContraseña = async (email: string) => {
+  try {
+    const response = await fetch(`${apiUrl}/users/recuperar/`, {
+      method: "POST",
+      body: JSON.stringify({ data: email }),
+      headers: { "Content-Type": "application/json" },
+    });
+    const json = await response.json();
+    console.log(json)
+
+    return json;
+  } catch (err) {
+    console.log(err);
+  }
+};

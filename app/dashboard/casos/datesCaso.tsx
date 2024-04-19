@@ -11,14 +11,19 @@ import {
   Spinner,
 } from "flowbite-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
+
+interface Fechas {
+  fechaRecibido: Date | undefined;
+  fechaRevision: Date | undefined;
+}
 
 function DatesModal() {
   const params = useSearchParams();
   const router = useRouter();
-  const [edit, setEdit] = useState({
-    fechaRecibido: new Date(),
-    fechaRevision: new Date(),
+  const [edit, setEdit] = useState<Fechas>({
+    fechaRecibido: undefined,
+    fechaRevision: undefined,
   });
   const [loading, setLoading] = useState(false);
   const idCaso = params.get("fechas");
@@ -43,6 +48,8 @@ function DatesModal() {
     );
   };
 
+  useEffect(() => {}, [edit.fechaRevision]);
+
   useEffect(() => {
     if (!idCaso) {
       return;
@@ -54,12 +61,19 @@ function DatesModal() {
     return;
   }
 
+  const clearDate = (name: string) => {
+    setEdit((prev: any) => ({
+      ...prev,
+      [name]: undefined,
+    }));
+  };
+
   const getCaso = async () => {
     const res: Caso = await getOne(idCaso);
     const { fechaRecibido, fechaRevision } = res;
     setEdit({
-      fechaRecibido: fechaRecibido ?? new Date(),
-      fechaRevision: fechaRevision ?? new Date(),
+      fechaRecibido: fechaRecibido,
+      fechaRevision: fechaRevision,
     });
   };
 
@@ -74,14 +88,21 @@ function DatesModal() {
     e.preventDefault();
     setLoading(true);
     try {
+      if (edit.fechaRecibido === null && edit.fechaRevision === null) {
+        callToast("success", "No  se realizaron cambios");
+        setTimeout(() => {
+          router.replace("/dashboard/casos");
+        }, 1500);
+        return;
+      }
       await changeDates(idCaso, edit);
-      callToast("success", "Caso agregado");
+      callToast("success", "Fechas actualizadas");
       setTimeout(() => {
         router.replace("/dashboard/casos");
         router.refresh();
       }, 1000);
     } catch (err) {
-      callToast("failure", "Ocurrio un error al guardar el caso");
+      callToast("failure", "Ocurrio un error al actualizar el caso");
       console.log(err);
     } finally {
       setLoading(false);
@@ -98,21 +119,42 @@ function DatesModal() {
         <Modal.Header>Modificar Fecha de revision / completado</Modal.Header>
         <form onSubmit={OnSubmit}>
           <Modal.Body className="flex flex-row gap-2 justify-around pr-32">
-            <div className="pb-12">
+            <div className="">
               <Label>Fecha de revision</Label>
               <Datepicker
-                value={format(edit.fechaRevision, "dd-MM-yyyy")}
+                value={
+                  edit.fechaRevision
+                    ? format(edit.fechaRevision, "dd-MM-yyyy")
+                    : " "
+                }
                 onSelectedDateChanged={(e) => handleChange(e, "fechaRevision")}
+                showClearButton={false}
                 className="absolute bottom-18 mr-12"
               />
+              <Button
+                onClick={() => clearDate("fechaRevision")}
+                className="mt-12"
+              >
+                Limpiar
+              </Button>
             </div>
             <div>
               <Label>Fecha completado</Label>
               <Datepicker
-                value={format(edit.fechaRecibido, "dd-MM-yyyy")}
+                value={
+                  edit.fechaRecibido
+                    ? format(edit.fechaRecibido, "dd-MM-yyyy")
+                    : " "
+                }
                 onSelectedDateChanged={(e) => handleChange(e, "fechaRecibido")}
                 className="absolute bottom-18 mr-12"
               />
+              <Button
+                onClick={() => clearDate("fechaRecibido")}
+                className="mt-12"
+              >
+                Limpiar
+              </Button>
             </div>
           </Modal.Body>
           <Modal.Footer className="flex justify-end">

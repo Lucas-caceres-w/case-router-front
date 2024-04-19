@@ -20,7 +20,6 @@ export const authOptions = {
             headers: { "Content-Type": "application/json" },
           });
           const user = await res.json();
-
           if (res.ok && user) {
             return user;
           }

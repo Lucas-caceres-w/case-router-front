@@ -47,7 +47,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
     const endIndex = startIndex + itemsPerPage;
     setFilteredCasos(initialCols.slice(startIndex, endIndex));
   };
-
+  console.log(cols);
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.toString().toLowerCase();
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -75,7 +75,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
     setCurrentPage(1);
   };
 
-  const selectCasosByStatus = (status: string) => {
+  const selectCasosByStatus = (status: string, status2?: string) => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
 
@@ -84,10 +84,13 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
       setFilteredCasos(initialCols.slice(startIndex, endIndex));
     } else {
       // Filtrar los casos según el valor de estatus ingresado
-      const filtered = initialCols?.filter((e) =>
-        e.estatus.toLowerCase().includes(status.toLowerCase())
+      const filtered = initialCols?.filter(
+        (e) =>
+          e.estatus.toLowerCase() === status.toLowerCase() ||
+          e.estatus.toLowerCase() === status2?.toLowerCase()
       );
-      setFilteredCasos(filtered.slice(0, 5));
+      console.log(filtered, status);
+      setFilteredCasos(filtered);
     }
     setCurrentPage(1);
   };
@@ -139,10 +142,10 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
           option.value.toLowerCase() === est.toLowerCase() ||
           option.label.toLowerCase() === est.toLowerCase()
       )?.label || "";
-    //console.log(est);
+    console.log(est);
     let cn =
       est === "iniciado"
-        ? "text-white"
+        ? "text-black dark:text-white"
         : est === "completado"
         ? "text-green-500"
         : "text-yellow-500";
@@ -229,7 +232,9 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               </div>
               <div className="flex gap-2 items-center">
                 <Radio
-                  onClick={() => selectCasosByStatus("verificacion")}
+                  onClick={() =>
+                    selectCasosByStatus("verificacion", "Verificacion inicial")
+                  }
                   name="estatus"
                   value="verificacion"
                   id="verificacion"
@@ -238,7 +243,9 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               </div>
               <div className="flex gap-2 items-center">
                 <Radio
-                  onClick={() => selectCasosByStatus("solicitaPlanos")}
+                  onClick={() =>
+                    selectCasosByStatus("solicitaPlanos", "Se Solicita Planos")
+                  }
                   name="estatus"
                   value="solicitaPlanos"
                   id="solicitaPlanos"
@@ -247,7 +254,12 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               </div>
               <div className="flex gap-2 items-center">
                 <Radio
-                  onClick={() => selectCasosByStatus("reporteInicial")}
+                  onClick={() =>
+                    selectCasosByStatus(
+                      "reporteInicial",
+                      "Preparacion De Reporte Inicial"
+                    )
+                  }
                   name="estatus"
                   value="reporteInicial"
                   id="reporteInicial"
@@ -256,7 +268,9 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               </div>
               <div className="flex gap-2 items-center">
                 <Radio
-                  onClick={() => selectCasosByStatus("asignado")}
+                  onClick={() =>
+                    selectCasosByStatus("asignado", "Asignado a investigaciòn")
+                  }
                   name="estatus"
                   value="asignado"
                   id="asignado"
@@ -265,7 +279,9 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               </div>
               <div className="flex gap-2 items-center">
                 <Radio
-                  onClick={() => selectCasosByStatus("referidoGTA")}
+                  onClick={() =>
+                    selectCasosByStatus("referidoGTA", "Referido a GTA")
+                  }
                   name="estatus"
                   value="referidoGTA"
                   id="referidoGTA"
@@ -274,7 +290,12 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               </div>
               <div className="flex gap-2 items-center">
                 <Radio
-                  onClick={() => selectCasosByStatus("reporteCompletado")}
+                  onClick={() =>
+                    selectCasosByStatus(
+                      "reporteCompletado",
+                      "Preparaciòn de reporte completado"
+                    )
+                  }
                   name="estatus"
                   value="reporteCompletado"
                   id="reporteCompletado"
@@ -283,7 +304,12 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               </div>
               <div className="flex gap-2 items-center">
                 <Radio
-                  onClick={() => selectCasosByStatus("cartaRecomendacion")}
+                  onClick={() =>
+                    selectCasosByStatus(
+                      "cartaRecomendacion",
+                      "Carta de recomendacion completada"
+                    )
+                  }
                   name="estatus"
                   value="cartaRecomendacion"
                   id="cartaRecomendacion"
@@ -294,7 +320,12 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               </div>
               <div className="flex gap-2 items-center">
                 <Radio
-                  onClick={() => selectCasosByStatus("completado")}
+                  onClick={() =>
+                    selectCasosByStatus(
+                      "completado",
+                      "Listo para trasferir a PPP"
+                    )
+                  }
                   name="estatus"
                   value="completado"
                   id="completado"
@@ -424,13 +455,13 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                     className="dark:bg-slate-800 bg-slate-100"
                   >
                     <Table.Cell>{e.nombreInspector}</Table.Cell>
-                    <Table.Cell className="text-nowrap">
+                    <Table.Cell className="text-nowrap whitespace-nowrap">
                       {e.asignadoPor}
                     </Table.Cell>
-                    <Table.Cell className="text-nowrap">
+                    <Table.Cell className="text-nowrap whitespace-nowrap">
                       {e.nroCatastro}
                     </Table.Cell>
-                    <Table.Cell className="text-nowrap">
+                    <Table.Cell className="text-nowrap whitespace-nowrap">
                       {e.nroOgpeSbp}
                     </Table.Cell>
                     <Table.Cell>{e.latitud}</Table.Cell>
@@ -480,13 +511,17 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                     </Table.Cell>
                     {/* Cuando esta habilitado */}
                     <Table.Cell className="text-nowrap capitalize">
-                      {e.estatus !== "iniciado" ? e.region.toLowerCase() : "-"}
+                      {e.estatus !== "iniciado" ? e.region?.toLowerCase() : "-"}
                     </Table.Cell>
                     <Table.Cell className="capitalize">
-                      {e.estatus !== "iniciado" ? e.areaOperacional.toLocaleLowerCase() : "-"}
+                      {e.estatus !== "iniciado"
+                        ? e.areaOperacional?.toLocaleLowerCase()
+                        : "-"}
                     </Table.Cell>
                     <Table.Cell className="capitalize">
-                      {e.estatus !== "iniciado" ? e.pueblo.toLocaleLowerCase() : "-"}
+                      {e.estatus !== "iniciado"
+                        ? e.pueblo?.toLocaleLowerCase()
+                        : "-"}
                     </Table.Cell>
                     <Table.Cell>
                       {e.estatus !== "iniciado"
