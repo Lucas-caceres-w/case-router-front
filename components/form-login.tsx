@@ -163,7 +163,7 @@ function FormLogin() {
           )}
         </Button>
         <div className="text-center">
-          {validLogin && validLogin ? (
+          {submit && validLogin ? (
             <span className="text-sm text-center my-0 text-green-500">
               Login exitoso
             </span>
