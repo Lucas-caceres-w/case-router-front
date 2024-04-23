@@ -16,8 +16,8 @@ function GoogleMapComp({ casos }: { casos: Caso[] }) {
   });
   const center = { lat: 18.251069, lng: -66.470603 };
 
-  const iconSuccess = "/assets/checked.png";
-  const iconInit = "/assets/arrows.png";
+  const iconSuccess = "/assets/aprobado.png";
+  const iconInit = "/assets/rechazado.png";
 
   const MarkerMultiple = () => {
     const [selectedCaso, setSelectedCaso] = useState<Caso | null>(null);
