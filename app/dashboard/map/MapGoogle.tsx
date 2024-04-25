@@ -18,6 +18,7 @@ function GoogleMapComp({ casos }: { casos: Caso[] }) {
 
   const iconSuccess = "/assets/aprobado.png";
   const iconInit = "/assets/rechazado.png";
+  const iconProcess = "/assets/proceso.png";
 
   const MarkerMultiple = () => {
     const [selectedCaso, setSelectedCaso] = useState<Caso | null>(null);
@@ -25,10 +26,18 @@ function GoogleMapComp({ casos }: { casos: Caso[] }) {
     const handleMarkerClick = useCallback((caso: Caso) => {
       setSelectedCaso(caso);
     }, []);
-
+    console.log(casos);
     return casos?.map((e, idx) => {
       const position = { lat: e.latitud, lng: e.longitud } as LatLng;
-      const icon = e.estatus !== "completado" ? iconInit : iconSuccess;
+      const icon =
+        e.estatus === "completado" ||
+        e.estatus === "Listo para trasferir a PPP" ||
+        e.estatus === "cartaRecomendacion" ||
+        e.estatus === "Carta de recomendacion completada"
+          ? iconSuccess
+          : e.estatus === "iniciado"
+          ? iconInit
+          : iconProcess;
       const image = {
         url: icon,
       };
