@@ -1,6 +1,6 @@
 import NavbarComp from "@/components/navbar";
 import SideBarComp from "@/components/sidebar";
-import SessionAuthProvider from "@/context/SessionProvider";
+import SessionAuthProvider from "@/components/context/SessionProvider";
 import { authOptions } from "@/utils/auth";
 import { ThemeModeScript } from "flowbite-react";
 import type { Metadata } from "next";

@@ -20,10 +20,10 @@ export const authOptions = {
             headers: { "Content-Type": "application/json" },
           });
           const user = await res.json();
-          if (res.ok && user) {
+          /* if (res.ok && user) {
             return user;
           }
-          return null;
+          return null; */
           return credentials;
         } catch (err) {
           console.log(err);
