@@ -14,7 +14,7 @@ async function UsersPages() {
       <React.Suspense fallback="Cargando...">
         <DeleteUser />
         <EditUser />
-        <TableUserComp initialCols={users || []} />
+        <TableUserComp initialCols={users ?? []} />
       </React.Suspense>
     </main>
   );

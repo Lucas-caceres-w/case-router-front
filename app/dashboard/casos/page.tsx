@@ -32,7 +32,7 @@ async function CasosPage() {
         <ImagesModal />
       </div>
       <React.Suspense fallback="Cargando...">
-        <TableComp initialCols={data || [null]} />
+        <TableComp initialCols={data ?? []} />
       </React.Suspense>
     </div>
   );
