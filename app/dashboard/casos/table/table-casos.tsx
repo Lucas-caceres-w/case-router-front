@@ -352,7 +352,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               Nombre Inspector
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Asignado por AAA
+              Asignado por
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
               catastro
@@ -409,7 +409,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               Crt. Autorizado
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Formulario 1190
+              Formulario
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
               Fecha de creación
