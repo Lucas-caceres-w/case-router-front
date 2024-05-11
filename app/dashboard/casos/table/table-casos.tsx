@@ -352,13 +352,13 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               Nombre Inspector
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Asignado por
+              Asignado por AAA
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
               catastro
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Peog Sbp
+              Ogpe Sbp
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
               Latitud
@@ -370,22 +370,22 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               Estatus
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Titularidad
+              Escrituras
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Servicios
+              Evidencia Servicios
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Titularidad
+              Evidencia Titularidad
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
               Plano
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Incripción
+              Plano Incripción
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Situación
+              Plano Situación
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
               Foto area
@@ -394,10 +394,10 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               Foto predio
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Subsanación
+              Memorial Subsanación
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Explicativo
+              Memorial Explicativo
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
               Mapa esquematico
@@ -406,10 +406,10 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
               Credenciales
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Autorizado
+              Crt. Autorizado
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
-              Formulario
+              Formulario 1190
             </Table.HeadCell>
             <Table.HeadCell className="!bg-slate-400 dark:!bg-slate-950">
               Fecha de creación
