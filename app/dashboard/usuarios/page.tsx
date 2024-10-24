@@ -9,7 +9,7 @@ async function UsersPages() {
   const users = await getUsers();
 
   return (
-    <main className="ml-24 lg:ml-52 mt-10 !w-[calc(100% - 60px)]">
+    <main className="ml-24 lg:ml-56 mt-10 !w-[calc(100% - 60px)]">
       <Tittle>Usuarios</Tittle>
       <React.Suspense fallback="Cargando...">
         <DeleteUser />

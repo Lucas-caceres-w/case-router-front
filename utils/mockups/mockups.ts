@@ -137,13 +137,9 @@ export const casosMock = [
 ];
 
 export const options = [
-  { value: "iniciado", label: "Iniciado" },
-  { value: "verificacion", label: "Verificacion Inicial" },
-  { value: "solicitaPlanos", label: "Se Solicita Planos" },
-  { value: "reporteInicial", label: "Preparacion de reporte inicial" },
-  { value: "asignado", label: "Asignado a investigaciòn" },
-  { value: "referidoGTA", label: "Referido a GTA" },
-  { value: "reporteCompletado", label: "Preparaciòn de reporte completado" },
-  { value: "cartaRecomendacion", label: "Carta de recomendacion completada" },
-  { value: "completado", label: "Listo para trasferir a PPP" },
+  { value: "nuevo", label: "Nuevo Proyecto" },
+  { value: "adjudicado", label: "Adjudicado" },
+  { value: "inicio", label: "Inició" },
+  { value: "progreso", label: "En progreso" },
+  { value: "completado", label: "Completado" },
 ];

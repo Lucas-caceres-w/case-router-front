@@ -9,8 +9,8 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 function ChangeStatus() {
   const params = useSearchParams();
   const router = useRouter();
-  const [edit, setEdit] = useState("");
   const [originalEstatus, setOriginalEstatus] = useState("");
+  const [edit, setEdit] = useState(originalEstatus);
   const [loading, setLoading] = useState(false);
   const [color, setColor] = useState("");
   const [text, setText] = useState("");
@@ -48,7 +48,7 @@ function ChangeStatus() {
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setEdit(e.target.value);
-    //console.log(e.target.value);
+    console.log(e.target.value);
   };
 
   const getCaso = async () => {
@@ -65,7 +65,6 @@ function ChangeStatus() {
     setLoading(true);
     try {
       const res = await cambiarEstatus(edit, idCaso);
-      //console.log(res);
       if (res) {
         callToast("success", "Se cambio el estado a  " + edit);
         setTimeout(() => {

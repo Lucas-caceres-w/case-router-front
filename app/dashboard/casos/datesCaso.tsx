@@ -70,10 +70,10 @@ function DatesModal() {
 
   const getCaso = async () => {
     const res: Caso = await getOne(idCaso);
-    const { fechaRecibido, fechaRevision } = res;
+    const { fechaRecibido, fechaFin } = res;
     setEdit({
       fechaRecibido: fechaRecibido,
-      fechaRevision: fechaRevision,
+      fechaRevision: fechaFin,
     });
   };
 

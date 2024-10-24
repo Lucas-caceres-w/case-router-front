@@ -18,8 +18,7 @@ export default function MapCasie() {
   }, []);
 
   return (
-    <main className="ml-24 lg:ml-52 mt-24 grid place-items-center w-[85%] h-full overflow-hidden">
-      {/* <Map casos={casos ?? []} /> */}
+    <main className="ml-24 lg:ml-56 mt-24 grid place-items-center w-[85%] h-full overflow-hidden">
       <div style={{ height: "75vh", width: "70vw", borderRadius: "5px" }}>
         <GoogleMapComp casos={casos ?? []} />
       </div>
