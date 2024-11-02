@@ -44,9 +44,9 @@ function PersonalPages() {
                <ChangeStatus refreshPersonal={fetchPersonal} />
             </section>
          </div>
-         <React.Suspense fallback="Cargando...">
-            <TablePersonal initialPersonal={personal || []} estatus={estatus} />
-         </React.Suspense>
+         <TablePersonal initialPersonal={personal || []} estatus={estatus} />
+         {/* <React.Suspense fallback="Cargando...">
+         </React.Suspense> */}
       </main>
    );
 }
