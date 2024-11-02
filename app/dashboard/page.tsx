@@ -4,7 +4,7 @@ import Tittle from '@/components/title';
 import { getCasos } from '@/utils/api/casos';
 import { getPersonal } from '@/utils/api/personal';
 import { Caso, Personal } from '@/utils/types';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function Home() {
    const [casos, setCasos] = useState<Caso[]>();
@@ -29,7 +29,12 @@ export default function Home() {
       <main className="ml-24 lg:ml-56 py-4">
          <Tittle>Estadisticas generales</Tittle>
          <div className="w-[95%] mt-4">
-            <ChartsSection proyectos={casos ?? []} personal={personal ?? []} />
+            <React.Suspense fallback='Cargando...'>
+               <ChartsSection
+                  proyectos={casos ?? []}
+                  personal={personal ?? []}
+               />
+            </React.Suspense>
          </div>
       </main>
    );
