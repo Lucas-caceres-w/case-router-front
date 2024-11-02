@@ -2,7 +2,6 @@
 import Tittle from '@/components/title';
 import { getPersonal } from '@/utils/api/personal';
 import { Personal } from '@/utils/types';
-import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import TablePersonal from './table/table-personal';
 import AddPersonal from './addPersonal';
@@ -11,10 +10,11 @@ import Observaciones from './observaciones';
 import DeletePersonal from './deletePersonal';
 import UpCertificado from './addCertificaciones';
 import ChangeStatus from './trabaja';
+import useGetAllSearchParams from '@/components/estatusC';
+
 
 function PersonalPages() {
-   const params = useSearchParams();
-   const estatus = params.get('estatus');
+   const estatus = useGetAllSearchParams().estatus;
    const [personal, setPersonal] = useState<Personal[]>();
 
    const fetchPersonal = async () => {
@@ -44,9 +44,9 @@ function PersonalPages() {
                <ChangeStatus refreshPersonal={fetchPersonal} />
             </section>
          </div>
-         <TablePersonal initialPersonal={personal || []} estatus={estatus} />
-         {/* <React.Suspense fallback="Cargando...">
-         </React.Suspense> */}
+         <React.Suspense fallback="Cargando...">
+            <TablePersonal initialPersonal={personal || []} estatus={estatus} />
+         </React.Suspense>
       </main>
    );
 }
