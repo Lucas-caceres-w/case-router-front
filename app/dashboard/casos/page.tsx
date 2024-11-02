@@ -21,7 +21,7 @@ async function CasosPage() {
    return (
       <div className="ml-24 lg:ml-56 mt-10 !w-[calc(100% - 200px)]">
          <div className="flex justify-between items-center">
-            <Tittle>Casos</Tittle>
+            <Tittle>Proyectos</Tittle>
             <UploadModal />
             <EditCaso />
             <AddCaso />

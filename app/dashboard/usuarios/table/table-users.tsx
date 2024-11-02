@@ -4,7 +4,6 @@ import { User } from '@/utils/types';
 import { format } from 'date-fns';
 import { Dropdown, Pagination, Table, TextInput } from 'flowbite-react';
 import { Edit, Trash } from 'lucide-react';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
 import AddUser from '../addUser';
@@ -15,7 +14,6 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
    const [filteredCasos, setFilteredCasos] = useState<User[] | []>(cols);
    const [currentPage, setCurrentPage] = useState(1);
    const itemsPerPage = 5; // Número de elementos por página
-   const { data } = useSession();
 
    // Función para manejar el cambio de página
    const handlePageChange = (pageNumber: number) => {
@@ -98,9 +96,9 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
                   type="search"
                   placeholder="Buscar..."
                />
-               {(data?.user?.rol === 1 || data?.user?.rol === 4) && (
                   <AddUser cols={setCols} />
-               )}
+               {/* {(data?.user?.rol === 1 || data?.user?.rol === 4) && (
+               )} */}
                {/* <AddUser cols={setCols} /> */}
             </div>
             <Table>
@@ -111,9 +109,9 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
                   <Table.HeadCell>Usuario</Table.HeadCell>
                   <Table.HeadCell>Rol</Table.HeadCell>
                   <Table.HeadCell>Fecha creacion</Table.HeadCell>
-                  {(data?.user?.rol === 1 || data?.user?.rol === 4) && (
-                     <Table.HeadCell>Acciones</Table.HeadCell>
-                  )}
+                  <Table.HeadCell>Acciones</Table.HeadCell>
+                  {/* {(data?.user?.rol === 1 || data?.user?.rol === 4) && (
+                  )} */}
                </Table.Head>
                <Table.Body>
                   {filteredCasos

@@ -285,7 +285,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                   </Button>
                </section>
             </div>
-            <fieldset className="w-7/12">
+            {/* <fieldset className="w-7/12">
                <legend className="text-slate-800 dark:text-slate-200 font-semibold">
                   Estado:
                </legend>
@@ -297,7 +297,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                </Button>
                {expandEstatus &&
                   {
-                     /* <section className="flex flex-row flex-wrap gap-x-4 items-center my-4">
+                     <section className="flex flex-row flex-wrap gap-x-4 items-center my-4">
                      <div className="flex gap-2 items-center">
                         <Radio
                            onClick={() => selectCasosByStatus('iniciado')}
@@ -440,9 +440,9 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                         />
                         <Label htmlFor="clean">Limpiar</Label>
                      </div>
-                  </section> */
+                  </section>
                   }}
-            </fieldset>
+            </fieldset> */}
          </div>
          <div className="w-[98%] h-full min-h-[450px] overflow-x-scroll">
             <Table striped>
