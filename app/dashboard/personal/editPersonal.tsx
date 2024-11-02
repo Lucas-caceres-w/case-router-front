@@ -30,6 +30,7 @@ function EditPersonal({ refreshPersonal }: { refreshPersonal: () => void }) {
       apellidoPaterno: '',
       apellidoMaterno: '',
       numContacto: '',
+      idPersonal: ''
    };
    const [formData, setFormData] = useState<any>(initialForm);
    const [color, setColor] = useState('');
@@ -136,6 +137,18 @@ function EditPersonal({ refreshPersonal }: { refreshPersonal: () => void }) {
                                     />
                                  </>
                               )}
+                              {e.type === 'number' && (
+                                 <>
+                                    <Label>{e.label}</Label>
+                                    <TextInput
+                                       onChange={handleChange}
+                                       value={formData[e.name]}
+                                       type={e.type}
+                                       name={e.name}
+                                       required
+                                    />
+                                 </>
+                              )}
                               {e.type === 'select' && (
                                  <>
                                     <Label>{e.label}</Label>
@@ -227,6 +240,7 @@ const inputs = [
    },
    { name: 'apellidoPaterno', type: 'text', label: 'Apellido paterno' },
    { name: 'numContacto', type: 'text', label: 'Numero de contacto' },
+   { name: 'idPersonal', type: 'number', label: 'Identificador' },
 ];
 
 export default EditPersonal;

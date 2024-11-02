@@ -108,13 +108,10 @@ export type Personal = {
    numContacto: number;
    observaciones: string;
    trabaja: boolean;
+   idPersonal: number;
    certificacions: Certificaciones[];
 };
 
-export type importPersonal = Omit<
-   Personal,
-   | 'id'
->;
-
+export type importPersonal = Omit<Personal, 'id'>;
 
 export type exportPersonal = Personal & ['updatedAt' | 'createdAt'];

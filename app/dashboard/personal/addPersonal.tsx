@@ -33,6 +33,7 @@ function AddPersonal({ refreshPersonal }: { refreshPersonal: () => void }) {
       apellidoPaterno: '',
       apellidoMaterno: '',
       numContacto: '',
+      idPersonal: '',
    };
    const [formData, setFormData] = useState<any>(initialForm);
    const [fileData, setFileData] = useState<File>();
@@ -124,6 +125,7 @@ function AddPersonal({ refreshPersonal }: { refreshPersonal: () => void }) {
             const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
             const customKeys = [
+               'idPersonal',
                'name',
                'secondName',
                'apellidoMaterno',
@@ -225,6 +227,7 @@ function AddPersonal({ refreshPersonal }: { refreshPersonal: () => void }) {
                   secondName,
                   trabaja,
                   id,
+                  idPersonal,
                   certificacions,
                   /* @ts-ignore */
                   updatedAt,
@@ -277,6 +280,7 @@ function AddPersonal({ refreshPersonal }: { refreshPersonal: () => void }) {
                return {
                   id: id,
                   Nombre: name,
+                  Identificador: idPersonal,
                   'Segundo nombre': secondName,
                   'Apellido Materno': apellidoMaterno,
                   'Apellido Paterno': apellidoPaterno,
@@ -407,6 +411,18 @@ function AddPersonal({ refreshPersonal }: { refreshPersonal: () => void }) {
                         return (
                            <div className="flex flex-col gap-2" key={idx}>
                               {e.type === 'text' && (
+                                 <>
+                                    <Label>{e.label}</Label>
+                                    <TextInput
+                                       onChange={handleChange}
+                                       value={formData[e.name]}
+                                       type={e.type}
+                                       name={e.name}
+                                       required
+                                    />
+                                 </>
+                              )}
+                              {e.type === 'number' && (
                                  <>
                                     <Label>{e.label}</Label>
                                     <TextInput
@@ -581,6 +597,7 @@ const inputs = [
    },
    { name: 'apellidoPaterno', type: 'text', label: 'Apellido paterno' },
    { name: 'numContacto', type: 'text', label: 'Numero de contacto' },
+   { name: 'idPersonal', type: 'number', label: 'Identificador' },
 ];
 
 export default AddPersonal;
