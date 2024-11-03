@@ -8,7 +8,6 @@ export async function POST(req: NextRequest) {
       const { username, password } = await req.json(); // Parseamos el body de la request
       const data = await Login(username, password); // Llamada directa sin necesitar .json()
       const json = await data.json();
-      
       if (!data) {
          return NextResponse.json(
             { message: 'Credenciales inválidas' },
@@ -31,10 +30,10 @@ export async function POST(req: NextRequest) {
 
       // Serialización de la cookie
       const serialized = serialize('session', token, {
-         httpOnly: true, // Mejor dejar httpOnly como true por razones de seguridad
+         httpOnly: process.env.NODE_ENV === 'production',
          maxAge: expire,
          secure: process.env.NODE_ENV === 'production',
-         sameSite: 'strict',
+         sameSite: 'lax',
          path: '/',
       });
 

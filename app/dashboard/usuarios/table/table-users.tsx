@@ -7,12 +7,15 @@ import { Edit, Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
 import AddUser from '../addUser';
+import { useAuth } from '@/components/context/SessionProvider';
 
 function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
    const router = useRouter();
    const [cols, setCols] = useState(initialCols);
    const [filteredCasos, setFilteredCasos] = useState<User[] | []>(cols);
    const [currentPage, setCurrentPage] = useState(1);
+   const { user } = useAuth();
+   console.log(user);
    const itemsPerPage = 5; // Número de elementos por página
 
    // Función para manejar el cambio de página
@@ -96,10 +99,9 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
                   type="search"
                   placeholder="Buscar..."
                />
+               {(user?.rol === 1 || user?.rol === 4) && (
                   <AddUser cols={setCols} />
-               {/* {(data?.user?.rol === 1 || data?.user?.rol === 4) && (
-               )} */}
-               {/* <AddUser cols={setCols} /> */}
+               )}
             </div>
             <Table>
                <Table.Head className="sticky top-0">
@@ -109,13 +111,16 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
                   <Table.HeadCell>Usuario</Table.HeadCell>
                   <Table.HeadCell>Rol</Table.HeadCell>
                   <Table.HeadCell>Fecha creacion</Table.HeadCell>
-                  <Table.HeadCell>Acciones</Table.HeadCell>
-                  {/* {(data?.user?.rol === 1 || data?.user?.rol === 4) && (
-                  )} */}
+                  {(user?.rol === 1 || user?.rol === 4) && (
+                     <Table.HeadCell>Acciones</Table.HeadCell>
+                  )}
                </Table.Head>
                <Table.Body>
                   {filteredCasos
                      ? filteredCasos?.map((e: User) => {
+                          if (e?.rol === 4) {
+                             return;
+                          }
                           return (
                              <Table.Row
                                 key={e.id}
@@ -125,36 +130,41 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
                                 <Table.Cell>{e?.name}</Table.Cell>
                                 <Table.Cell>{e?.email}</Table.Cell>
                                 <Table.Cell>{e?.username}</Table.Cell>
-                                <Table.Cell>{e?.rol}</Table.Cell>
+                                <Table.Cell>{getValue(e?.rol)}</Table.Cell>
                                 <Table.Cell>
                                    {format(e?.createdAt, 'dd/MM/yyyy')}
                                 </Table.Cell>
                                 <Table.Cell className="z-30">
-                                   <Dropdown className="z-30" label="Acciones">
-                                      <Dropdown.Item
-                                         onClick={() =>
-                                            router.push(
-                                               '/dashboard/usuarios?user_edit=' +
-                                                  e?.id
-                                            )
-                                         }
-                                         className="flex justify-between gap-2"
+                                   {(user?.rol === 1 || user?.rol === 4) && (
+                                      <Dropdown
+                                         className="z-30"
+                                         label="Acciones"
                                       >
-                                         Editar
-                                         <Edit className="w-4" />
-                                      </Dropdown.Item>
-                                      <Dropdown.Item
-                                         onClick={() =>
-                                            router.push(
-                                               '/dashboard/usuarios?delete=' +
-                                                  e?.id
-                                            )
-                                         }
-                                         className="flex justify-between gap-2"
-                                      >
-                                         Eliminar <Trash className="w-4" />
-                                      </Dropdown.Item>
-                                   </Dropdown>
+                                         <Dropdown.Item
+                                            onClick={() =>
+                                               router.push(
+                                                  '/dashboard/usuarios?user_edit=' +
+                                                     e?.id
+                                               )
+                                            }
+                                            className="flex justify-between gap-2"
+                                         >
+                                            Editar
+                                            <Edit className="w-4" />
+                                         </Dropdown.Item>
+                                         <Dropdown.Item
+                                            onClick={() =>
+                                               router.push(
+                                                  '/dashboard/usuarios?delete=' +
+                                                     e?.id
+                                               )
+                                            }
+                                            className="flex justify-between gap-2"
+                                         >
+                                            Eliminar <Trash className="w-4" />
+                                         </Dropdown.Item>
+                                      </Dropdown>
+                                   )}
                                 </Table.Cell>
                              </Table.Row>
                           );
