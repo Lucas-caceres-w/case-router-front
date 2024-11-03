@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
 
       // Serialización de la cookie
       const serialized = serialize('session', token, {
-         httpOnly: process.env.NODE_ENV === 'production',
+         httpOnly: false,
          maxAge: expire,
          secure: process.env.NODE_ENV === 'production',
          sameSite: 'lax',
