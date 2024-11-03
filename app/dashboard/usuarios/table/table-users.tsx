@@ -132,8 +132,8 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
                                 <Table.Cell>
                                    {format(e?.createdAt, 'dd/MM/yyyy')}
                                 </Table.Cell>
-                                {(user?.rol === 1 || user?.rol === 4) && (
-                                   <Table.Cell className="z-30">
+                                <Table.Cell className="z-30">
+                                   {(user?.rol === 1 || user?.rol === 4) && (
                                       <Dropdown
                                          className="z-30"
                                          label="Acciones"
@@ -162,8 +162,8 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
                                             Eliminar <Trash className="w-4" />
                                          </Dropdown.Item>
                                       </Dropdown>
-                                   </Table.Cell>
-                                )}
+                                   )}
+                                </Table.Cell>
                              </Table.Row>
                           );
                        })
