@@ -111,9 +111,7 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
                   <Table.HeadCell>Usuario</Table.HeadCell>
                   <Table.HeadCell>Rol</Table.HeadCell>
                   <Table.HeadCell>Fecha creacion</Table.HeadCell>
-                  {(user?.rol === 1 || user?.rol === 4) && (
-                     <Table.HeadCell>Acciones</Table.HeadCell>
-                  )}
+                  <Table.HeadCell>Acciones</Table.HeadCell>
                </Table.Head>
                <Table.Body>
                   {filteredCasos
