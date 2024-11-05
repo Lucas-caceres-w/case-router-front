@@ -2,6 +2,7 @@
 'use client';
 import { useAuth } from '@/components/context/SessionProvider';
 import { ImportData, createCaso, getCasosByDate } from '@/utils/api/casos';
+import { Pueblos } from '@/utils/mockups/areas';
 import { Caso, ImportCaso } from '@/utils/types';
 import { differenceInDays, format } from 'date-fns';
 import {
@@ -316,7 +317,6 @@ function AddCaso() {
                   'Cantidad estimada': cantidadEstimada,
                   'Cantidad desperdiciada': cantidadDesperdiciada,
                   'Ultima actualizacion': ultimaActualizacion,
-
                   'Plan de trabajo de Asbesto (ABS)': planAsbesto ? 'SI' : 'NO',
                   'Plan de trabajo de Plomo (LBL)': planPlomo ? 'SI' : 'NO',
                   'Estudio Ambiental de Asbesto (ABS)': estudioAsbesto
@@ -343,11 +343,9 @@ function AddCaso() {
                   'Documentos de Cambios de Orden': documentosCambioOrden
                      ? 'SI'
                      : 'NO',
-
                   'Fecha de cambio de Orden': fechaCambioOrden,
                   'Dias adicionales por cambio de Orden': diasAdicionales,
                   'Otros documentos': otros ? 'SI' : 'NO',
-
                   'Fecha de inicio': fechaInicio,
                   'Fecha de fin': fechaFin,
                   'Duracion del proyecto': DuracionEnDias,
@@ -600,13 +598,18 @@ const inputs = [
       name: 'materialARemover',
       type: 'select',
       label: 'Material a remover',
-      options: ['Asbesto', 'Plomo'],
+      options: ['Asbesto', 'Plomo', 'Asbesto/Plomo'],
    },
    { name: 'numeroProyecto', type: 'text', label: 'Nº proyecto' },
    { name: 'direccionProyecto', type: 'text', label: 'Dirección de proyecto' },
    { name: 'latitud', type: 'text', label: 'Latitud' },
    { name: 'longitud', type: 'text', label: 'Longitud' },
-   { name: 'pueblo', type: 'text', label: 'Pueblo' },
+   {
+      name: 'pueblo',
+      type: 'select',
+      label: 'Pueblo',
+      options: Pueblos.map((e) => e.pueblo),
+   },
    { name: 'fechaInicio', type: 'date', label: 'Fecha de inicio' },
    { name: 'fechaFin', type: 'date', label: 'Fecha de fin' },
 ];

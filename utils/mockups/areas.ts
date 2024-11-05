@@ -194,3 +194,24 @@ export const Areas = [
     ],
   },
 ];
+
+export const Pueblos = [
+  {pueblo:'Bayamon'},
+  {pueblo:"San Juan"},
+  {pueblo:"Carolina"},
+  {pueblo:"Arecibo"},
+  {pueblo:"Manati"},
+  {pueblo:"Utuado"},
+  {pueblo:"Toa Alta"},
+  {pueblo:"Ponce"},
+  {pueblo:"Coamo"},
+  {pueblo:"Yauco"},
+  {pueblo:"Guamaya"},
+  {pueblo:"Caguas"},
+  {pueblo:"Cayey"},
+  {pueblo:"Fajardo"},
+  {pueblo:"Humacao"},
+  {pueblo:"San German"},
+  {pueblo:"Mayaguez"},
+  {pueblo:"Aguadilla"},
+]
