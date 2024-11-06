@@ -17,47 +17,55 @@ function GoogleMapComp({ casos }: { casos: Caso[] }) {
    });
    const center = { lat: 18.251069, lng: -66.470603 };
 
-   const iconSuccess = '/assets/aprobado.png';
    const iconInit = '/assets/rechazado.png';
+   const iconSuccess = '/assets/aprobado.png';
    const iconProcess = '/assets/proceso.png';
 
    const MarkerMultiple = () => {
       const [selectedCaso, setSelectedCaso] = useState<Caso | null>(null);
 
       const calcularProgreso = (fechaInicio: Date, fechaFin: Date) => {
-         const fechaActual = new Date(); // Fecha actual
+         const fechaActual = new Date();
          const totalDias = differenceInDays(
             new Date(fechaFin),
             new Date(fechaInicio)
-         ); // Días totales del proyecto
+         );
          const diasTranscurridos = differenceInDays(
             fechaActual,
             new Date(fechaInicio)
-         ); // Días transcurridos desde la fecha de inicio
-
-         // Asegurarnos de que no se supere el 100% si ya pasó la fecha de finalización
+         );
          const progreso = Math.min((diasTranscurridos / totalDias) * 100, 100);
 
-         return progreso.toFixed(2); // Redondear el progreso a dos decimales
+         return progreso.toFixed(2);
       };
 
       const handleMarkerClick = useCallback((caso: Caso) => {
          setSelectedCaso(caso);
       }, []);
+
       return casos?.map((e, idx) => {
          const position = {
             lat: e.latitud,
             lng: e.longitud,
          } as unknown as LatLng;
-         const icon =
-            e.estatus === 'completado'
-               ? iconSuccess
-               : e.estatus === 'inicio'
-               ? iconInit
-               : iconProcess;
+
+         let icon = '';
+
+         switch (e.estatus) {
+            case 'nuevo':
+               icon = iconInit;
+               break;
+            case 'completado':
+               icon = iconSuccess;
+               break;
+            default:
+               icon = iconProcess;
+         }
+
          const image = {
             url: icon,
          };
+
          return (
             <Marker
                onClick={() => handleMarkerClick(e)}
@@ -75,7 +83,9 @@ function GoogleMapComp({ casos }: { casos: Caso[] }) {
                         <br />
                         <span className="text-xs">
                            Material a remover:{' '}
-                           <b className="font-semibold">{e?.materialARemover}</b>
+                           <b className="font-semibold">
+                              {e?.materialARemover}
+                           </b>
                         </span>
                         <br />
                         <span className="text-xs">
@@ -107,7 +117,8 @@ function GoogleMapComp({ casos }: { casos: Caso[] }) {
                         </span>
                         <br />
                         <span className="text-xs">
-                           Estatus: <b className="font-semibold">{e?.estatus}</b>
+                           Estatus:{' '}
+                           <b className="font-semibold">{e?.estatus}</b>
                         </span>
                      </div>
                   </InfoWindow>

@@ -10,7 +10,7 @@ function ChangeStatus() {
   const params = useSearchParams();
   const router = useRouter();
   const [originalEstatus, setOriginalEstatus] = useState("");
-  const [edit, setEdit] = useState(originalEstatus);
+  const [edit, setEdit] = useState(originalEstatus ||'nuevo');
   const [loading, setLoading] = useState(false);
   const [color, setColor] = useState("");
   const [text, setText] = useState("");

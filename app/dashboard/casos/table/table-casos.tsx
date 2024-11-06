@@ -201,7 +201,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
          options.find(
             (option) => option.value.toLowerCase() === est.toLowerCase()
          )?.label || '';
-
+      console.log(est);
       const classEstatus = () => {
          switch (est) {
             case 'nuevo':
@@ -481,10 +481,10 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                               <Table.Cell className="text-nowrap whitespace-nowrap">
                                  {e?.nombreCliente}
                               </Table.Cell>
-                              <Table.Cell className="text-nowrap whitespace-nowrap">
-                                 {e?.nombreProyecto}
+                              <Table.Cell>{e?.nombreProyecto}</Table.Cell>
+                              <Table.Cell className="text-nowrap">
+                                 {e?.direccionProyecto}
                               </Table.Cell>
-                              <Table.Cell>{e?.direccionProyecto}</Table.Cell>
                               <Table.Cell>{e?.latitud}</Table.Cell>
                               <Table.Cell>{e?.longitud}</Table.Cell>
                               <Table.Cell>{e?.pueblo}</Table.Cell>
@@ -579,10 +579,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                                  )}
                               </Table.Cell>
                               <Table.Cell>
-                                 {getValue(
-                                    e?.documento?.clearencePlomo,
-                                    e.id
-                                 )}
+                                 {getValue(e?.documento?.clearencePlomo, e.id)}
                               </Table.Cell>
                               <Table.Cell>
                                  {e?.cambioOrden &&
