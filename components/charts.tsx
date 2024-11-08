@@ -112,6 +112,8 @@ function ChartsSection({
       return resultado;
    };
 
+   Chart.defaults.color = "#ededed";
+
    const cantidadPorPueblo = proyectos.reduce((acc: any, proyecto) => {
       const pueblo = proyecto.pueblo;
       if (!acc[pueblo]) {
@@ -459,24 +461,24 @@ function ChartsSection({
                <CarIcon className="text-white" size={32} />
             </div>
          </Card>
-         <Card className="w-full flex items-center justify-center !bg-slate-600 h-96">
+         <Card className="w-full flex items-center justify-center !bg-slate-400 dark:!bg-slate-600 h-96">
             <Pie className="w-full h-full" data={data} />
          </Card>
-         <Card className="w-full flex items-center justify-center !bg-slate-600 h-96">
+         <Card className="w-full flex items-center justify-center !bg-slate-400 dark:!bg-slate-600 h-96">
             <Line
                className="w-full h-full"
                data={dataPorMes}
                options={options}
             />
          </Card>
-         <Card className="w-full flex items-center justify-center !bg-slate-600 h-96">
+         <Card className="w-full flex items-center justify-center !bg-slate-400 dark:!bg-slate-600 h-96">
             <Line
                className="w-full h-full"
                data={dataAsbesto}
                options={optionsABS}
             />
          </Card>
-         <Card className="w-full flex items-center justify-center !bg-slate-600 h-96">
+         <Card className="w-full flex items-center justify-center !bg-slate-400 dark:!bg-slate-600 h-96">
             <Line
                className="w-full h-full"
                data={dataPlomo}

@@ -258,13 +258,13 @@ function TablePersonal({
          date: false,
       },
       {
-         name: 'Fecha de caducidad de licencia de conducir',
+         name: 'Fecha de inicio de licencia de conducir',
          accessor: (e: Personal) => {
             const cert = e?.certificacions?.find(
                (cert: any) => cert.tipoDocumento === 'licencia'
             );
-            return cert && cert.fechaExpiracion
-               ? format(new Date(cert.fechaExpiracion), 'dd/MM/yyyy')
+            return cert && cert.fechaInicio
+               ? format(new Date(cert.fechaInicio), 'dd/MM/yyyy')
                : '---';
          },
          date: true,
