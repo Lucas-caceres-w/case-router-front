@@ -49,21 +49,34 @@ function GoogleMapComp({ casos }: { casos: Caso[] }) {
             lng: e.longitud,
          } as unknown as LatLng;
 
-         let icon = '';
+         let iconColor;
 
-         switch (e.estatus) {
+         switch (e.estatus.toLowerCase()) {
             case 'nuevo':
-               icon = iconInit;
+               iconColor = '#8a2be2'; // Violeta
+               break;
+            case 'adjudicado':
+               iconColor = '#007bff'; // Azul
+               break;
+            case 'inicio':
+               iconColor = '#dc3545'; // Rojo
+               break;
+            case 'progreso':
+               iconColor = '#ffc107'; // Amarillo
                break;
             case 'completado':
-               icon = iconSuccess;
+               iconColor = '#28a745'; // Verde
                break;
             default:
-               icon = iconProcess;
+               iconColor = '#6c757d'; // Gris para cualquier otro estado
          }
 
          const image = {
-            url: icon,
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: iconColor,
+            fillOpacity: 1,
+            strokeWeight: 1,
+            scale: 10, // Tamaño del marcador
          };
 
          return (

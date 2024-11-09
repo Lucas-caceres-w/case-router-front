@@ -1,5 +1,6 @@
 'use client';
 import { getOne, updateCaso } from '@/utils/api/casos';
+import { Pueblos } from '@/utils/mockups/areas';
 import { CreateCaso } from '@/utils/types';
 import { format } from 'date-fns';
 import {
@@ -271,13 +272,18 @@ const inputs = [
       name: 'materialARemover',
       type: 'select',
       label: 'Material a remover',
-      options: ['Asbesto', 'Plomo'],
+      options: ['Asbesto', 'Plomo' , 'Asbesto/Plomo'],
    },
    { name: 'numeroProyecto', type: 'text', label: 'Nº proyecto' },
    { name: 'direccionProyecto', type: 'text', label: 'Dirección de proyecto' },
    { name: 'latitud', type: 'text', label: 'Latitud' },
    { name: 'longitud', type: 'text', label: 'Longitud' },
-   { name: 'pueblo', type: 'text', label: 'Pueblo' },
+   {
+      name: 'pueblo',
+      type: 'select',
+      label: 'Pueblo',
+      options: Pueblos.map((e) => e.pueblo),
+   },
    { name: 'fechaInicio', type: 'date', label: 'Fecha de inicio' },
    { name: 'fechaFin', type: 'date', label: 'Fecha de fin' },
 ];

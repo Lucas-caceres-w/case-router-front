@@ -61,15 +61,15 @@ function ChartsSection({
       'Dic',
    ];
 
-   const newProyects = proyectos.filter((item) => item.estatus === 'nuevo');
+   const newProyects = proyectos.filter((item) => item.estatus.toLowerCase() === 'nuevo');
 
-   const Adjudicado = proyectos.filter((item) => item.estatus === 'adjudicado');
+   const Adjudicado = proyectos.filter((item) => item.estatus.toLowerCase() === 'adjudicado');
 
-   const Iniciado = proyectos.filter((item) => item.estatus === 'inicio');
+   const Iniciado = proyectos.filter((item) => item.estatus.toLowerCase() === 'inicio');
 
-   const EnProgreso = proyectos.filter((item) => item.estatus === 'progreso');
+   const EnProgreso = proyectos.filter((item) => item.estatus.toLowerCase() === 'progreso');
 
-   const Completado = proyectos.filter((item) => item.estatus === 'completado');
+   const Completado = proyectos.filter((item) => item.estatus.toLowerCase() === 'completado');
 
    const porcentajeCompletados =
       proyectos.length > 0 ? (Completado.length / proyectos.length) * 100 : 0;
