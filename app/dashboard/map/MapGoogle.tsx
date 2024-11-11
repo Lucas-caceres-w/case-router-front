@@ -17,10 +17,6 @@ function GoogleMapComp({ casos }: { casos: Caso[] }) {
    });
    const center = { lat: 18.251069, lng: -66.470603 };
 
-   const iconInit = '/assets/rechazado.png';
-   const iconSuccess = '/assets/aprobado.png';
-   const iconProcess = '/assets/proceso.png';
-
    const MarkerMultiple = () => {
       const [selectedCaso, setSelectedCaso] = useState<Caso | null>(null);
 
@@ -42,7 +38,7 @@ function GoogleMapComp({ casos }: { casos: Caso[] }) {
       const handleMarkerClick = useCallback((caso: Caso) => {
          setSelectedCaso(caso);
       }, []);
-
+      
       return casos?.map((e, idx) => {
          const position = {
             lat: e.latitud,
@@ -50,29 +46,26 @@ function GoogleMapComp({ casos }: { casos: Caso[] }) {
          } as unknown as LatLng;
 
          let iconColor;
-
          switch (e.estatus.toLowerCase()) {
             case 'nuevo':
-               iconColor = '#8a2be2'; // Violeta
+               iconColor = '#8338ec'; // Violeta
                break;
             case 'adjudicado':
-               iconColor = '#007bff'; // Azul
+               iconColor = '#3a86ff'; // Azul
                break;
             case 'inicio':
                iconColor = '#dc3545'; // Rojo
                break;
             case 'progreso':
-               iconColor = '#ffc107'; // Amarillo
+               iconColor = '#ffbe0b'; // Amarillo
                break;
             case 'completado':
-               iconColor = '#28a745'; // Verde
+               iconColor = '#70e000'; // Verde
                break;
-            default:
-               iconColor = '#6c757d'; // Gris para cualquier otro estado
          }
 
          const image = {
-            path: google.maps.SymbolPath.CIRCLE,
+            path: google?.maps?.SymbolPath.CIRCLE,
             fillColor: iconColor,
             fillOpacity: 1,
             strokeWeight: 1,

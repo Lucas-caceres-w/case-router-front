@@ -264,3 +264,20 @@ export const DeleteImage = async (id: string, path: string) => {
       console.log(err);
    }
 };
+
+export const DeleteDoc = async (id: number, key: string, file: string) => {
+   try {
+      const res = await fetch(apiUrl + '/documentos/' + id, {
+         method: 'DELETE',
+         body: JSON.stringify({ key, file }),
+         headers: {
+            'Content-Type': 'application/json',
+         },
+      });
+      const json = await res.json();
+      //console.log(json);
+      return json;
+   } catch (err) {
+      console.log(err);
+   }
+};

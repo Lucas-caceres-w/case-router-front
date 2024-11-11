@@ -165,7 +165,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
    }, [currentPage, initialCols, itemsPerPage]);
 
    const getValue = (valor: string | string[], id: string) => {
-      const res = valor ? (
+      const res = valor && valor.length > 0 ? (
          <Tooltip className="z-40" content="Abrir">
             <span
                onClick={() => router.push('/dashboard/casos?docs=' + id)}

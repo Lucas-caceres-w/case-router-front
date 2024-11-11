@@ -1,5 +1,10 @@
 'use client';
-import { DeleteImage, getDocsById, getImagesById } from '@/utils/api/casos';
+import {
+   DeleteDoc,
+   DeleteImage,
+   getDocsById,
+   getImagesById,
+} from '@/utils/api/casos';
 import { staticsPdf } from '@/utils/routes';
 import { ShowDoc } from '@/utils/types';
 import {
@@ -31,7 +36,7 @@ function DocsModal() {
       setText(text);
       setTimeout(() => {
          setShowToast(false);
-      }, 1500);
+      }, 2000);
    };
 
    const ToastAttr = ({ color, text }: { color: string; text: string }) => {
@@ -56,14 +61,13 @@ function DocsModal() {
    const getDocs = async () => {
       const res = await getDocsById(idCaso);
       if (res) {
-         console.log(res);
          const fotos = res;
          setDocs(fotos);
       }
    };
 
-   const deleteDoc = async (id: string, path: string) => {
-      const res = await DeleteImage(id, path);
+   const deleteDoc = async (id: number, key: string, file: string) => {
+      const res = await DeleteDoc(id, key, file);
       if (res === 'Documento eliminado') {
          callToast('success', 'Documento eliminado correctamente');
          setTimeout(() => {
@@ -99,17 +103,35 @@ function DocsModal() {
                           }
                           return (
                              <div className="flex flex-col gap-2" key={key}>
-                                <b className='text-black dark:text-white'>{key}</b>
-                                <div className="flex flex-row flex-wrap ">
-                                   {value && (
-                                      <a
-                                         className="bg-green-500 w-20 text-white px-4 py-1 rounded-md truncate"
-                                         href={staticsPdf + value}
-                                         target="_blank"
-                                      >
-                                         {value}
-                                      </a>
-                                   )}
+                                <b className="text-black dark:text-white">
+                                   {key}
+                                </b>
+                                <div className="flex flex-row gap-2 flex-wrap">
+                                   {Array.isArray(value) &&
+                                      value.map((file, index) => (
+                                         <div
+                                            key={index}
+                                            className="relative w-24 overflow-hidden group"
+                                         >
+                                            <span
+                                               onClick={() =>
+                                                  deleteDoc(docs.id, key, file)
+                                               }
+                                               className="absolute bg-red-500 cursor-pointer hover:bg-red-400 hidden group-hover:block px-2 py-0 text-white top-0 right-0 w-min"
+                                            >
+                                               X
+                                            </span>
+                                            <a
+                                               key={index}
+                                               className="bg-green-500 w-24 text-white px-4 py-2 rounded-md truncate"
+                                               href={staticsPdf + file}
+                                               target="_blank"
+                                               rel="noopener noreferrer"
+                                            >
+                                               {file}
+                                            </a>
+                                         </div>
+                                      ))}
                                 </div>
                              </div>
                           );

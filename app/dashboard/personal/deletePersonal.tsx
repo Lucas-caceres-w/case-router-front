@@ -23,7 +23,7 @@ function DeletePersonal({ refreshPersonal }: { refreshPersonal: () => void }) {
       setText(text);
       setTimeout(() => {
          setShowToast(false);
-      }, 1500);
+      }, 2000);
    };
 
    const ToastAttr = ({ color, text }: { color: string; text: string }) => {

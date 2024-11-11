@@ -61,15 +61,29 @@ function ChartsSection({
       'Dic',
    ];
 
-   const newProyects = proyectos.filter((item) => item.estatus.toLowerCase() === 'nuevo');
+   const Años = [
+      2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034,
+   ];
 
-   const Adjudicado = proyectos.filter((item) => item.estatus.toLowerCase() === 'adjudicado');
+   const newProyects = proyectos.filter(
+      (item) => item.estatus.toLowerCase() === 'nuevo'
+   );
 
-   const Iniciado = proyectos.filter((item) => item.estatus.toLowerCase() === 'inicio');
+   const Adjudicado = proyectos.filter(
+      (item) => item.estatus.toLowerCase() === 'adjudicado'
+   );
 
-   const EnProgreso = proyectos.filter((item) => item.estatus.toLowerCase() === 'progreso');
+   const Iniciado = proyectos.filter(
+      (item) => item.estatus.toLowerCase() === 'inicio'
+   );
 
-   const Completado = proyectos.filter((item) => item.estatus.toLowerCase() === 'completado');
+   const EnProgreso = proyectos.filter(
+      (item) => item.estatus.toLowerCase() === 'progreso'
+   );
+
+   const Completado = proyectos.filter(
+      (item) => item.estatus.toLowerCase() === 'completado'
+   );
 
    const porcentajeCompletados =
       proyectos.length > 0 ? (Completado.length / proyectos.length) * 100 : 0;
@@ -112,7 +126,7 @@ function ChartsSection({
       return resultado;
    };
 
-   Chart.defaults.color = "#ededed";
+   Chart.defaults.color = '#ededed';
 
    const cantidadPorPueblo = proyectos.reduce((acc: any, proyecto) => {
       const pueblo = proyecto.pueblo;
@@ -191,6 +205,19 @@ function ChartsSection({
       return acc;
    }, {});
 
+   const cantidadPorAño = fechasFin.reduce((acc: any, fecha) => {
+      const año = fecha
+         .toLocaleString('default', {
+            year: 'numeric',
+         })
+         .toLowerCase();
+      if (!acc[año]) {
+         acc[año] = 0;
+      }
+      acc[año]++;
+      return acc;
+   }, {});
+
    const cantidadPorMesAsbesto = fechasAsbesto.reduce((acc: any, fecha) => {
       const mes = fecha
          .toLocaleString('default', {
@@ -219,9 +246,13 @@ function ChartsSection({
 
    const labels2 = Object.values(Meses);
 
+   const labels3 = Object.values(Años);
+
    const dataValues2 = Meses.map(
       (mes) => cantidadPorMes[mes.toLowerCase()] || 0
    );
+
+   const dataValues3 = Años.map((año) => cantidadPorAño[año] || 0);
 
    const dataValuesAsbesto = Meses.map(
       (mes) => cantidadPorMesAsbesto[mes.toLowerCase()] || 0
@@ -233,6 +264,8 @@ function ChartsSection({
 
    const maxData = Math.max(...dataValues2) + 5;
 
+   const maxData2 = Math.max(...dataValues3) + 5;
+
    const maxDataAbs = Math.max(...dataValues2) + 5;
 
    const maxDataPlp = Math.max(...dataValues2) + 5;
@@ -242,6 +275,15 @@ function ChartsSection({
          y: {
             min: 0,
             max: maxData,
+         },
+      },
+   };
+
+   const options2 = {
+      scales: {
+         y: {
+            min: 0,
+            max: maxData2,
          },
       },
    };
@@ -274,6 +316,33 @@ function ChartsSection({
             borderColor: 'rgb(255, 99, 132)',
             tension: 0.3,
          },
+         {
+            label: 'Proyectos de Asbesto por Mes',
+            data: dataValuesAsbesto,
+            fill: true,
+            borderColor: 'rgb(54, 162, 235)',
+            tension: 0.3,
+         },
+         {
+            label: 'Proyectos de Plomo por Mes',
+            data: dataValuesPlomo,
+            fill: true,
+            borderColor: 'rgb(23, 162, 184)',
+            tension: 0.3,
+         },
+      ],
+   };
+
+   const dataPorAño = {
+      labels: labels3,
+      datasets: [
+         {
+            label: 'Proyectos Completados por Año',
+            data: dataValues3,
+            fill: true,
+            borderColor: 'rgb(15, 140, 12)',
+            tension: 0.3,
+         },
       ],
    };
 
@@ -285,6 +354,13 @@ function ChartsSection({
             data: dataValuesAsbesto,
             fill: true,
             borderColor: 'rgb(54, 162, 235)',
+            tension: 0.3,
+         },
+         {
+            label: 'Proyectos de Plomo por Mes',
+            data: dataValuesPlomo,
+            fill: true,
+            borderColor: 'rgb(23, 162, 184)',
             tension: 0.3,
          },
       ],
@@ -390,7 +466,7 @@ function ChartsSection({
                      % de proyectos completados:
                   </h2>
                   <p className="text-green-100 font-semibold">
-                     {porcentajeCompletados} %
+                     {porcentajeCompletados.toFixed(2)} %
                   </p>
                </div>
                <SquareCheck className="text-white" size={32} />
@@ -474,17 +550,24 @@ function ChartsSection({
          <Card className="w-full flex items-center justify-center !bg-slate-400 dark:!bg-slate-600 h-96">
             <Line
                className="w-full h-full"
+               data={dataPorAño}
+               options={options2}
+            />
+         </Card>
+         {/* <Card className="w-full flex items-center justify-center !bg-slate-400 dark:!bg-slate-600 h-96">
+            <Line
+               className="w-full h-full"
                data={dataAsbesto}
                options={optionsABS}
             />
-         </Card>
-         <Card className="w-full flex items-center justify-center !bg-slate-400 dark:!bg-slate-600 h-96">
+         </Card> */}
+         {/* <Card className="w-full flex items-center justify-center !bg-slate-400 dark:!bg-slate-600 h-96">
             <Line
                className="w-full h-full"
                data={dataPlomo}
                options={optionsPLP}
             />
-         </Card>
+         </Card> */}
       </section>
    );
 }
