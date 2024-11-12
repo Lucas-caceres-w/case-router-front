@@ -3,6 +3,7 @@
 import { useAuth } from '@/components/context/SessionProvider';
 import { ImportData, createCaso, getCasosByDate } from '@/utils/api/casos';
 import { Pueblos } from '@/utils/mockups/areas';
+import { Supervisores } from '@/utils/mockups/mockups';
 import { Caso, ImportCaso } from '@/utils/types';
 import { differenceInDays, format } from 'date-fns';
 import {
@@ -570,7 +571,12 @@ function AddCaso() {
 }
 
 const inputs = [
-   { name: 'gerenteProyecto', type: 'text', label: 'Gerente de proyecto' },
+   {
+      name: 'gerenteProyecto',
+      type: 'select',
+      label: 'Gerente de proyecto',
+      options: ['Melvin J. Torres'],
+   },
    {
       name: 'superintendenteProyecto',
       type: 'text',
@@ -578,8 +584,9 @@ const inputs = [
    },
    {
       name: 'supervisorProyecto',
-      type: 'text',
+      type: 'select',
       label: 'Supervisor de Proyecto',
+      options: Supervisores.map((e) => e.supervisor),
    },
    { name: 'nombreCliente', type: 'text', label: 'Nombre de cliente' },
    { name: 'nombreProyecto', type: 'text', label: 'Nombre de proyecto' },

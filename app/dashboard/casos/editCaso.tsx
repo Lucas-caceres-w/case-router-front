@@ -1,6 +1,7 @@
 'use client';
 import { getOne, updateCaso } from '@/utils/api/casos';
 import { Pueblos } from '@/utils/mockups/areas';
+import { Supervisores } from '@/utils/mockups/mockups';
 import { CreateCaso } from '@/utils/types';
 import { format } from 'date-fns';
 import {
@@ -244,7 +245,12 @@ function EditCaso() {
 }
 
 const inputs = [
-   { name: 'gerenteProyecto', type: 'text', label: 'Gerente de proyecto' },
+   {
+      name: 'gerenteProyecto',
+      type: 'select',
+      label: 'Gerente de proyecto',
+      options: ['Melvin J. Torres'],
+   },
    {
       name: 'superintendenteProyecto',
       type: 'text',
@@ -252,8 +258,9 @@ const inputs = [
    },
    {
       name: 'supervisorProyecto',
-      type: 'text',
+      type: 'select',
       label: 'Supervisor de Proyecto',
+      options: Supervisores.map((e) => e.supervisor),
    },
    { name: 'nombreCliente', type: 'text', label: 'Nombre de cliente' },
    { name: 'nombreProyecto', type: 'text', label: 'Nombre de proyecto' },
@@ -272,7 +279,7 @@ const inputs = [
       name: 'materialARemover',
       type: 'select',
       label: 'Material a remover',
-      options: ['Asbesto', 'Plomo' , 'Asbesto/Plomo'],
+      options: ['Asbesto', 'Plomo', 'Asbesto/Plomo'],
    },
    { name: 'numeroProyecto', type: 'text', label: 'Nº proyecto' },
    { name: 'direccionProyecto', type: 'text', label: 'Dirección de proyecto' },

@@ -69,7 +69,7 @@ function GoogleMapComp({ casos }: { casos: Caso[] }) {
             fillColor: iconColor,
             fillOpacity: 1,
             strokeWeight: 1,
-            scale: 10, // Tamaño del marcador
+            scale: 7, // Tamaño del marcador
          };
 
          return (

@@ -488,7 +488,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                               <Table.Cell>{e?.latitud}</Table.Cell>
                               <Table.Cell>{e?.longitud}</Table.Cell>
                               <Table.Cell>{e?.pueblo}</Table.Cell>
-                              <Table.Cell>{e?.numeroProyecto}</Table.Cell>
+                              <Table.Cell className='text-nowrap'>{e?.numeroProyecto}</Table.Cell>
                               <Table.Cell>
                                  <Progress
                                     color="cyan"
