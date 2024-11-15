@@ -101,7 +101,6 @@ function AddCaso() {
          ...prev,
          [name]: new Date(e),
       }));
-      console.log(formData);
    };
 
    const handleFile = (e: ChangeEvent<HTMLInputElement>) => {

@@ -270,6 +270,11 @@ const inputs = [
       label: 'Cantidad estimado a remover',
    },
    {
+      name: 'cantidadDesperdiciada',
+      type: 'text',
+      label: 'Cantidad de material desperdiciado',
+   },
+   {
       name: 'descripcionProyecto',
       type: 'select',
       label: 'Descripción',

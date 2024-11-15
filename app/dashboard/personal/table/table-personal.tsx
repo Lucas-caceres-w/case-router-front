@@ -39,13 +39,21 @@ function TablePersonal({
             const cert = e?.certificacions?.find(
                (cert: any) => cert.tipoDocumento === 'asbesto'
             );
-            console.log(cert);
             return cert ? (
-               <a target="_blank" href={staticsCerts + cert.fileName}>
+               <span
+                  onClick={() =>
+                     router.push(
+                        `/dashboard/personal?estatus=${estatus}&certificacion=${e.id}`
+                     )
+                  }
+                  className="text-white px-2 py-1 bg-green-600 rounded-md cursor-pointer"
+               >
                   SI
-               </a>
+               </span>
             ) : (
-               'NO'
+               <span className="text-white px-1 py-1 bg-red-600 rounded-md">
+                  NO
+               </span>
             );
          },
          date: false,
@@ -81,11 +89,20 @@ function TablePersonal({
                (cert: any) => cert.tipoDocumento === 'plomo'
             );
             return cert ? (
-               <a target="_blank" href={staticsCerts + cert.fileName}>
+               <span
+                  onClick={() =>
+                     router.push(
+                        `/dashboard/personal?estatus=${estatus}&certificacion=${e.id}`
+                     )
+                  }
+                  className="text-white px-2 py-1 bg-green-600 rounded-md cursor-pointer"
+               >
                   SI
-               </a>
+               </span>
             ) : (
-               'NO'
+               <span className="text-white px-1 py-1 bg-red-600 rounded-md">
+                  NO
+               </span>
             );
          },
          date: false,
@@ -121,6 +138,7 @@ function TablePersonal({
                (acc: Set<string>, cert: any) => {
                   if (
                      cert.tipoDocumento === 'plomo' ||
+                     cert.tipoDocumento === 'asbesto/plomo' ||
                      cert.tipoDocumento === 'asbesto'
                   ) {
                      acc.add(cert.tipoDocumento);
@@ -139,9 +157,24 @@ function TablePersonal({
          name: 'Evaluacion Medica',
          accessor: (e: Personal) => {
             const cert = e?.certificacions?.find(
-               (cert: any) => cert.tipoDocumento === 'Medica'
+               (cert: any) => cert.tipoDocumento.toLowerCase() === 'medica'
             );
-            return cert ? cert.tipoEvaluacion : 'NO';
+            return cert ? (
+               <span
+                  onClick={() =>
+                     router.push(
+                        `/dashboard/personal?estatus=${estatus}&certificacion=${e.id}`
+                     )
+                  }
+                  className="text-white px-2 py-1 bg-green-600 rounded-md cursor-pointer"
+               >
+                  SI
+               </span>
+            ) : (
+               <span className="text-white px-1 py-1 bg-red-600 rounded-md">
+                  NO
+               </span>
+            );
          },
          date: false,
       },
@@ -176,11 +209,20 @@ function TablePersonal({
                (cert: any) => cert.tipoDocumento === 'fitTest'
             );
             return cert ? (
-               <a target="_blank" href={staticsCerts + cert.fileName}>
+               <span
+                  onClick={() =>
+                     router.push(
+                        `/dashboard/personal?estatus=${estatus}&certificacion=${e.id}`
+                     )
+                  }
+                  className="text-white px-2 py-1 bg-green-600 rounded-md cursor-pointer"
+               >
                   SI
-               </a>
+               </span>
             ) : (
-               'NO'
+               <span className="text-white px-1 py-1 bg-red-600 rounded-md">
+                  NO
+               </span>
             );
          },
          date: false,
@@ -216,11 +258,20 @@ function TablePersonal({
                (cert: any) => cert.tipoDocumento === 'resultadoMedica'
             );
             return cert ? (
-               <a target="_blank" href={staticsCerts + cert.fileName}>
+               <span
+                  onClick={() =>
+                     router.push(
+                        `/dashboard/personal?estatus=${estatus}&certificacion=${e.id}`
+                     )
+                  }
+                  className="text-white px-2 py-1 bg-green-600 rounded-md cursor-pointer"
+               >
                   SI
-               </a>
+               </span>
             ) : (
-               'NO'
+               <span className="text-white px-1 py-1 bg-red-600 rounded-md">
+                  NO
+               </span>
             );
          },
          date: false,
@@ -232,11 +283,20 @@ function TablePersonal({
                (cert) => cert.tipoDocumento === 'resultadoFitTest'
             );
             return cert ? (
-               <a target="_blank" href={staticsCerts + cert.fileName}>
+               <span
+                  onClick={() =>
+                     router.push(
+                        `/dashboard/personal?estatus=${estatus}&certificacion=${e.id}`
+                     )
+                  }
+                  className="text-white px-2 py-1 bg-green-600 rounded-md cursor-pointer"
+               >
                   SI
-               </a>
+               </span>
             ) : (
-               'NO'
+               <span className="text-white px-1 py-1 bg-red-600 rounded-md">
+                  NO
+               </span>
             );
          },
          date: false,
@@ -248,11 +308,20 @@ function TablePersonal({
                (cert) => cert.tipoDocumento === 'licencia'
             );
             return cert ? (
-               <a target="_blank" href={staticsCerts + cert.fileName}>
-                  categoria:{cert.tipoEvaluacion}
-               </a>
+               <span
+                  onClick={() =>
+                     router.push(
+                        `/dashboard/personal?estatus=${estatus}&certificacion=${e.id}`
+                     )
+                  }
+                  className="text-white px-2 py-1 bg-green-600 rounded-md cursor-pointer"
+               >
+                  SI
+               </span>
             ) : (
-               'NO'
+               <span className="text-white px-1 py-1 bg-red-600 rounded-md">
+                  NO
+               </span>
             );
          },
          date: false,
@@ -288,11 +357,20 @@ function TablePersonal({
                (cert) => cert.tipoDocumento === 'otros'
             );
             return cert ? (
-               <a target="_blank" href={staticsCerts + cert.fileName}>
+               <span
+                  onClick={() =>
+                     router.push(
+                        `/dashboard/personal?estatus=${estatus}&certificacion=${e.id}`
+                     )
+                  }
+                  className="text-white px-2 py-1 bg-green-600 rounded-md cursor-pointer"
+               >
                   SI
-               </a>
+               </span>
             ) : (
-               'NO'
+               <span className="text-white px-1 py-1 bg-red-600 rounded-md">
+                  NO
+               </span>
             );
          },
          date: false,

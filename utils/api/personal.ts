@@ -5,7 +5,7 @@ const getPersonal = async (estatus: string) => {
    try {
       const res = await fetch(`${apiUrl}/personal?estatus=${estatus}`);
       const json = await res.json();
-      console.log(json);
+
       return json;
    } catch (err) {
       return err;
@@ -37,6 +37,17 @@ const addPersonal = async (data: any, estatus: string) => {
          },
          body: JSON.stringify(data),
       });
+      const json = await res.json();
+
+      return json;
+   } catch (err) {
+      return err;
+   }
+};
+
+const getCertificaciones = async (id: string) => {
+   try {
+      const res = await fetch(`${apiUrl}/personal/certificaciones/${id}`);
       const json = await res.json();
 
       return json;
@@ -84,6 +95,7 @@ const deletePersonal = async (estatus: string | null, id: string | null) => {
 
 const uploadCertification = async (body: any) => {
    const { formData, idParam, inicio, expiracion, tipo, tipoEvaluacion } = body;
+   console.log(tipo, tipoEvaluacion);
    try {
       const res = await fetch(
          `${apiUrl}/personal/documento/${idParam}?tipo=${tipo}&inicio=${inicio}&exp=${expiracion}&tipoEvaluacion=${tipoEvaluacion}`,
@@ -134,6 +146,22 @@ const ImportPersonal = async (file: importPersonal[]) => {
    }
 };
 
+const deleteCertificacion = async (idCert: string) => {
+   try {
+      const res = await fetch(`${apiUrl}/personal/certificacion/${idCert}`, {
+         method: 'DELETE',
+         headers: {
+            'Content-Type': 'application/json',
+         },
+      });
+      const json = await res.json();
+
+      return json;
+   } catch (err) {
+      return err;
+   }
+};
+
 export {
    getPersonal,
    getOnePersonal,
@@ -142,4 +170,6 @@ export {
    deletePersonal,
    uploadCertification,
    ImportPersonal,
+   getCertificaciones,
+   deleteCertificacion,
 };

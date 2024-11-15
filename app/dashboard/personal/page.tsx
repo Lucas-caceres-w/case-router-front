@@ -11,6 +11,7 @@ import DeletePersonal from './deletePersonal';
 import UpCertificado from './addCertificaciones';
 import ChangeStatus from './trabaja';
 import useGetAllSearchParams from '@/components/estatusC';
+import CertsModal from './getCertificaciones';
 
 
 function PersonalPages() {
@@ -42,6 +43,7 @@ function PersonalPages() {
                <DeletePersonal refreshPersonal={fetchPersonal} />
                <UpCertificado refreshPersonal={fetchPersonal} />
                <ChangeStatus refreshPersonal={fetchPersonal} />
+               <CertsModal refreshPersonal={fetchPersonal}/>
             </section>
          </div>
          <React.Suspense fallback="Cargando...">

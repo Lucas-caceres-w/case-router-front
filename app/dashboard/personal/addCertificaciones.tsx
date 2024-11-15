@@ -125,9 +125,13 @@ function UpCertificado({ refreshPersonal }: { refreshPersonal: () => void }) {
             formData,
             inicio: fechaExportacion.inicio,
             expiracion: fechaExportacion.exp,
-            tipo: selectedOption === 'medica' ? selectedMedica : selectedOption,
+            tipo: selectedOption.toLowerCase(),
             tipoEvaluacion:
-               selectedOption === 'licencia' ? selectedLicencia : null,
+               selectedOption.toLowerCase() === 'medica'
+                  ? selectedMedica
+                  : selectedOption.toLowerCase() === 'licencia'
+                  ? selectedLicencia
+                  : '',
             idParam,
          });
          if (res) {
@@ -168,7 +172,7 @@ function UpCertificado({ refreshPersonal }: { refreshPersonal: () => void }) {
                         );
                      })}
                   </Select>
-                  {selectedOption === 'medica' && (
+                  {selectedOption.toLowerCase() === 'medica' && (
                      <div className="pt-2">
                         <Label>Seleccionar tipo de Evaluación medica</Label>
                         <Select required onChange={handleChangeMedica}>

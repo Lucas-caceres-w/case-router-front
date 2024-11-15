@@ -100,7 +100,6 @@ function AddPersonal({ refreshPersonal }: { refreshPersonal: () => void }) {
          ...prev,
          [name]: new Date(e),
       }));
-      console.log(formData);
    };
 
    const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
@@ -136,13 +135,18 @@ function AddPersonal({ refreshPersonal }: { refreshPersonal: () => void }) {
             const dataRows = jsonData.slice(1);
             const parsedData = dataRows
                .map((row: any) => {
-                  const rowData: importPersonal[] | any =
-                     {} as importPersonal[];
-                  if (row.some((value: string) => value.trim() !== '')) {
-                     row.forEach((value: string, index: any) => {
+                  const rowData: any = {};
+                  if (
+                     row.some(
+                        (value) =>
+                           typeof value === 'string' && value.trim() !== ''
+                     )
+                  ) {
+                     row.forEach((value, index: any) => {
                         const label = customKeys[index];
                         if (label === 'trabaja') {
                            rowData[label] =
+                              typeof value === 'string' &&
                               value.trim().toLowerCase() === 'si'
                                  ? true
                                  : false;
