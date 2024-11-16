@@ -30,7 +30,7 @@ function CasosPage() {
    }, []);
 
    return (
-      <div className="ml-24 lg:ml-56 mt-10 !w-[calc(100% - 200px)]">
+      <main className="ml-24 lg:ml-56 mt-10 !w-[calc(100% - 200px)]">
          <div className="flex justify-between items-center">
             <Tittle>Proyectos</Tittle>
             <UploadModal />
@@ -47,9 +47,9 @@ function CasosPage() {
             <MaterialDesperdiciado />
          </div>
          <React.Suspense fallback="Cargando...">
-            <TableComp initialCols={proyectos ?? []} />
+            <TableComp initialCols={proyectos || []} />
          </React.Suspense>
-      </div>
+      </main>
    );
 }
 
