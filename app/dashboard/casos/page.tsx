@@ -1,10 +1,11 @@
+'use client'
 import TableComp from './table/table-casos';
 import Tittle from '@/components/title';
 import { getCasos } from '@/utils/api/casos';
 import AddCaso from './addCaso';
 import UploadModal from './uploadFile';
 import EditCaso from './editCaso';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DeleteCaso from './deleteCaso';
 import RegionEdit from './editRegion';
 import ChangeStatus from './changeStatus';
@@ -14,10 +15,20 @@ import ImagesModal from './getFotos';
 import DatesModal from './datesCaso';
 import DocsModal from './getDocs';
 import MaterialDesperdiciado from './materialDesperdiciado';
+import { Caso } from '@/utils/types';
 
-async function CasosPage() {
-   const data = await getCasos();
-   //console.log(data)
+function CasosPage() {
+   const [proyectos, setProyectos] = useState<Caso[]>();
+
+   const fetchProyectos = async () => {
+      const data = await getCasos();
+      setProyectos(data);
+   };
+   
+   useEffect(() => {
+      fetchProyectos()
+   }, []);
+
    return (
       <div className="ml-24 lg:ml-56 mt-10 !w-[calc(100% - 200px)]">
          <div className="flex justify-between items-center">
@@ -32,11 +43,11 @@ async function CasosPage() {
             <DatesModal />
             <UploadImages />
             <ImagesModal />
-            <DocsModal />
+            <DocsModal refreshProyectos={fetchProyectos} />
             <MaterialDesperdiciado />
          </div>
          <React.Suspense fallback="Cargando...">
-            <TableComp initialCols={data ?? []} />
+            <TableComp initialCols={proyectos ?? []} />
          </React.Suspense>
       </div>
    );

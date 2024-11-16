@@ -1,23 +1,37 @@
 'use client';
 import { DeleteDoc } from '@/utils/api/casos';
-import { deleteCertificacion, getCertificaciones } from '@/utils/api/personal';
+import {
+   deleteCertificacion,
+   editCertificacion,
+   getCertificaciones,
+   getOneCertificacion,
+} from '@/utils/api/personal';
 import { staticsCerts } from '@/utils/routes';
 import { format } from 'date-fns';
 import {
    Alert,
    Button,
+   Datepicker,
+   Label,
    Modal,
    ModalBody,
    ModalFooter,
    ModalHeader,
 } from 'flowbite-react';
+import { Pencil, X } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-function CertsModal({refreshPersonal}) {
+function CertsModal({ refreshPersonal }: { refreshPersonal: () => void }) {
    const params = useSearchParams();
    const router = useRouter();
    const [loading, setLoading] = useState(false);
+   const [certificacion, setCertificacion] = useState();
+   const [selectFechas, setSelectFechas] = useState({
+      fechaInicio: new Date(),
+      fechaExpiracion: new Date(),
+   });
+   const [editCert, setEditCert] = useState(false);
    const [tipoDocs, settipoDocs] = useState();
    const [docs, setDocs] = useState();
    const idPersonal = params.get('certificacion');
@@ -85,7 +99,40 @@ function CertsModal({refreshPersonal}) {
          callToast('success', 'Documento eliminado correctamente');
          setTimeout(() => {
             getCerts();
-            refreshPersonal()
+            refreshPersonal();
+         }, 2000);
+      } else {
+         callToast('failure', 'Ocurrio un error');
+      }
+   };
+
+   const getOneCert = async (id: string) => {
+      const res = await getOneCertificacion(id);
+      if (res) {
+         setEditCert(true);
+         setCertificacion(res)
+         setSelectFechas({
+            fechaInicio: new Date(res.fechaInicio),
+            fechaExpiracion: new Date(res.fechaExpiracion),
+         });
+      }
+   };
+
+   const selectFechaExportacion = (e: Date, name: string) => {
+      setSelectFechas((prev: any) => ({
+         ...prev,
+         [name]: new Date(e),
+      }));
+   };
+
+   const editCertificado = async (id: string) => {
+      const res = await editCertificacion(id, selectFechas);
+      if (res === 'certificado editado') {
+         callToast('success', 'Certificacion editada correctamente');
+         setTimeout(() => {
+            getCerts();
+            refreshPersonal();
+            setEditCert(false);
          }, 2000);
       } else {
          callToast('failure', 'Ocurrio un error');
@@ -112,7 +159,7 @@ function CertsModal({refreshPersonal}) {
                                 Certificado tipo: {tipo}
                              </h2>
                              <ul className="list-disc ml-6">
-                                {file?.map((doc) => (
+                                {file?.map((doc: any) => (
                                    <li key={doc.id} className="my-2">
                                       <div className="flex flex-row gap-2">
                                          <span className="w-48 overflow-hidden">
@@ -133,10 +180,16 @@ function CertsModal({refreshPersonal}) {
                                             )}
                                          </span>
                                          <span
-                                            onClick={() => deleteDoc(doc.id)}
-                                            className="text-red-500 ml-4 cursor-pointer"
+                                            onClick={() => getOneCert(doc.id)}
+                                            className="text-cyan-500 cursor-pointer"
                                          >
-                                            X
+                                            <Pencil size={'20'} />
+                                         </span>
+                                         <span
+                                            onClick={() => deleteDoc(doc.id)}
+                                            className="text-red-500 cursor-pointer"
+                                         >
+                                            <X size={'22'} />
                                          </span>
                                       </div>
                                    </li>
@@ -157,6 +210,55 @@ function CertsModal({refreshPersonal}) {
                   Cerrar
                </Button>
             </ModalFooter>
+            <Modal show={editCert} onClose={() => setEditCert(false)}>
+               <ModalHeader>Editar fechas de certificado</ModalHeader>
+               <ModalBody className="flex flex-row">
+                  <div className="mt-4 w-full pb-12">
+                     <Label>Fecha de inicio</Label>
+                     <Datepicker
+                        onSelectedDateChanged={(e) =>
+                           selectFechaExportacion(e, 'fechaInicio')
+                        }
+                        language="es-ES"
+                        showTodayButton={false}
+                        showClearButton={false}
+                        required
+                        className="w-5/12 absolute"
+                        name="fechaInicio"
+                        value={
+                           selectFechas
+                              ? format(selectFechas.fechaInicio, 'dd-MM-yy')
+                              : ''
+                        }
+                     />
+                  </div>
+                  <div className="mt-4 w-full pb-12">
+                     <Label>Fecha de expiración</Label>
+                     <Datepicker
+                        onSelectedDateChanged={(e) =>
+                           selectFechaExportacion(e, 'fechaExpiracion')
+                        }
+                        language="es-ES"
+                        showTodayButton={false}
+                        showClearButton={false}
+                        required
+                        className="w-5/12 absolute"
+                        name="fechaExpiracion"
+                        value={
+                           selectFechas
+                              ? format(selectFechas.fechaExpiracion, 'dd-MM-yy')
+                              : ''
+                        }
+                     />
+                  </div>
+               </ModalBody>
+               <ModalFooter className="flex justify-end">
+                  <Button onClick={() => editCertificado(certificacion?.id)}>
+                     Guardar
+                  </Button>
+                  <Button onClick={() => setEditCert(false)}>Cancelar</Button>
+               </ModalFooter>
+            </Modal>
          </Modal>
       </>
    );

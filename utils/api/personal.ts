@@ -162,6 +162,34 @@ const deleteCertificacion = async (idCert: string) => {
    }
 };
 
+const getOneCertificacion = async (id: string) => {
+   try {
+      const res = await fetch(`${apiUrl}/personal/certificacion/${id}`);
+      const json = await res.json();
+
+      return json;
+   } catch (err) {
+      return err;
+   }
+};
+
+const editCertificacion = async (id: string, data: any) => {
+   try {
+      const res = await fetch(`${apiUrl}/personal/certificacion/${id}`, {
+         method: 'PATCH',
+         body: JSON.stringify({ data }),
+         headers: {
+            'Content-Type': 'application/json',
+         },
+      });
+      const json = await res.json();
+
+      return json;
+   } catch (err) {
+      return err;
+   }
+};
+
 export {
    getPersonal,
    getOnePersonal,
@@ -172,4 +200,6 @@ export {
    ImportPersonal,
    getCertificaciones,
    deleteCertificacion,
+   getOneCertificacion,
+   editCertificacion,
 };
