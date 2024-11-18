@@ -173,7 +173,7 @@ function ChartsSection({
    };
 
    const fechasFin = proyectos
-      .filter((proyecto) => proyecto.estatus === 'completado')
+      .filter((proyecto) => proyecto.estatus.toLowerCase() === 'completado')
       .map((proyecto) => new Date(proyecto.fechaFin));
 
    const fechasAsbesto = proyectos

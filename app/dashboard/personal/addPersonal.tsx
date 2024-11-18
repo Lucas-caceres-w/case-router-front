@@ -162,7 +162,7 @@ function AddPersonal({ refreshPersonal }: { refreshPersonal: () => void }) {
             if (parsedData) {
                setLoading(true);
                const res = await ImportPersonal(parsedData);
-               if (res === 'AddCases') {
+               if (res === 'AddPersonal') {
                   setLoading(false);
                   setImportData(false);
                   router.replace('/dashboard/personal?estatus=' + estatus);
