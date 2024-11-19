@@ -22,7 +22,7 @@ import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import * as XLSX from 'xlsx';
 
-function AddCaso() {
+function AddCaso({ refreshProyectos }: { refreshProyectos: () => void }) {
    const [modal, setModal] = useState(false);
    const initialForm = {
       gerenteProyecto: '',
@@ -37,7 +37,12 @@ function AddCaso() {
       pueblo: '',
       descripcionProyecto: '',
       materialARemover: '',
-      cantidadEstimada: '',
+      cantidadEstimadaPlomoYardas: '',
+      cantidadEstimadaPlomoPiesCuad: '',
+      cantidadEstimadaPlomoPiesLineales: '',
+      cantidadEstimadaAsbestoYardas: '',
+      cantidadEstimadaAsbestoPiesCuad: '',
+      cantidadEstimadaAsbestoPiesLineales: '',
       fechaInicio: '',
       fechaFin: '',
    };
@@ -117,7 +122,7 @@ function AddCaso() {
             callToast('warning', 'El Proyecto ya existe');
          } else if (res === 'Proyecto creado') {
             setModal(false);
-            router.refresh();
+            refreshProyectos()
             callToast('success', 'Proyecto agregado');
          } else {
             callToast('warning', 'Error inesperado');
@@ -160,7 +165,14 @@ function AddCaso() {
                'estatus',
                'descripcionProyecto',
                'materialARemover',
-               'cantidadEstimada',
+               'cantidadDesperdiciadaPlomo',
+               'cantidadEstimadaPlomoYardas',
+               'cantidadEstimadaPlomoPiesCuad',
+               'cantidadEstimadaPlomoPiesLineales',
+               'cantidadDesperdiciadaAsbesto',
+               'cantidadEstimadaAsbestoYardas',
+               'cantidadEstimadaAsbestoPiesCuad',
+               'cantidadEstimadaAsbestoPiesLineales',
             ];
             const dataRows = jsonData.slice(1);
             const parsedData = dataRows
@@ -249,8 +261,22 @@ function AddCaso() {
                   ? format(new Date(caso?.fechaAdjudicado), 'dd-MM-yyyy')
                   : 'Sin fecha';
                const materialARemover = caso.materialARemover;
-               const cantidadEstimada = caso.cantidadEstimada;
-               const cantidadDesperdiciada = caso.cantidadDesperdiciada;
+               const cantidadDesperdiciadaPlomo =
+                  caso.cantidadDesperdiciadaPlomo;
+               const cantidadEstimadaPlomoYardas =
+                  caso.cantidadEstimadaPlomoYardas;
+               const cantidadEstimadaPlomoPiesCuad =
+                  caso.cantidadEstimadaPlomoPiesCuad;
+               const cantidadEstimadaPlomoPiesLineales =
+                  caso.cantidadEstimadaPlomoPiesLineales;
+               const cantidadDesperdiciadaAsbesto =
+                  caso.cantidadDesperdiciadaAsbesto;
+               const cantidadEstimadaAsbestoYardas =
+                  caso.cantidadEstimadaAsbestoYardas;
+               const cantidadEstimadaAsbestoPiesCuad =
+                  caso.cantidadEstimadaAsbestoPiesCuad;
+               const cantidadEstimadaAsbestoPiesLineales =
+                  caso.cantidadEstimadaAsbestoPiesLineales;
                const comentarios = caso.observaciones;
 
                const planAsbesto = caso.documento.planAsbesto;
@@ -314,8 +340,19 @@ function AddCaso() {
                   'Descripcion del proyecto': descripcionProyecto,
                   'Fecha de adjudicacion': fechaAdjudicado,
                   'Material a remover': materialARemover,
-                  'Cantidad estimada': cantidadEstimada,
-                  'Cantidad desperdiciada': cantidadDesperdiciada,
+                  'Cantidad estimada asbesto yds':
+                     cantidadEstimadaAsbestoYardas,
+                  'Cantidad estimada asbesto ft 2':
+                     cantidadEstimadaAsbestoPiesCuad,
+                  'Cantidad estimada asbesto ft LNL':
+                     cantidadEstimadaAsbestoPiesLineales,
+                  'Cantidad desperdiciada asbesto':
+                     cantidadDesperdiciadaAsbesto,
+                  'Cantidad estimada plomo yds': cantidadEstimadaPlomoYardas,
+                  'Cantidad estimada plomo ft 2': cantidadEstimadaPlomoPiesCuad,
+                  'Cantidad estimada plomo ft LNL':
+                     cantidadEstimadaPlomoPiesLineales,
+                  'Cantidad desperdiciada plomo': cantidadDesperdiciadaPlomo,
                   'Ultima actualizacion': ultimaActualizacion,
                   'Plan de trabajo de Asbesto (ABS)': planAsbesto ? 'SI' : 'NO',
                   'Plan de trabajo de Plomo (LBL)': planPlomo ? 'SI' : 'NO',
@@ -395,6 +432,15 @@ function AddCaso() {
       }
    };
 
+   const shouldRenderField = (fieldMaterial, selectedMaterial) => {
+      if (!selectedMaterial) return false;
+      selectedMaterial = selectedMaterial.toLowerCase();
+      return (
+         fieldMaterial === selectedMaterial ||
+         selectedMaterial === 'asbesto/plomo'
+      );
+   };
+
    return (
       <div className="w-full flex justify-end gap-4 mr-10">
          {showToast && <ToastAttr color={color} text={text} />}
@@ -414,21 +460,36 @@ function AddCaso() {
          <Modal show={modal} onClose={() => setModal(false)}>
             <Modal.Header>Agregar proyecto</Modal.Header>
             <form onSubmit={onSubmit}>
-               <Modal.Body className="grid grid-cols-2 gap-2 h-max">
+               <Modal.Body className="grid grid-cols-2 gap-x-2">
                   {inputs?.map((e: any, idx: number) => {
+                     const shouldRender =
+                        e.type === 'text' &&
+                        (!e.material ||
+                           e.material === formData?.materialARemover ||
+                           formData?.materialARemover?.toLowerCase() ===
+                              'asbesto/plomo');
                      return (
-                        <div className="flex flex-col gap-2" key={idx}>
-                           {e.type === 'text' && (
-                              <>
+                        <div
+                           className={`flex flex-col gap-1 ${
+                              shouldRender ||
+                              e.type === 'select' ||
+                              e.type === 'date'
+                                 ? ''
+                                 : 'hidden'
+                           }`}
+                           key={idx}
+                        >
+                           {shouldRender && (
+                              <div key={e.name}>
                                  <Label>{e.label}</Label>
                                  <TextInput
                                     onChange={handleChange}
-                                    value={formData[e.name]}
+                                    value={formData[e.name] || ''}
                                     type={e.type}
                                     name={e.name}
                                     required
                                  />
-                              </>
+                              </div>
                            )}
                            {e.type === 'select' && (
                               <>
@@ -590,9 +651,40 @@ const inputs = [
    { name: 'nombreCliente', type: 'text', label: 'Nombre de cliente' },
    { name: 'nombreProyecto', type: 'text', label: 'Nombre de proyecto' },
    {
-      name: 'cantidadEstimada',
+      name: 'cantidadEstimadaAsbestoYardas',
       type: 'text',
-      label: 'Cantidad estimado a remover',
+      label: 'Cantidad estimado a remover en yardas (ABS)',
+      material: 'Asbesto',
+   },
+   {
+      name: 'cantidadEstimadaAsbestoPiesCuad',
+      type: 'text',
+      label: 'Cantidad estimado a remover en ft2 (ABS)',
+      material: 'Asbesto',
+   },
+   {
+      name: 'cantidadEstimadaAsbestoPiesLineales',
+      type: 'text',
+      label: 'Cantidad estimado a remover en ft lnl (ABS)',
+      material: 'Asbesto',
+   },
+   {
+      name: 'cantidadEstimadaPlomoYardas',
+      type: 'text',
+      label: 'Cantidad estimado a remover en yardas(LBL)',
+      material: 'Plomo',
+   },
+   {
+      name: 'cantidadEstimadaPlomoPiesCuad',
+      type: 'text',
+      label: 'Cantidad estimado a remover en ft2(LBL)',
+      material: 'Plomo',
+   },
+   {
+      name: 'cantidadEstimadaPlomoPiesLineales',
+      type: 'text',
+      label: 'Cantidad estimado a remover en ft lnl(LBL)',
+      material: 'Plomo',
    },
    {
       name: 'descripcionProyecto',

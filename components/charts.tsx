@@ -179,6 +179,7 @@ function ChartsSection({
    const fechasAsbesto = proyectos
       .filter(
          (proyecto) =>
+            proyecto.estatus.toLowerCase() === 'completado' &&
             proyecto.materialARemover.toLowerCase() === 'asbesto' ||
             proyecto.materialARemover.toLowerCase() === 'asbesto/plomo'
       )
@@ -187,6 +188,7 @@ function ChartsSection({
    const fechasPlomo = proyectos
       .filter(
          (proyecto) =>
+            proyecto.estatus.toLowerCase() === 'completado' &&
             proyecto.materialARemover.toLowerCase() === 'plomo' ||
             proyecto.materialARemover.toLowerCase() === 'asbesto/plomo'
       )

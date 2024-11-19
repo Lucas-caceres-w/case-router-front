@@ -56,8 +56,14 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
       { label: 'Descripción del Proyecto' },
       { label: 'Fecha de Adjudicación' },
       { label: 'Material a remover' },
-      { label: 'Cantidad estimada a remover' },
-      { label: 'Cantidad de desperdicio' },
+      { label: 'Cantidad estimada a remover en YDS (ABS)' },
+      { label: 'Cantidad estimada a remover en ft2 (ABS)' },
+      { label: 'Cantidad estimada a remover en ft lnl (ABS)' },
+      { label: 'Cantidad estimada a remover en YDS (LBL)' },
+      { label: 'Cantidad estimada a remover en ft2 (LBL)' },
+      { label: 'Cantidad estimada a remover en ft lnl (LBL)' },
+      { label: 'Cantidad de desperdicio (ABS)' },
+      { label: 'Cantidad de desperdicio (LBL)' },
       { label: 'Plan de trabajo de Asbesto (ABS)' },
       { label: 'Plan de trabajo de Plomo (LBP)' },
       { label: 'Estudio Ambiental de Asbesto' },
@@ -165,20 +171,21 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
    }, [currentPage, initialCols, itemsPerPage]);
 
    const getValue = (valor: string | string[], id: string) => {
-      const res = valor && valor.length > 0 ? (
-         <Tooltip className="z-40" content="Abrir">
-            <span
-               onClick={() => router.push('/dashboard/casos?docs=' + id)}
-               className="bg-green-400 border-2 border-green-600 p-[5px] px-2 rounded-md text-white cursor-pointer"
-            >
-               SI
+      const res =
+         valor && valor.length > 0 ? (
+            <Tooltip className="z-40" content="Abrir">
+               <span
+                  onClick={() => router.push('/dashboard/casos?docs=' + id)}
+                  className="bg-green-400 border-2 border-green-600 p-[5px] px-2 rounded-md text-white cursor-pointer"
+               >
+                  SI
+               </span>
+            </Tooltip>
+         ) : (
+            <span className="bg-red-500 border-2 border-red-600 p-[5px] rounded-md text-white">
+               NO
             </span>
-         </Tooltip>
-      ) : (
-         <span className="bg-red-500 border-2 border-red-600 p-[5px] rounded-md text-white">
-            NO
-         </span>
-      );
+         );
 
       return res;
    };
@@ -488,7 +495,9 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                               <Table.Cell>{e?.latitud}</Table.Cell>
                               <Table.Cell>{e?.longitud}</Table.Cell>
                               <Table.Cell>{e?.pueblo}</Table.Cell>
-                              <Table.Cell className='text-nowrap'>{e?.numeroProyecto}</Table.Cell>
+                              <Table.Cell className="text-nowrap">
+                                 {e?.numeroProyecto}
+                              </Table.Cell>
                               <Table.Cell>
                                  <Progress
                                     color="cyan"
@@ -515,9 +524,29 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                                     : '-'}
                               </Table.Cell>
                               <Table.Cell>{e?.materialARemover}</Table.Cell>
-                              <Table.Cell>{e?.cantidadEstimada}</Table.Cell>
                               <Table.Cell>
-                                 {e?.cantidadDesperdiciada}
+                                 {e?.cantidadEstimadaAsbestoYardas}
+                              </Table.Cell>
+                              <Table.Cell>
+                                 {e?.cantidadEstimadaAsbestoPiesCuad}
+                              </Table.Cell>
+                              <Table.Cell>
+                                 {e?.cantidadEstimadaAsbestoPiesLineales}
+                              </Table.Cell>
+                              <Table.Cell>
+                                 {e?.cantidadEstimadaPlomoYardas}
+                              </Table.Cell>
+                              <Table.Cell>
+                                 {e?.cantidadEstimadaPlomoPiesCuad}
+                              </Table.Cell>
+                              <Table.Cell>
+                                 {e?.cantidadEstimadaPlomoPiesLineales}
+                              </Table.Cell>
+                              <Table.Cell>
+                                 {e?.cantidadDesperdiciadaAsbesto}
+                              </Table.Cell>
+                              <Table.Cell>
+                                 {e?.cantidadDesperdiciadaPlomo}
                               </Table.Cell>
                               <Table.Cell>
                                  {getValue(e?.documento?.planAsbesto, e.id)}

@@ -34,8 +34,8 @@ function CasosPage() {
          <div className="flex justify-between items-center">
             <Tittle>Proyectos</Tittle>
             <UploadModal />
-            <EditCaso />
-            <AddCaso />
+            <EditCaso refreshProyectos={fetchProyectos} />
+            <AddCaso refreshProyectos={fetchProyectos} />
             <DeleteCaso />
             <RegionEdit />
             <ChangeStatus />

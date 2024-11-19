@@ -51,8 +51,14 @@ export type Caso = {
    fechaAdjudicado: Date;
    materialRemovido: string;
    materialARemover: string;
-   cantidadEstimada: string;
-   cantidadDesperdiciada: string;
+   cantidadDesperdiciadaPlomo: string;
+   cantidadEstimadaPlomoYardas: string;
+   cantidadEstimadaPlomoPiesCuad: string;
+   cantidadEstimadaPlomoPiesLineales: string;
+   cantidadDesperdiciadaAsbesto: string;
+   cantidadEstimadaAsbestoYardas: string;
+   cantidadEstimadaAsbestoPiesCuad: string;
+   cantidadEstimadaAsbestoPiesLineales: string;
    fechaRecibido: Date;
    fechaCambioOrden: string;
    diasAdicionales: Date;

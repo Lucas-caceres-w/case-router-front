@@ -18,7 +18,7 @@ import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useEffect, useState } from 'react';
 
-function EditCaso() {
+function EditCaso({ refreshProyectos }: { refreshProyectos: () => void }) {
    const params = useSearchParams();
    const router = useRouter();
    const [loading, setLoading] = useState(false);
@@ -35,8 +35,14 @@ function EditCaso() {
       pueblo: '',
       descripcionProyecto: '',
       materialARemover: '',
-      cantidadDesperdiciada: '',
-      cantidadEstimada: '',
+      cantidadDesperdiciadaPlomo: '',
+      cantidadEstimadaPlomoYardas: '',
+      cantidadEstimadaPlomoPiesCuad: '',
+      cantidadEstimadaPlomoPiesLineales: '',
+      cantidadDesperdiciadaAsbesto: '',
+      cantidadEstimadaAsbestoYardas: '',
+      cantidadEstimadaAsbestoPiesCuad: '',
+      cantidadEstimadaAsbestoPiesLineales: '',
       fechaInicio: '',
       fechaFin: '',
    };
@@ -84,7 +90,14 @@ function EditCaso() {
          nombreProyecto,
          numeroProyecto,
          direccionProyecto,
-         cantidadEstimada,
+         cantidadEstimadaAsbestoYardas,
+         cantidadEstimadaAsbestoPiesCuad,
+         cantidadEstimadaAsbestoPiesLineales,
+         cantidadEstimadaPlomoPiesCuad,
+         cantidadEstimadaPlomoPiesLineales,
+         cantidadEstimadaPlomoYardas,
+         cantidadDesperdiciadaAsbesto,
+         cantidadDesperdiciadaPlomo,
          latitud,
          longitud,
          pueblo,
@@ -101,7 +114,14 @@ function EditCaso() {
          nombreProyecto,
          numeroProyecto,
          direccionProyecto,
-         cantidadEstimada,
+         cantidadEstimadaAsbestoYardas,
+         cantidadEstimadaAsbestoPiesCuad,
+         cantidadEstimadaAsbestoPiesLineales,
+         cantidadEstimadaPlomoPiesCuad,
+         cantidadEstimadaPlomoPiesLineales,
+         cantidadEstimadaPlomoYardas,
+         cantidadDesperdiciadaAsbesto,
+         cantidadDesperdiciadaPlomo,
          latitud,
          longitud,
          pueblo,
@@ -137,10 +157,7 @@ function EditCaso() {
          //console.log(res);
          if (res === 'Caso actualizado') {
             callToast('success', 'Caso actualizado');
-            setTimeout(() => {
-               router.push('/dashboard/casos');
-               router.refresh();
-            }, 1000);
+            refreshProyectos();
          } else {
             callToast('failure', 'Error al actualizar el caso');
          }
@@ -165,19 +182,33 @@ function EditCaso() {
             <form onSubmit={OnSubmit}>
                <Modal.Body className="grid grid-cols-2 gap-2 h-max">
                   {inputs?.map((e: any, idx: number) => {
+                     const shouldRender =
+                        e.type === 'text' &&
+                        (!e.material ||
+                           e.material === edit?.materialARemover ||
+                           edit?.materialARemover?.toLowerCase() ===
+                              'asbesto/plomo');
                      return (
-                        <div className="flex flex-col gap-2" key={idx}>
-                           {e.type === 'text' && (
-                              <>
+                        <div
+                           className={`flex flex-col gap-1 ${
+                              shouldRender ||
+                              e.type === 'select' ||
+                              e.type === 'date'
+                                 ? ''
+                                 : 'hidden'
+                           }`}
+                           key={idx}
+                        >
+                           {shouldRender && (
+                              <div key={e.name}>
                                  <Label>{e.label}</Label>
                                  <TextInput
                                     onChange={handleChange}
-                                    value={edit[e.name]}
+                                    value={edit[e.name] || ''}
                                     type={e.type}
                                     name={e.name}
-                                    required
                                  />
-                              </>
+                              </div>
                            )}
                            {e.type === 'select' && (
                               <>
@@ -187,7 +218,6 @@ function EditCaso() {
                                     value={edit[e.name]}
                                     type={e.type}
                                     name={e.name}
-                                    required
                                  >
                                     <option value={''}>
                                        Seleccionar opcion
@@ -217,7 +247,6 @@ function EditCaso() {
                                           : ''
                                     }
                                     name={e.name}
-                                    required
                                  />
                               </div>
                            )}
@@ -265,14 +294,50 @@ const inputs = [
    { name: 'nombreCliente', type: 'text', label: 'Nombre de cliente' },
    { name: 'nombreProyecto', type: 'text', label: 'Nombre de proyecto' },
    {
-      name: 'cantidadEstimada',
+      name: 'cantidadEstimadaAsbestoYardas',
       type: 'text',
-      label: 'Cantidad estimado a remover',
+      label: 'Cantidad estimado a remover en yardas (ABS)',
+      material: 'Asbesto',
    },
    {
-      name: 'cantidadDesperdiciada',
+      name: 'cantidadEstimadaAsbestoPiesCuad',
       type: 'text',
-      label: 'Cantidad de material desperdiciado',
+      label: 'Cantidad estimado a remover en ft2 (ABS)',
+      material: 'Asbesto',
+   },
+   {
+      name: 'cantidadEstimadaAsbestoPiesLineales',
+      type: 'text',
+      label: 'Cantidad estimado a remover en ft lnl (ABS)',
+      material: 'Asbesto',
+   },
+   {
+      name: 'cantidadEstimadaPlomoYardas',
+      type: 'text',
+      label: 'Cantidad estimado a remover en yardas(LBL)',
+      material: 'Plomo',
+   },
+   {
+      name: 'cantidadEstimadaPlomoPiesCuad',
+      type: 'text',
+      label: 'Cantidad estimado a remover en ft2(LBL)',
+      material: 'Plomo',
+   },
+   {
+      name: 'cantidadEstimadaPlomoPiesLineales',
+      type: 'text',
+      label: 'Cantidad estimado a remover en ft lnl(LBL)',
+      material: 'Plomo',
+   },
+   {
+      name: 'cantidadDesperdiciadaAsbesto',
+      type: 'text',
+      label: 'Cantidad desperdiciada (ABS)',
+   },
+   {
+      name: 'cantidadDesperdiciadaPlomo',
+      type: 'text',
+      label: 'Cantidad desperdiciada (LBL)',
    },
    {
       name: 'descripcionProyecto',
