@@ -12,7 +12,7 @@ import {
    TextInput,
    useThemeMode,
 } from 'flowbite-react';
-import { LogIn } from 'lucide-react';
+import { Eye, EyeOff, LogIn } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useEffect, useState } from 'react';
@@ -27,6 +27,7 @@ function FormLogin() {
    const [formData, setFormData] = useState(initialForm);
    const router = useRouter();
    const { mode, setMode } = useThemeMode();
+   const [visible, setVisible] = useState(false);
    const { login } = HandleAuth();
    const [loading, setLoading] = useState(false);
    const [email, setEmail] = useState('');
@@ -136,14 +137,24 @@ function FormLogin() {
             </div>
             <div className="flex flex-col gap-2">
                <Label htmlFor="password">Contraseña</Label>
-               <TextInput
-                  onChange={handleChange}
-                  type="password"
-                  name="password"
-                  id="password"
-                  color={submit ? (validLogin ? 'success' : 'failure') : 'auto'}
-                  required
-               />
+               <div className="relative">
+                  <TextInput
+                     onChange={handleChange}
+                     type={!visible ? 'password' : 'text'}
+                     name="password"
+                     id="password"
+                     color={
+                        submit ? (validLogin ? 'success' : 'failure') : 'auto'
+                     }
+                     required
+                  />
+                  <div
+                     onClick={() => setVisible(!visible)}
+                     className="absolute right-2 top-2 cursor-pointer"
+                  >
+                     {visible ? <EyeOff /> : <Eye />}{' '}
+                  </div>
+               </div>
             </div>
             <Button type="submit" disabled={loading}>
                {loading ? (

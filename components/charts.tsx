@@ -219,6 +219,31 @@ function ChartsSection({
       acc[año]++;
       return acc;
    }, {});
+   const cantidadPorAñoAsbesto = fechasAsbesto.reduce((acc: any, fecha) => {
+      const año = fecha
+         .toLocaleString('default', {
+            year: 'numeric',
+         })
+         .toLowerCase();
+      if (!acc[año]) {
+         acc[año] = 0;
+      }
+      acc[año]++;
+      return acc;
+   }, {});
+
+   const cantidadPorAñoPlomo = fechasPlomo.reduce((acc: any, fecha) => {
+      const año = fecha
+         .toLocaleString('default', {
+            year: 'numeric',
+         })
+         .toLowerCase();
+      if (!acc[año]) {
+         acc[año] = 0;
+      }
+      acc[año]++;
+      return acc;
+   }, {});
 
    const cantidadPorMesAsbesto = fechasAsbesto.reduce((acc: any, fecha) => {
       const mes = fecha
@@ -255,6 +280,10 @@ function ChartsSection({
    );
 
    const dataValues3 = Años.map((año) => cantidadPorAño[año] || 0);
+
+   const dataValuesAbs = Años.map((año) => cantidadPorAñoAsbesto[año] || 0);
+
+   const dataValuesPLP = Años.map((año) => cantidadPorAñoPlomo[año] || 0);
 
    const dataValuesAsbesto = Meses.map(
       (mes) => cantidadPorMesAsbesto[mes.toLowerCase()] || 0
@@ -343,6 +372,20 @@ function ChartsSection({
             data: dataValues3,
             fill: true,
             borderColor: 'rgb(15, 140, 12)',
+            tension: 0.3,
+         },
+         {
+            label: 'Proyectos ABS Completados por Año',
+            data: dataValuesAbs,
+            fill: true,
+            borderColor: 'rgb(54, 162, 235)',
+            tension: 0.3,
+         },
+         {
+            label: 'Proyectos LBL Completados por Año',
+            data: dataValuesPLP,
+            fill: true,
+            borderColor: 'rgb(23, 162, 184)',
             tension: 0.3,
          },
       ],
