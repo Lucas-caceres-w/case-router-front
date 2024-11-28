@@ -150,7 +150,7 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
                                             Editar
                                             <Edit className="w-4" />
                                          </Dropdown.Item>
-                                         <Dropdown.Item
+                                         {e.rol !== 1 && <Dropdown.Item
                                             onClick={() =>
                                                router.push(
                                                   '/dashboard/usuarios?delete=' +
@@ -160,7 +160,7 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
                                             className="flex justify-between gap-2"
                                          >
                                             Eliminar <Trash className="w-4" />
-                                         </Dropdown.Item>
+                                         </Dropdown.Item>}
                                       </Dropdown>
                                    )}
                                 </Table.Cell>

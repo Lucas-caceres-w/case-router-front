@@ -219,6 +219,7 @@ function ChartsSection({
       acc[año]++;
       return acc;
    }, {});
+   
    const cantidadPorAñoAsbesto = fechasAsbesto.reduce((acc: any, fecha) => {
       const año = fecha
          .toLocaleString('default', {
@@ -375,14 +376,14 @@ function ChartsSection({
             tension: 0.3,
          },
          {
-            label: 'Proyectos ABS Completados por Año',
+            label: 'Proyectos de ABS por Año',
             data: dataValuesAbs,
             fill: true,
             borderColor: 'rgb(54, 162, 235)',
             tension: 0.3,
          },
          {
-            label: 'Proyectos LBL Completados por Año',
+            label: 'Proyectos de LBL por Año',
             data: dataValuesPLP,
             fill: true,
             borderColor: 'rgb(23, 162, 184)',

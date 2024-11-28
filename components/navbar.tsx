@@ -1,15 +1,17 @@
 'use client';
 import { Dropdown, Navbar, useThemeMode } from 'flowbite-react';
 import ToggleTheme from './toggle-theme';
-import { EllipsisVertical, LogOut } from 'lucide-react';
+import { EllipsisVertical, LogOut, User } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { HandleAuth } from './context/handleAuth';
+import { useAuth } from './context/SessionProvider';
 
 function NavbarComp() {
    const { mode } = useThemeMode();
    const [currentMode, setCurrentMode] = useState(mode); // Almacena el modo de tema
    const { logout } = HandleAuth();
+   const { user } = useAuth();
 
    // Sincroniza el modo del tema en el cliente
    useEffect(() => {
@@ -38,7 +40,12 @@ function NavbarComp() {
          <Dropdown
             inline
             arrowIcon={false}
-            label={<EllipsisVertical className="dark:text-slate-400" />}
+            label={
+               <div className="dark:text-slate-400 text-slate-900 flex flex-row capitalize gap-2">
+                  <User />
+                  {user?.username}
+               </div>
+            }
          >
             <Dropdown.Divider />
             <Dropdown.Item onClick={Logout} icon={LogOut}>
