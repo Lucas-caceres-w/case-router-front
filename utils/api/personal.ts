@@ -95,7 +95,6 @@ const deletePersonal = async (estatus: string | null, id: string | null) => {
 
 const uploadCertification = async (body: any) => {
    const { formData, idParam, inicio, expiracion, tipo, tipoEvaluacion } = body;
-   console.log(tipo, tipoEvaluacion);
    try {
       const res = await fetch(
          `${apiUrl}/personal/documento/${idParam}?tipo=${tipo}&inicio=${inicio}&exp=${expiracion}&tipoEvaluacion=${tipoEvaluacion}`,

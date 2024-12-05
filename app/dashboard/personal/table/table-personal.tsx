@@ -182,7 +182,7 @@ function TablePersonal({
          name: 'Fecha de inicio de Examen medico',
          accessor: (e: Personal) => {
             const cert = e?.certificacions?.find(
-               (cert: any) => cert.tipoDocumento === 'Medica'
+               (cert: any) => cert.tipoDocumento.toLowerCase() === 'medica'
             );
             return cert && cert.fechaInicio
                ? format(new Date(cert.fechaInicio), 'dd/MM/yyyy')
@@ -194,7 +194,7 @@ function TablePersonal({
          name: 'Fecha de caducidad de Examen medico',
          accessor: (e: Personal) => {
             const cert = e?.certificacions?.find(
-               (cert: any) => cert.tipoDocumento === 'Medica'
+               (cert: any) => cert.tipoDocumento.toLowerCase() === 'medica'
             );
             return cert && cert.fechaExpiracion
                ? format(new Date(cert.fechaExpiracion), 'dd/MM/yyyy')
@@ -231,7 +231,7 @@ function TablePersonal({
          name: 'Fecha de inicio de Fit Test',
          accessor: (e: Personal) => {
             const cert = e?.certificacions?.find(
-               (cert: any) => cert.tipoDocumento === 'fitTest'
+               (cert: any) => cert.tipoDocumento.toLowerCase() === 'fittest'
             );
             return cert && cert.fechaInicio
                ? format(new Date(cert.fechaInicio), 'dd/MM/yyyy')
@@ -243,7 +243,7 @@ function TablePersonal({
          name: 'Fecha de caducidad de Fit Test',
          accessor: (e: Personal) => {
             const cert = e?.certificacions?.find(
-               (cert: any) => cert.tipoDocumento === 'fitTest'
+               (cert: any) => cert.tipoDocumento.toLowerCase() === 'fittest'
             );
             return cert && cert.fechaExpiracion
                ? format(new Date(cert.fechaExpiracion), 'dd/MM/yyyy')

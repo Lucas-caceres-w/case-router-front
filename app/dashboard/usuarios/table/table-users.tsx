@@ -15,7 +15,7 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
    const [filteredCasos, setFilteredCasos] = useState<User[] | []>(cols);
    const [currentPage, setCurrentPage] = useState(1);
    const { user } = useAuth();
-   console.log(user);
+   console.log(cols);
    const itemsPerPage = 5; // Número de elementos por página
 
    // Función para manejar el cambio de página
@@ -32,12 +32,9 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
 
-      if (value.trim() === '') {
-         // Si el valor está vacío, mostrar todos los casos nuevamente
-         setFilteredCasos(initialCols?.slice(startIndex, endIndex));
-      } else {
-         // Filtrar los casos según el valor ingresado
-         const filtered = initialCols?.filter(
+      const filtered = initialCols
+         .filter((e) => e.rol !== 4) // Excluir `DEV`
+         .filter(
             (e) =>
                e.id.toString().toLowerCase().includes(value) ||
                e.username.toLowerCase().includes(value) ||
@@ -48,8 +45,12 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
                e.name.toLowerCase().includes(value) ||
                e.rol.toString().toLowerCase().includes(value)
          );
-         setFilteredCasos(filtered.slice(0, 5));
-      }
+
+      setFilteredCasos(
+         value.trim() === ''
+            ? filtered.slice(startIndex, endIndex)
+            : filtered.slice(0, 5)
+      );
       setCurrentPage(1);
    };
 
@@ -57,7 +58,8 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
 
-      setFilteredCasos(initialCols.slice(startIndex, endIndex));
+      const filteredData = initialCols.filter((e) => e.rol !== 4);
+      setFilteredCasos(filteredData.slice(startIndex, endIndex));
    }, [currentPage, initialCols, itemsPerPage]);
 
    const getValue = (valor: number) => {
@@ -114,60 +116,52 @@ function TableUserComp({ initialCols }: { initialCols: User[] | [] }) {
                   <Table.HeadCell>Acciones</Table.HeadCell>
                </Table.Head>
                <Table.Body>
-                  {filteredCasos
-                     ? filteredCasos?.map((e: User) => {
-                          if (e?.rol === 4) {
-                             return;
-                          }
-                          return (
-                             <Table.Row
-                                key={e.id}
-                                className="dark:bg-slate-800 bg-slate-100"
-                             >
-                                <Table.Cell>{e?.id}</Table.Cell>
-                                <Table.Cell>{e?.name}</Table.Cell>
-                                <Table.Cell>{e?.email}</Table.Cell>
-                                <Table.Cell>{e?.username}</Table.Cell>
-                                <Table.Cell>{getValue(e?.rol)}</Table.Cell>
-                                <Table.Cell>
-                                   {format(e?.createdAt, 'dd/MM/yyyy')}
-                                </Table.Cell>
-                                <Table.Cell className="z-30">
-                                   {(user?.rol === 1 || user?.rol === 4) && (
-                                      <Dropdown
-                                         className="z-30"
-                                         label="Acciones"
-                                      >
-                                         <Dropdown.Item
-                                            onClick={() =>
-                                               router.push(
-                                                  '/dashboard/usuarios?user_edit=' +
-                                                     e?.id
-                                               )
-                                            }
-                                            className="flex justify-between gap-2"
-                                         >
-                                            Editar
-                                            <Edit className="w-4" />
-                                         </Dropdown.Item>
-                                         {e.rol !== 1 && <Dropdown.Item
-                                            onClick={() =>
-                                               router.push(
-                                                  '/dashboard/usuarios?delete=' +
-                                                     e?.id
-                                               )
-                                            }
-                                            className="flex justify-between gap-2"
-                                         >
-                                            Eliminar <Trash className="w-4" />
-                                         </Dropdown.Item>}
-                                      </Dropdown>
-                                   )}
-                                </Table.Cell>
-                             </Table.Row>
-                          );
-                       })
-                     : null}
+                  {filteredCasos.map((e: User) => (
+                     <Table.Row
+                        key={e.id}
+                        className="dark:bg-slate-800 bg-slate-100"
+                     >
+                        <Table.Cell>{e?.id}</Table.Cell>
+                        <Table.Cell>{e?.name}</Table.Cell>
+                        <Table.Cell>{e?.email}</Table.Cell>
+                        <Table.Cell>{e?.username}</Table.Cell>
+                        <Table.Cell>{getValue(e?.rol)}</Table.Cell>
+                        <Table.Cell>
+                           {format(e?.createdAt, 'dd/MM/yyyy')}
+                        </Table.Cell>
+                        <Table.Cell className="z-30">
+                           {(user?.rol === 1 || user?.rol === 4) && (
+                              <Dropdown className="z-30" label="Acciones">
+                                 <Dropdown.Item
+                                    onClick={() =>
+                                       router.push(
+                                          '/dashboard/usuarios?user_edit=' +
+                                             e?.id
+                                       )
+                                    }
+                                    className="flex justify-between gap-2"
+                                 >
+                                    Editar
+                                    <Edit className="w-4" />
+                                 </Dropdown.Item>
+                                 {e.rol !== 1 && (
+                                    <Dropdown.Item
+                                       onClick={() =>
+                                          router.push(
+                                             '/dashboard/usuarios?delete=' +
+                                                e?.id
+                                          )
+                                       }
+                                       className="flex justify-between gap-2"
+                                    >
+                                       Eliminar <Trash className="w-4" />
+                                    </Dropdown.Item>
+                                 )}
+                              </Dropdown>
+                           )}
+                        </Table.Cell>
+                     </Table.Row>
+                  ))}
                </Table.Body>
             </Table>
          </div>
