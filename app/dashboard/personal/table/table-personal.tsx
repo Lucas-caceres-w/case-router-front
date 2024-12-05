@@ -255,7 +255,7 @@ function TablePersonal({
          name: 'Resultados de Evaluacion Medica',
          accessor: (e: Personal) => {
             const cert = e?.certificacions?.find(
-               (cert: any) => cert.tipoDocumento === 'resultadoMedica'
+               (cert: any) => cert.tipoDocumento.toLowerCase() === 'resultadomedica'
             );
             return cert ? (
                <span
@@ -280,7 +280,7 @@ function TablePersonal({
          name: 'Resultados de Fit Test',
          accessor: (e: Personal) => {
             const cert = e?.certificacions?.find(
-               (cert) => cert.tipoDocumento === 'resultadoFitTest'
+               (cert) => cert.tipoDocumento.toLowerCase() === 'resultadofittest'
             );
             return cert ? (
                <span
