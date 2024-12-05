@@ -206,7 +206,7 @@ function TablePersonal({
          name: 'Prueba de Fit Test',
          accessor: (e: Personal) => {
             const cert = e?.certificacions?.find(
-               (cert: any) => cert.tipoDocumento === 'fitTest'
+               (cert: any) => cert.tipoDocumento.toLowerCase() === 'fittest'
             );
             return cert ? (
                <span
