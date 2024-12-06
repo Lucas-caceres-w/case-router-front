@@ -316,7 +316,7 @@ function TablePersonal({
                   }
                   className="text-white px-2 py-1 bg-green-600 rounded-md cursor-pointer"
                >
-                  SI
+                  tipo {cert.tipoEvaluacion}
                </span>
             ) : (
                <span className="text-white px-1 py-1 bg-red-600 rounded-md">

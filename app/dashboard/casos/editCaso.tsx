@@ -154,9 +154,9 @@ function EditCaso({ refreshProyectos }: { refreshProyectos: () => void }) {
       setLoading(true);
       try {
          const res = await updateCaso(idCaso, edit);
-         //console.log(res);
          if (res === 'Caso actualizado') {
             callToast('success', 'Caso actualizado');
+            router.replace("/dashboard/casos");
             refreshProyectos();
          } else {
             callToast('failure', 'Error al actualizar el caso');
