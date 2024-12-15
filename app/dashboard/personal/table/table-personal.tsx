@@ -1,4 +1,5 @@
 'use client';
+import { useAuth } from '@/components/context/SessionProvider';
 import { staticsCerts } from '@/utils/routes';
 import { Personal } from '@/utils/types';
 import { format } from 'date-fns';
@@ -19,6 +20,7 @@ function TablePersonal({
    const [filteredPersonal, setFilteredPersonal] = useState<Personal[]>(cols);
    const [currentPage, setCurrentPage] = useState(1);
    const itemsPerPage = 5;
+   const { user } = useAuth();
 
    const handlePageChange = (pageNumber: number) => {
       setCurrentPage(pageNumber);
@@ -255,7 +257,8 @@ function TablePersonal({
          name: 'Resultados de Evaluacion Medica',
          accessor: (e: Personal) => {
             const cert = e?.certificacions?.find(
-               (cert: any) => cert.tipoDocumento.toLowerCase() === 'resultadomedica'
+               (cert: any) =>
+                  cert.tipoDocumento.toLowerCase() === 'resultadomedica'
             );
             return cert ? (
                <span
@@ -427,7 +430,9 @@ function TablePersonal({
                                    })}
                                 <Table.Cell className="z-30">
                                    <Dropdown className="z-30" label="Acciones">
-                                      {e.rol === 4 || e.rol === 1 ? null : (
+                                      {(user?.rol === 1 || user?.rol === 4) &&
+                                      e.rol !== 4 &&
+                                      e.rol !== 1 ? null : (
                                          <Dropdown.Item
                                             onClick={() =>
                                                router.push(
@@ -473,7 +478,9 @@ function TablePersonal({
                                          Subir certificación
                                          <Paperclip className="w-4" />
                                       </Dropdown.Item>
-                                      {e.rol === 4 || e.rol === 1 ? null : (
+                                      {(user?.rol === 1 || user?.rol === 4) &&
+                                      e.rol !== 4 &&
+                                      e.rol !== 1 ? null : (
                                          <Dropdown.Item
                                             onClick={() =>
                                                router.push(

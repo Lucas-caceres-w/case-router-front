@@ -753,17 +753,21 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                                              Subir fotos{' '}
                                              <Upload className="w-4" />
                                           </Dropdown.Item>
-                                          <Dropdown.Item
-                                             onClick={() =>
-                                                router.push(
-                                                   '/dashboard/casos?delete=' +
-                                                      e.id
-                                                )
-                                             }
-                                             className="flex justify-between gap-2"
-                                          >
-                                             Eliminar <Trash className="w-4" />
-                                          </Dropdown.Item>
+                                          {(user?.rol === 1 ||
+                                             user?.rol === 4) && (
+                                             <Dropdown.Item
+                                                onClick={() =>
+                                                   router.push(
+                                                      '/dashboard/casos?delete=' +
+                                                         e.id
+                                                   )
+                                                }
+                                                className="flex justify-between gap-2"
+                                             >
+                                                Eliminar{' '}
+                                                <Trash className="w-4" />
+                                             </Dropdown.Item>
+                                          )}
                                        </Dropdown>
                                     </div>
                                  </Table.Cell>

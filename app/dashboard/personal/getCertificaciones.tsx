@@ -1,4 +1,5 @@
 'use client';
+import { useAuth } from '@/components/context/SessionProvider';
 import { DeleteDoc } from '@/utils/api/casos';
 import {
    deleteCertificacion,
@@ -39,6 +40,7 @@ function CertsModal({ refreshPersonal }: { refreshPersonal: () => void }) {
    const [color, setColor] = useState('');
    const [text, setText] = useState('');
    const [showToast, setShowToast] = useState(false);
+   const { user } = useAuth();
 
    const callToast = (type: string, text: string) => {
       setShowToast(true);
@@ -110,7 +112,7 @@ function CertsModal({ refreshPersonal }: { refreshPersonal: () => void }) {
       const res = await getOneCertificacion(id);
       if (res) {
          setEditCert(true);
-         setCertificacion(res)
+         setCertificacion(res);
          setSelectFechas({
             fechaInicio: new Date(res.fechaInicio),
             fechaExpiracion: new Date(res.fechaExpiracion),
@@ -185,12 +187,15 @@ function CertsModal({ refreshPersonal }: { refreshPersonal: () => void }) {
                                          >
                                             <Pencil size={'20'} />
                                          </span>
-                                         <span
-                                            onClick={() => deleteDoc(doc.id)}
-                                            className="text-red-500 cursor-pointer"
-                                         >
-                                            <X size={'22'} />
-                                         </span>
+                                         {(user?.rol === 1 ||
+                                            user?.rol === 4) && (
+                                            <span
+                                               onClick={() => deleteDoc(doc.id)}
+                                               className="text-red-500 cursor-pointer"
+                                            >
+                                               <X size={'22'} />
+                                            </span>
+                                         )}
                                       </div>
                                    </li>
                                 ))}

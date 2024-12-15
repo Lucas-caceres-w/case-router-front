@@ -1,4 +1,5 @@
 'use client';
+import { useAuth } from '@/components/context/SessionProvider';
 import { DeleteDoc, getDocsById } from '@/utils/api/casos';
 import { staticsPdf } from '@/utils/routes';
 import { ShowDoc } from '@/utils/types';
@@ -22,6 +23,7 @@ function DocsModal({ refreshProyectos }: { refreshProyectos: () => void }) {
    const [color, setColor] = useState('');
    const [text, setText] = useState('');
    const [showToast, setShowToast] = useState(false);
+   const { user } = useAuth();
 
    const callToast = (type: string, text: string) => {
       setShowToast(true);
@@ -151,14 +153,21 @@ function DocsModal({ refreshProyectos }: { refreshProyectos: () => void }) {
                                             >
                                                {file}
                                             </a>
-                                            <span
-                                               onClick={() =>
-                                                  deleteDoc(docs.id, key, file)
-                                               }
-                                               className="bg-red-500 cursor-pointer hover:bg-red-400 px-2 py-0 text-white top-0 right-0 w-min"
-                                            >
-                                               X
-                                            </span>
+                                            {(user?.rol === 1 ||
+                                               user?.rol === 4) && (
+                                               <span
+                                                  onClick={() =>
+                                                     deleteDoc(
+                                                        docs.id,
+                                                        key,
+                                                        file
+                                                     )
+                                                  }
+                                                  className="bg-red-500 cursor-pointer hover:bg-red-400 px-2 py-0 text-white top-0 right-0 w-min"
+                                               >
+                                                  X
+                                               </span>
+                                            )}
                                          </div>
                                       ))}
                                 </div>
