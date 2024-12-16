@@ -1,5 +1,6 @@
 //@ts-nocheck
 'use client';
+import { useAuth } from '@/components/context/SessionProvider';
 import { options } from '@/utils/mockups/mockups';
 import { staticsPdf } from '@/utils/routes';
 import { Caso } from '@/utils/types';
@@ -39,6 +40,7 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
    const [startDate, setstartDate] = useState<Date | undefined>();
    const [endDate, setEndDate] = useState<Date | undefined>();
    const [expandEstatus, setExpandEstatus] = useState(false);
+   const { user } = useAuth();
 
    const tableHeaders = [
       { label: 'Gerente de Proyectos' },

@@ -102,17 +102,17 @@ function ChartsSection({
             const fechaExpiracion = new Date(certificacion.fechaExpiracion);
 
             if (fechaExpiracion < hoy) {
-               switch (certificacion.tipoDocumento) {
+               switch (certificacion.tipoDocumento.toLowerCase()) {
                   case 'asbesto':
                      resultado.asbesto += 1;
                      break;
                   case 'plomo':
                      resultado.plomo += 1;
                      break;
-                  case 'fitTest':
+                  case 'fittest':
                      resultado.fitTest += 1;
                      break;
-                  case 'evaluacionMedica':
+                  case 'evaluacionmedica':
                      resultado.evaluacionMedica += 1;
                      break;
                   case 'licencia':
