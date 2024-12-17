@@ -430,9 +430,7 @@ function TablePersonal({
                                    })}
                                 <Table.Cell className="z-30">
                                    <Dropdown className="z-30" label="Acciones">
-                                      {(user?.rol === 1 || user?.rol === 4) &&
-                                      e.rol !== 4 &&
-                                      e.rol !== 1 ? null : (
+                                      {(user?.rol === 1 || user?.rol === 4) && (
                                          <Dropdown.Item
                                             onClick={() =>
                                                router.push(
@@ -478,9 +476,7 @@ function TablePersonal({
                                          Subir certificación
                                          <Paperclip className="w-4" />
                                       </Dropdown.Item>
-                                      {(user?.rol === 1 || user?.rol === 4) &&
-                                      e.rol !== 4 &&
-                                      e.rol !== 1 ? null : (
+                                      {(user?.rol === 1 || user?.rol === 4) && (
                                          <Dropdown.Item
                                             onClick={() =>
                                                router.push(
