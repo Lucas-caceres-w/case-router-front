@@ -97,12 +97,30 @@ function ChartsSection({
          licencia: 0,
       };
       personal.forEach((persona) => {
-         persona.certificacions.forEach((certificacion) => {
-            const hoy = new Date();
-            const fechaExpiracion = new Date(certificacion.fechaExpiracion);
+         // Agrupar los certificados por tipo de documento
+         const certificadosPorTipo = persona.certificacions.reduce(
+            (grupos: any, certificado: any) => {
+               const tipo = certificado.tipoDocumento.toLowerCase();
+               if (
+                  !grupos[tipo] ||
+                  new Date(certificado.createdAt) >
+                     new Date(grupos[tipo].createdAt)
+               ) {
+                  grupos[tipo] = certificado; // Guardar el certificado más reciente de este tipo
+               }
+               return grupos;
+            },
+            {}
+         );
+
+         // Revisar si cada certificado más reciente por tipo está vencido
+         const hoy = new Date();
+         Object.values(certificadosPorTipo).forEach((certificado: any) => {
+            const fechaExpiracion = new Date(certificado.fechaExpiracion);
 
             if (fechaExpiracion < hoy) {
-               switch (certificacion.tipoDocumento.toLowerCase()) {
+               // Incrementar el contador correspondiente
+               switch (certificado.tipoDocumento.toLowerCase()) {
                   case 'asbesto':
                      resultado.asbesto += 1;
                      break;
@@ -113,6 +131,9 @@ function ChartsSection({
                      resultado.fitTest += 1;
                      break;
                   case 'evaluacionmedica':
+                     resultado.evaluacionMedica += 1;
+                     break;
+                  case 'medica':
                      resultado.evaluacionMedica += 1;
                      break;
                   case 'licencia':
@@ -179,8 +200,8 @@ function ChartsSection({
    const fechasAsbesto = proyectos
       .filter(
          (proyecto) =>
-            proyecto.estatus.toLowerCase() === 'completado' &&
-            proyecto.materialARemover.toLowerCase() === 'asbesto' ||
+            (proyecto.estatus.toLowerCase() === 'completado' &&
+               proyecto.materialARemover.toLowerCase() === 'asbesto') ||
             proyecto.materialARemover.toLowerCase() === 'asbesto/plomo'
       )
       .map((proyecto) => new Date(proyecto.fechaFin));
@@ -188,8 +209,8 @@ function ChartsSection({
    const fechasPlomo = proyectos
       .filter(
          (proyecto) =>
-            proyecto.estatus.toLowerCase() === 'completado' &&
-            proyecto.materialARemover.toLowerCase() === 'plomo' ||
+            (proyecto.estatus.toLowerCase() === 'completado' &&
+               proyecto.materialARemover.toLowerCase() === 'plomo') ||
             proyecto.materialARemover.toLowerCase() === 'asbesto/plomo'
       )
       .map((proyecto) => new Date(proyecto.fechaFin));
@@ -219,7 +240,7 @@ function ChartsSection({
       acc[año]++;
       return acc;
    }, {});
-   
+
    const cantidadPorAñoAsbesto = fechasAsbesto.reduce((acc: any, fecha) => {
       const año = fecha
          .toLocaleString('default', {
