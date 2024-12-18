@@ -275,7 +275,7 @@ export const DeleteDoc = async (id: number, key: string, file: string) => {
          },
       });
       const json = await res.json();
-      //console.log(json);
+      
       return json;
    } catch (err) {
       console.log(err);
