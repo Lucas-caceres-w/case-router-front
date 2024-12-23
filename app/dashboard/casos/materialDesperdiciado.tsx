@@ -12,7 +12,7 @@ import {
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
-function MaterialDesperdiciado() {
+function MaterialDesperdiciado({ refreshProyectos }: { refreshProyectos: () => void }) {
    const params = useSearchParams();
    const router = useRouter();
    const [originalEstatus, setOriginalEstatus] = useState('');

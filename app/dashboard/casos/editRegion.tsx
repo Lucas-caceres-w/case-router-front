@@ -15,7 +15,7 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
-function RegionEdit() {
+function RegionEdit({ refreshProyectos }: { refreshProyectos: () => void }) {
   const router = useRouter();
   const params = useSearchParams();
   const [selectedArea, setSelectedArea] = useState("");

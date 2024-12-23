@@ -18,7 +18,7 @@ interface Fechas {
   fechaRevision: Date | undefined;
 }
 
-function DatesModal() {
+function DatesModal({ refreshProyectos }: { refreshProyectos: () => void }) {
   const params = useSearchParams();
   const router = useRouter();
   const [edit, setEdit] = useState<Fechas>({

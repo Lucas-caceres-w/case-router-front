@@ -15,7 +15,7 @@ import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-function ImagesModal() {
+function ImagesModal({ refreshProyectos }: { refreshProyectos: () => void }) {
    const params = useSearchParams();
    const router = useRouter();
    const [loading, setLoading] = useState(false);

@@ -275,7 +275,36 @@ export const DeleteDoc = async (id: number, key: string, file: string) => {
          },
       });
       const json = await res.json();
-      
+
+      return json;
+   } catch (err) {
+      console.log(err);
+   }
+};
+
+export const getDaysOrder = async (id: number) => {
+   console.log(id);
+   try {
+      const res = await fetch(`${apiUrl}/documentos/order/${id}`);
+      const json = await res.json();
+
+      return json;
+   } catch (err) {
+      console.log(err);
+   }
+};
+
+export const editDaysOrder = async (id: string, value: string) => {
+   try {
+      const res = await fetch(`${apiUrl}/documentos/order/${id}`, {
+         method: 'PATCH',
+         headers: {
+            'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({ id, value }),
+      });
+      const json = await res.json();
+
       return json;
    } catch (err) {
       console.log(err);

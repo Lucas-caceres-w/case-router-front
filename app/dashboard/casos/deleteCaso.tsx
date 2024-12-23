@@ -4,7 +4,7 @@ import { Alert, Button, Modal, Spinner } from "flowbite-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-function DeleteCaso() {
+function DeleteCaso({ refreshProyectos }: { refreshProyectos: () => void }) {
   const params = useSearchParams();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -51,7 +51,7 @@ function DeleteCaso() {
         callToast("success", "El caso fue eliminado");
         setTimeout(() => {
           router.push("/dashboard/casos");
-          router.refresh();
+          refreshProyectos()
         }, 1500);
       } else {
         callToast("failure", "Error  al eliminar el caso");

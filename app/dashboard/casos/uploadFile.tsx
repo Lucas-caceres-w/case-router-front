@@ -13,7 +13,7 @@ import {
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
 
-function UploadModal() {
+function UploadModal({ refreshProyectos }: { refreshProyectos: () => void }) {
    const selects = [
       { name: 'planAsbesto', label: 'Plan de trabajo de Asbesto (ABS)' },
       { name: 'planPlomo', label: 'Plan de trabajo de Plomo (LBP)' },
@@ -126,7 +126,7 @@ function UploadModal() {
             setDays('');
             setTimeout(() => {
                router.replace('/dashboard/casos');
-               router.refresh();
+               refreshProyectos();
             }, 1500);
          } else {
             callToast('warning', 'Error al guardar el documento');

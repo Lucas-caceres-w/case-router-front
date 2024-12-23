@@ -122,7 +122,7 @@ function AddCaso({ refreshProyectos }: { refreshProyectos: () => void }) {
             callToast('warning', 'El Proyecto ya existe');
          } else if (res === 'Proyecto creado') {
             setModal(false);
-            refreshProyectos()
+            refreshProyectos();
             callToast('success', 'Proyecto agregado');
          } else {
             callToast('warning', 'Error inesperado');
@@ -457,10 +457,14 @@ function AddCaso({ refreshProyectos }: { refreshProyectos: () => void }) {
                </Button>
             </>
          }
-         <Modal show={modal} onClose={() => setModal(false)}>
+         <Modal
+            size={'5xl'}
+            show={modal}
+            onClose={() => setModal(false)}
+         >
             <Modal.Header>Agregar proyecto</Modal.Header>
             <form onSubmit={onSubmit}>
-               <Modal.Body className="grid grid-cols-2 gap-x-2">
+               <Modal.Body className="grid grid-cols-3 gap-x-1">
                   {inputs?.map((e: any, idx: number) => {
                      const shouldRender =
                         e.type === 'text' &&
@@ -519,7 +523,7 @@ function AddCaso({ refreshProyectos }: { refreshProyectos: () => void }) {
                                     onSelectedDateChanged={(d) =>
                                        selectFechaFormData(d, e.name)
                                     }
-                                    className="absolute w-5/12"
+                                    className="absolute w-4/12"
                                     language="es-ES"
                                     showTodayButton={false}
                                     showClearButton={false}
@@ -653,19 +657,19 @@ const inputs = [
    {
       name: 'cantidadEstimadaAsbestoYardas',
       type: 'text',
-      label: 'Cantidad estimado a remover en yardas (ABS)',
+      label: 'Cantidad estimado a remover en yardas(ABS)',
       material: 'Asbesto',
    },
    {
       name: 'cantidadEstimadaAsbestoPiesCuad',
       type: 'text',
-      label: 'Cantidad estimado a remover en ft2 (ABS)',
+      label: 'Cantidad estimado a remover en ft2(ABS)',
       material: 'Asbesto',
    },
    {
       name: 'cantidadEstimadaAsbestoPiesLineales',
       type: 'text',
-      label: 'Cantidad estimado a remover en ft lnl (ABS)',
+      label: 'Cantidad estimado a remover en ft LNL(ABS)',
       material: 'Asbesto',
    },
    {
@@ -683,7 +687,7 @@ const inputs = [
    {
       name: 'cantidadEstimadaPlomoPiesLineales',
       type: 'text',
-      label: 'Cantidad estimado a remover en ft lnl(LBL)',
+      label: 'Cantidad estimado a remover en ft LNL(LBL)',
       material: 'Plomo',
    },
    {

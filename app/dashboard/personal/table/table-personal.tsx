@@ -30,6 +30,7 @@ function TablePersonal({
    };
 
    const tableHead = [
+      { name: 'Identificador', accessor: 'idPersonal', date: false },
       { name: 'Nombre', accessor: 'name', date: false },
       { name: 'Inicial', accessor: 'secondName', date: false },
       { name: 'Apellido Materno', accessor: 'apellidoMaterno', date: false },

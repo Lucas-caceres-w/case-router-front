@@ -6,7 +6,7 @@ import { Check, Edit } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 
-function CommentsModal() {
+function CommentsModal({ refreshProyectos }: { refreshProyectos: () => void }) {
   const params = useSearchParams();
   const router = useRouter();
   const [edit, setEdit] = useState("");

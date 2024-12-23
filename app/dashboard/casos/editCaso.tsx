@@ -156,7 +156,7 @@ function EditCaso({ refreshProyectos }: { refreshProyectos: () => void }) {
          const res = await updateCaso(idCaso, edit);
          if (res === 'Caso actualizado') {
             callToast('success', 'Caso actualizado');
-            router.replace("/dashboard/casos");
+            router.replace('/dashboard/casos');
             refreshProyectos();
          } else {
             callToast('failure', 'Error al actualizar el caso');
@@ -172,6 +172,7 @@ function EditCaso({ refreshProyectos }: { refreshProyectos: () => void }) {
       <>
          {showToast && <ToastAttr color={color} text={text} />}
          <Modal
+            size={'5xl'}
             show={idCaso ? true : false}
             onClose={() => {
                router.push('/dashboard/casos');
@@ -179,8 +180,9 @@ function EditCaso({ refreshProyectos }: { refreshProyectos: () => void }) {
             }}
          >
             <Modal.Header>Editar caso</Modal.Header>
-            <form onSubmit={OnSubmit}>
-               <Modal.Body className="grid grid-cols-2 gap-2 h-max">
+            <form 
+            className="body_modal"onSubmit={OnSubmit}>
+               <Modal.Body className="grid grid-cols-3 gap-x-2">
                   {inputs?.map((e: any, idx: number) => {
                      const shouldRender =
                         e.type === 'text' &&
@@ -237,7 +239,7 @@ function EditCaso({ refreshProyectos }: { refreshProyectos: () => void }) {
                                     onSelectedDateChanged={(d) =>
                                        selectFechaFormData(d, e.name)
                                     }
-                                    className="absolute w-5/12"
+                                    className="absolute w-4/12"
                                     language="es-ES"
                                     showTodayButton={false}
                                     showClearButton={false}

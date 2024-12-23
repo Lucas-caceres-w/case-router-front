@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import TableComp from './table/table-casos';
 import Tittle from '@/components/title';
 import { getCasos } from '@/utils/api/casos';
@@ -24,27 +24,27 @@ function CasosPage() {
       const data = await getCasos();
       setProyectos(data);
    };
-   
+
    useEffect(() => {
-      fetchProyectos()
+      fetchProyectos();
    }, []);
 
    return (
       <main className="ml-24 lg:ml-56 mt-10 !w-[calc(100% - 200px)]">
          <div className="flex justify-between items-center">
             <Tittle>Proyectos</Tittle>
-            <UploadModal />
+            <UploadModal refreshProyectos={fetchProyectos} />
             <EditCaso refreshProyectos={fetchProyectos} />
             <AddCaso refreshProyectos={fetchProyectos} />
-            <DeleteCaso />
-            <RegionEdit />
-            <ChangeStatus />
-            <CommentsModal />
-            <DatesModal />
-            <UploadImages />
-            <ImagesModal />
+            <DeleteCaso refreshProyectos={fetchProyectos} />
+            <RegionEdit refreshProyectos={fetchProyectos} />
+            <ChangeStatus refreshProyectos={fetchProyectos} />
+            <CommentsModal refreshProyectos={fetchProyectos} />
+            <DatesModal refreshProyectos={fetchProyectos} />
+            <UploadImages refreshProyectos={fetchProyectos} />
+            <ImagesModal refreshProyectos={fetchProyectos} />
             <DocsModal refreshProyectos={fetchProyectos} />
-            <MaterialDesperdiciado />
+            <MaterialDesperdiciado refreshProyectos={fetchProyectos} />
          </div>
          <React.Suspense fallback="Cargando...">
             <TableComp initialCols={proyectos || []} />

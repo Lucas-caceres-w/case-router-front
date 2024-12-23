@@ -1,6 +1,11 @@
 'use client';
 import { useAuth } from '@/components/context/SessionProvider';
-import { DeleteDoc, getDocsById } from '@/utils/api/casos';
+import {
+   DeleteDoc,
+   editDaysOrder,
+   getDaysOrder,
+   getDocsById,
+} from '@/utils/api/casos';
 import { staticsPdf } from '@/utils/routes';
 import { ShowDoc } from '@/utils/types';
 import {
@@ -10,7 +15,9 @@ import {
    ModalBody,
    ModalFooter,
    ModalHeader,
+   TextInput,
 } from 'flowbite-react';
+import { Edit, X } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -18,6 +25,8 @@ function DocsModal({ refreshProyectos }: { refreshProyectos: () => void }) {
    const params = useSearchParams();
    const router = useRouter();
    const [loading, setLoading] = useState(false);
+   const [days, setDays] = useState(['', '']);
+   const [modalDays, setModalDays] = useState(false);
    const [docs, setDocs] = useState<ShowDoc>();
    const idCaso = params.get('docs');
    const [color, setColor] = useState('');
@@ -58,6 +67,7 @@ function DocsModal({ refreshProyectos }: { refreshProyectos: () => void }) {
       if (res) {
          const fotos = res;
          setDocs(fotos);
+         console.log(res);
       }
    };
 
@@ -71,6 +81,28 @@ function DocsModal({ refreshProyectos }: { refreshProyectos: () => void }) {
          }, 2000);
       } else {
          callToast('failure', 'Ocurrio un error');
+      }
+   };
+
+   const getDays = async (id: number) => {
+      const res = await getDaysOrder(id);
+      console.log(res);
+      if (res) {
+         setDays(res);
+         setModalDays(true);
+      } else {
+         callToast('failure', 'Error al obtener los dias');
+      }
+   };
+
+   const editDays = async (id: string, value: string) => {
+      const res = await editDaysOrder(id, value);
+      if (res) {
+         callToast('success', 'Dias actualizados');
+         setModalDays(false);
+         refreshProyectos();
+      } else {
+         callToast('failure', 'Error al actualizar los dias');
       }
    };
 
@@ -155,18 +187,30 @@ function DocsModal({ refreshProyectos }: { refreshProyectos: () => void }) {
                                             </a>
                                             {(user?.rol === 1 ||
                                                user?.rol === 4) && (
-                                               <span
-                                                  onClick={() =>
-                                                     deleteDoc(
-                                                        docs.id,
-                                                        key,
-                                                        file
-                                                     )
-                                                  }
-                                                  className="bg-red-500 cursor-pointer hover:bg-red-400 px-2 py-0 text-white top-0 right-0 w-min"
-                                               >
-                                                  X
-                                               </span>
+                                               <>
+                                                  {key === 'cambioOrden' && (
+                                                     <span
+                                                        onClick={() =>
+                                                           getDays(docs.id)
+                                                        }
+                                                        className="bg-blue-500 cursor-pointer hover:bg-blue-400 px-1 py-1 text-white top-0 right-5 w-min"
+                                                     >
+                                                        <Edit size={16} />
+                                                     </span>
+                                                  )}
+                                                  <span
+                                                     onClick={() =>
+                                                        deleteDoc(
+                                                           docs.id,
+                                                           key,
+                                                           file
+                                                        )
+                                                     }
+                                                     className="bg-red-500 cursor-pointer hover:bg-red-400 px-1 py-1 text-white top-0 right-0 w-min"
+                                                  >
+                                                     <X size={16} />
+                                                  </span>
+                                               </>
                                             )}
                                          </div>
                                       ))}
@@ -183,6 +227,27 @@ function DocsModal({ refreshProyectos }: { refreshProyectos: () => void }) {
                   onClick={() => router.push('/dashboard/casos')}
                >
                   Cerrar
+               </Button>
+            </ModalFooter>
+         </Modal>
+         <Modal show={modalDays}>
+            <ModalHeader>Dias adicionales:</ModalHeader>
+            <ModalBody>
+               <TextInput
+                  onChange={(e) =>
+                     setDays((prevDays) => {
+                        const updatedDays = [...prevDays];
+                        updatedDays[1] = e.target.value;
+                        return updatedDays;
+                     })
+                  }
+                  value={days[1]}
+               ></TextInput>
+            </ModalBody>
+            <ModalFooter>
+               <Button onClick={() => setModalDays(false)}>Cancelar</Button>
+               <Button onClick={() => editDays(days[0], days[1])}>
+                  Enviar
                </Button>
             </ModalFooter>
          </Modal>

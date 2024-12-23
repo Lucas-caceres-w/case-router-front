@@ -6,7 +6,7 @@ import { Alert, Button, Modal, Select, Spinner } from "flowbite-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
-function ChangeStatus() {
+function ChangeStatus({ refreshProyectos }: { refreshProyectos: () => void }) {
   const params = useSearchParams();
   const router = useRouter();
   const [originalEstatus, setOriginalEstatus] = useState("");
