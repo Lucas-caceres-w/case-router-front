@@ -79,6 +79,7 @@ function AddPersonal({ refreshPersonal }: { refreshPersonal: () => void }) {
       try {
          setLoading(true);
          const res = await addPersonal(formData, estatus);
+         console.log(res)
          if (res === 'personal agregado') {
             setModal(false);
             refreshPersonal();
