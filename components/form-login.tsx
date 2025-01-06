@@ -77,16 +77,16 @@ function FormLogin() {
 
    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      const res = await login({
+      /* const res = await login({
          username: formData.user,
          password: formData.password,
-      });
-
-      if (res.message === 'Successfully login') {
+      }); */
+      router.push('/dashboard')
+      /* if (res.message === 'Successfully login') {
          callToast('success', res.message);
       } else {
          callToast('success', res.message);
-      }
+      } */
    };
 
    const sendEmail = async (event: FormEvent<HTMLFormElement>) => {

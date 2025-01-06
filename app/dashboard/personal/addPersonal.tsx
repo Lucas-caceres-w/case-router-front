@@ -398,13 +398,13 @@ function AddPersonal({ refreshPersonal }: { refreshPersonal: () => void }) {
          <>
             {showToast && <ToastAttr color={color} text={text} />}
             <>
-               <Button onClick={() => setModal(true)}>
+               <Button /* onClick={() => setModal(true)} */>
                   Agregar <PlusCircle className="ml-2" />
                </Button>
-               <Button onClick={() => setExportData(true)}>
+               <Button /* onClick={() => setExportData(true)} */>
                   Exportar datos <FileUp className="ml-2" />
                </Button>
-               <Button outline onClick={() => setImportData(true)}>
+               <Button outline /* onClick={() => setImportData(true)} */>
                   Importar datos <FileUp className="ml-2" />
                </Button>
             </>

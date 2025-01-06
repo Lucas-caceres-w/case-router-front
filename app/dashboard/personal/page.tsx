@@ -20,9 +20,9 @@ function PersonalPages() {
 
    const fetchPersonal = async () => {
       if (estatus) {
-         const res = await getPersonal(estatus);
+         /* const res = await getPersonal(estatus);
 
-         setPersonal(res);
+         setPersonal(res); */
       }
    };
 

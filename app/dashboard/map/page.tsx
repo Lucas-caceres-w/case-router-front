@@ -14,7 +14,7 @@ export default function MapCasie() {
     setCasos(data);
   };
   useEffect(() => {
-    handleGetCasos();
+    //handleGetCasos();
   }, []);
 
   return (

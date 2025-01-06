@@ -6,7 +6,7 @@ import { DeleteUser } from "./deleteUser";
 import EditUser from "./editUser";
 
 async function UsersPages() {
-  const users = await getUsers();
+  //const users = await getUsers();
 
   return (
     <main className="ml-24 lg:ml-56 mt-10 !w-[calc(100% - 60px)]">
@@ -14,7 +14,7 @@ async function UsersPages() {
       <React.Suspense fallback="Cargando...">
         <DeleteUser />
         <EditUser />
-        <TableUserComp initialCols={users ?? []} />
+        <TableUserComp initialCols={[]} />
       </React.Suspense>
     </main>
   );

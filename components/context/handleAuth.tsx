@@ -23,7 +23,6 @@ export function HandleAuth() {
             body: JSON.stringify({ username, password }),
          });
          const json = await res.json();
-         console.log(json);
          if (json.message === 'Successfully login') {
             if (window.location.pathname === '/login') {
                window.location.replace('/dashboard');

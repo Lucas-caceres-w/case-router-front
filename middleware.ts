@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 export async function middleware(req) {
    const jwt = req.cookies.get('session');
 
-   if (req.nextUrl.pathname.includes('/dashboard')) {
+   /* if (req.nextUrl.pathname.includes('/dashboard')) {
       if (jwt === undefined) {
          return NextResponse.redirect(new URL('/login', req.url));
       }
@@ -18,7 +18,7 @@ export async function middleware(req) {
          console.log(err);
          return NextResponse.redirect(new URL('/login', req.url));
       }
-   }
+   } */
 
    // Continuar normalmente si no se requiere redirección
    return NextResponse.next();

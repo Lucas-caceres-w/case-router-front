@@ -21,8 +21,8 @@ export default function Home() {
    };
 
    useEffect(() => {
-      obtainCasos();
-      obtainPersonal();
+      //obtainCasos();
+      //obtainPersonal();
    }, []);
 
    return (

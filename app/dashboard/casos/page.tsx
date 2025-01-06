@@ -26,7 +26,7 @@ function CasosPage() {
    };
 
    useEffect(() => {
-      fetchProyectos();
+      //fetchProyectos();
    }, []);
 
    return (
