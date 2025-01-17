@@ -24,6 +24,10 @@ import {
    Play,
    ShieldOff,
    SquareCheck,
+   User,
+   UserCheck,
+   Users,
+   UserX,
 } from 'lucide-react';
 
 Chart.register(
@@ -46,6 +50,29 @@ function ChartsSection({
    proyectos: Caso[];
    personal: Personal[];
 }) {
+   console.log(personal);
+
+   function getActiveInactiveCounts(personalList: Personal[]) {
+      let activeCount = 0;
+      let inactiveCount = 0;
+
+      personalList.forEach((person) => {
+         const hasRelevantCert = person.certificacions.some((cert) =>
+            ['asbesto', 'plomo', 'asbesto/plomo'].includes(cert.tipoDocumento)
+         );
+
+         if (person.trabaja && hasRelevantCert) {
+            activeCount++;
+         } else {
+            inactiveCount++;
+         }
+      });
+
+      return { activeCount, inactiveCount };
+   }
+
+   const { activeCount, inactiveCount } = getActiveInactiveCounts(personal);
+
    const Meses = [
       'Jan',
       'Feb',
@@ -602,6 +629,43 @@ function ChartsSection({
                   </p>
                </div>
                <CarIcon className="text-white" size={32} />
+            </div>
+         </Card>
+         <Card className="w-full !bg-fuchsia-500 h-24">
+            <div className="flex flex-row items-center justify-between w-11/12 lg:w-10/12 m-auto">
+               <div className="flex flex-col justify-between gap-6">
+                  <h2 className="text-slate-200 font-semibold text-lg">
+                     Personal total:
+                  </h2>
+                  <p className="text-green-100 font-semibold">
+                     {personal.length}
+                  </p>
+               </div>
+               <Users className="text-white" size={32} />
+            </div>
+         </Card>
+         <Card className="w-full !bg-orange-500 h-24">
+            <div className="flex flex-row items-center justify-between w-11/12 lg:w-10/12 m-auto">
+               <div className="flex flex-col justify-between gap-6">
+                  <h2 className="text-slate-200 font-semibold text-lg">
+                     Personal Activo:
+                  </h2>
+                  <p className="text-green-100 font-semibold">{activeCount}</p>
+               </div>
+               <UserCheck className="text-white" size={32} />
+            </div>
+         </Card>
+         <Card className="w-full !bg-yellow-400 h-24">
+            <div className="flex flex-row items-center justify-between w-11/12 lg:w-10/12 m-auto">
+               <div className="flex flex-col justify-between gap-6">
+                  <h2 className="text-slate-200 font-semibold text-lg">
+                     Personal Inactivo:
+                  </h2>
+                  <p className="text-green-100 font-semibold">
+                     {inactiveCount}
+                  </p>
+               </div>
+               <UserX className="text-white" size={32} />
             </div>
          </Card>
          <Card className="w-full flex items-center justify-center !bg-slate-400 dark:!bg-slate-600 h-96">

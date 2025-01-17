@@ -33,8 +33,8 @@ function TablePersonal({
       { name: 'Identificador', accessor: 'idPersonal', date: false },
       { name: 'Nombre', accessor: 'name', date: false },
       { name: 'Inicial', accessor: 'secondName', date: false },
-      { name: 'Apellido Materno', accessor: 'apellidoMaterno', date: false },
       { name: 'Apellido Paterno', accessor: 'apellidoPaterno', date: false },
+      { name: 'Apellido Materno', accessor: 'apellidoMaterno', date: false },
       { name: 'Numero de contacto', accessor: 'numContacto', date: false },
       {
          name: 'Certificacion de ABS',

@@ -595,12 +595,12 @@ const inputs = [
       type: 'text',
       label: 'Segundo nombre',
    },
+   { name: 'apellidoPaterno', type: 'text', label: 'Apellido paterno' },
    {
       name: 'apellidoMaterno',
       type: 'text',
       label: 'Apellido materno',
    },
-   { name: 'apellidoPaterno', type: 'text', label: 'Apellido paterno' },
    { name: 'numContacto', type: 'text', label: 'Numero de contacto' },
    { name: 'idPersonal', type: 'number', label: 'Identificador' },
 ];
