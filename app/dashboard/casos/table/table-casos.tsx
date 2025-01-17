@@ -622,16 +622,16 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                               </Table.Cell>
                               <Table.Cell>{e?.diasAdicionales}</Table.Cell>
                               <Table.Cell>
-                                 {getValue(e?.documento?.noPresenciaABS)}
+                                 {getValue(e?.documento?.noPresenciaABS, e.id)}
                               </Table.Cell>
                               <Table.Cell>
-                                 {getValue(e?.documento?.noPresenciaLBP)}
+                                 {getValue(e?.documento?.noPresenciaLBP, e.id)}
                               </Table.Cell>
                               <Table.Cell>
-                                 {getValue(e?.documento?.manifiesto)}
+                                 {getValue(e?.documento?.manifiesto, e.id)}
                               </Table.Cell>
                               <Table.Cell>
-                                 {getValue(e?.documento?.otros)}
+                                 {getValue(e?.documento?.otros, e.id)}
                               </Table.Cell>
                               <Table.Cell>
                                  {e?.fechaInicio &&
