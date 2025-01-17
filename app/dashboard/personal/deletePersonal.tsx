@@ -82,7 +82,7 @@ function DeletePersonal({ refreshPersonal }: { refreshPersonal: () => void }) {
                </Button>
                <Button
                   onClick={() =>
-                     router.push('/dashboard/personal?estatus' + estatus)
+                     router.push('/dashboard/personal?estatus=' + estatus)
                   }
                >
                   Cancelar

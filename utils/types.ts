@@ -15,6 +15,9 @@ type Documento = {
    documentosCambioOrden: string;
    clearenceAsbesto: string;
    clearencePlomo: string;
+   noPresenciaABS: string;
+   noPresenciaLBP: string;
+   manifiesto: string;
    otros: string;
    createdAt: Date;
    updatedAt: Date;
@@ -44,6 +47,7 @@ export type Caso = {
    direccionProyecto: string;
    latitud: string;
    longitud: string;
+   zipCode: string;
    pueblo: string;
    proyectoCompletados: string;
    estatus: estatus;

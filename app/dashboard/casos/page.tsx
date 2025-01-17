@@ -23,6 +23,7 @@ function CasosPage() {
    const fetchProyectos = async () => {
       const data = await getCasos();
       setProyectos(data);
+      console.log(data)
    };
 
    useEffect(() => {

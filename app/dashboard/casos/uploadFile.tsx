@@ -1,8 +1,10 @@
 'use client';
 import { uploadFile } from '@/utils/api/casos';
+import { format } from 'date-fns';
 import {
    Alert,
    Button,
+   Datepicker,
    FileInput,
    Label,
    Modal,
@@ -15,20 +17,20 @@ import { ChangeEvent, useEffect, useState } from 'react';
 
 function UploadModal({ refreshProyectos }: { refreshProyectos: () => void }) {
    const selects = [
-      { name: 'planAsbesto', label: 'Plan de trabajo de Asbesto (ABS)' },
-      { name: 'planPlomo', label: 'Plan de trabajo de Plomo (LBP)' },
-      { name: 'estudioAsbesto', label: 'Estudio Ambiental de Asbesto' },
+      { name: 'planAsbesto', label: 'Plan de trabajo de ABS' },
+      { name: 'planPlomo', label: 'Plan de trabajo de LBP' },
+      { name: 'estudioAsbesto', label: 'Estudio Ambiental de ABS' },
       {
          name: 'estudioEnmendado',
-         label: 'Estudio Ambiental de Asbesto Enmendado',
+         label: 'Estudio Ambiental de ABS Enmendado',
       },
-      { name: 'estudioPlomo', label: 'Estudio Ambiental de Plomo' },
+      { name: 'estudioPlomo', label: 'Estudio Ambiental de LBP' },
       {
          name: 'estudioPlomoEnmendado',
-         label: 'Estudio Ambiental de Plomo Enmendado',
+         label: 'Estudio Ambiental de LBP Enmendado',
       },
-      { name: 'permisoAsbesto', label: 'Permiso de Asbesto' },
-      { name: 'permisoPlomo', label: 'Permiso de Plomo' },
+      { name: 'permisoAsbesto', label: 'Permiso de ABS' },
+      { name: 'permisoPlomo', label: 'Permiso de LBP' },
       { name: 'cambioOrden', label: 'Cambios de Orden' },
       { name: 'planosProyectos', label: 'Planos de Proyectos Ambientales' },
       {
@@ -46,13 +48,17 @@ function UploadModal({ refreshProyectos }: { refreshProyectos: () => void }) {
       },
       {
          name: 'ClearencePlomo',
-         label: 'Clearence de LPB PDF',
+         label: 'Clearence de LBP PDF',
       },
+      { name: 'noPresenciaABS', label: 'No certificado ABS' },
+      { name: 'noPresenciaLBP', label: 'No certificado LBP' },
+      { name: 'manifiesto', label: 'Manifiesto' },
       { name: 'otros', label: 'Otros documentos' },
    ];
    const [file, setFile] = useState<File | any>();
    const [selectedOption, setSelectedOption] = useState(selects[0].name);
    const [days, setDays] = useState('');
+   const [date, setDate] = useState<Date>(new Date());
    const params = useSearchParams();
    const router = useRouter();
    const [color, setColor] = useState('');
@@ -114,6 +120,7 @@ function UploadModal({ refreshProyectos }: { refreshProyectos: () => void }) {
       formData.append('Blob', file, file.name);
       formData.append('option', selectedOption);
       formData.append('days', days);
+      formData.append('date', date);
       setLoading(true);
       try {
          if (!idCaso) {
@@ -172,12 +179,23 @@ function UploadModal({ refreshProyectos }: { refreshProyectos: () => void }) {
                            type="number"
                            value={days}
                         ></TextInput>
+                        <Label>Nueva fecha de cambio de orden</Label>
+                        <Datepicker
+                           onSelectedDateChanged={(d) => setDate(d)}
+                           className="absolute"
+                           language="es-ES"
+                           showTodayButton={false}
+                           showClearButton={false}
+                           value={date ? format(date, 'dd-MM-yy') : ''}
+                           name={'date'}
+                           required
+                        />
                      </>
                   )}
                   <FileInput
                      onChange={readFile}
                      accept=".pdf"
-                     className="mt-4"
+                     className="mt-14"
                      name="file"
                      required
                   />

@@ -109,21 +109,21 @@ function DocsModal({ refreshProyectos }: { refreshProyectos: () => void }) {
    function getDocumentDescription(identifier: string): string {
       switch (identifier) {
          case 'planAsbesto':
-            return 'Plan de Asbesto';
+            return 'Plan de ÀBS';
          case 'planPlomo':
-            return 'Plan de Plomo';
+            return 'Plan de LBP';
          case 'estudioAsbesto':
-            return 'Estudio de Asbesto';
+            return 'Estudio de ABS';
          case 'estudioEnmendado':
             return 'Estudio Enmendado';
          case 'estudioPlomo':
-            return 'Estudio de Plomo';
+            return 'Estudio de LBP';
          case 'estudioPlomoEnmendado':
-            return 'Estudio de Plomo Enmendado';
+            return 'Estudio de LBP Enmendado';
          case 'permisoAsbesto':
-            return 'Permiso de Asbesto';
+            return 'Permiso de ABS';
          case 'permisoPlomo':
-            return 'Permiso de Plomo';
+            return 'Permiso de LBP';
          case 'cambioOrden':
             return 'Cambio de Orden';
          case 'planosProyectos':
@@ -134,6 +134,12 @@ function DocsModal({ refreshProyectos }: { refreshProyectos: () => void }) {
             return 'Planos de Cambio de Orden';
          case 'documentosCambioOrden':
             return 'Documentos de Cambio de Orden';
+         case 'noPresenciaABS':
+            return 'No Presencia de ABS';
+         case 'noPresenciaLBL':
+            return 'No Presencia de LBP';
+         case 'manifiesto':
+            return 'Manifiesto';
          case 'otros':
             return 'Otros Documentos';
          default:
@@ -151,7 +157,7 @@ function DocsModal({ refreshProyectos }: { refreshProyectos: () => void }) {
                router.refresh();
             }}
          >
-            <ModalHeader>Imagenes del caso</ModalHeader>
+            <ModalHeader>Documentos del proyecto</ModalHeader>
             <ModalBody>
                <div className="grid grid-cols-2 gap-6 w-full h-full">
                   {docs

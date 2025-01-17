@@ -37,10 +37,35 @@ function TablePersonal({
       { name: 'Apellido Paterno', accessor: 'apellidoPaterno', date: false },
       { name: 'Numero de contacto', accessor: 'numContacto', date: false },
       {
-         name: 'Certificacion de Asbesto',
+         name: 'Certificacion de ABS',
          accessor: (e: Personal) => {
             const cert = e?.certificacions?.find(
                (cert: any) => cert.tipoDocumento === 'asbesto'
+            );
+            return cert ? (
+               <span
+                  onClick={() =>
+                     router.push(
+                        `/dashboard/personal?estatus=${estatus}&certificacion=${e.id}`
+                     )
+                  }
+                  className="text-white px-2 py-1 bg-green-600 rounded-md cursor-pointer"
+               >
+                  SI
+               </span>
+            ) : (
+               <span className="text-white px-1 py-1 bg-red-600 rounded-md">
+                  NO
+               </span>
+            );
+         },
+         date: false,
+      },
+      {
+         name: 'Carnet de ABS',
+         accessor: (e: Personal) => {
+            const cert = e?.certificacions?.find(
+               (cert: any) => cert.tipoDocumento === 'carnet-abs'
             );
             return cert ? (
                <span
@@ -86,7 +111,7 @@ function TablePersonal({
          date: true,
       },
       {
-         name: 'Certificacion de Plomo',
+         name: 'Certificacion de LBP',
          accessor: (e: Personal) => {
             const cert = e?.certificacions?.find(
                (cert: any) => cert.tipoDocumento === 'plomo'
@@ -111,7 +136,32 @@ function TablePersonal({
          date: false,
       },
       {
-         name: 'Fecha de inicio de cerficiacion de plomo',
+         name: 'Carnet de LBP',
+         accessor: (e: Personal) => {
+            const cert = e?.certificacions?.find(
+               (cert: any) => cert.tipoDocumento === 'carnet-lbp'
+            );
+            return cert ? (
+               <span
+                  onClick={() =>
+                     router.push(
+                        `/dashboard/personal?estatus=${estatus}&certificacion=${e.id}`
+                     )
+                  }
+                  className="text-white px-2 py-1 bg-green-600 rounded-md cursor-pointer"
+               >
+                  SI
+               </span>
+            ) : (
+               <span className="text-white px-1 py-1 bg-red-600 rounded-md">
+                  NO
+               </span>
+            );
+         },
+         date: false,
+      },
+      {
+         name: 'Fecha de inicio de cerficiacion de LBP',
          accessor: (e: Personal) => {
             const cert = e?.certificacions?.find(
                (cert: any) => cert.tipoDocumento === 'plomo'
@@ -123,7 +173,7 @@ function TablePersonal({
          date: true,
       },
       {
-         name: 'Fecha de caducidad de cerficiacion de plomo',
+         name: 'Fecha de caducidad de cerficiacion de LBP',
          accessor: (e: Personal) => {
             const cert = e?.certificacions?.find(
                (cert: any) => cert.tipoDocumento === 'plomo'

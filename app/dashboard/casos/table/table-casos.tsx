@@ -48,9 +48,10 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
       { label: 'Supervisor de Proyecto' },
       { label: 'Nombre de cliente' },
       { label: 'Nombre del Proyecto' },
-      { label: 'Dirección Física del Proyecto' },
       { label: 'Latitud' },
       { label: 'Longitud' },
+      { label: 'Dirección Física del Proyecto' },
+      { label: 'ZIP CODE' },
       { label: 'Pueblo' },
       { label: 'Número de Proyecto' },
       { label: '% de Proyectos completados' },
@@ -61,19 +62,19 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
       { label: 'Cantidad estimada a remover en YDS (ABS)' },
       { label: 'Cantidad estimada a remover en ft2 (ABS)' },
       { label: 'Cantidad estimada a remover en ft LNL (ABS)' },
-      { label: 'Cantidad estimada a remover en YDS (LBL)' },
-      { label: 'Cantidad estimada a remover en ft2 (LBL)' },
-      { label: 'Cantidad estimada a remover en ft LNL (LBL)' },
+      { label: 'Cantidad estimada a remover en YDS (LBP)' },
+      { label: 'Cantidad estimada a remover en ft2 (LBP)' },
+      { label: 'Cantidad estimada a remover en ft LNL (LBP)' },
       { label: 'Cantidad desperdiciada (ABS)' },
-      { label: 'Cantidad desperdiciada (LBL)' },
-      { label: 'Plan de trabajo de Asbesto (ABS)' },
-      { label: 'Plan de trabajo de Plomo (LBP)' },
-      { label: 'Estudio Ambiental de Asbesto' },
-      { label: 'Estudio Ambiental de Asbesto Enmendado' },
-      { label: 'Estudio Ambiental de Plomo' },
-      { label: 'Estudio Ambiental de Plomo Enmendado' },
-      { label: 'Permiso de Asbesto' },
-      { label: 'Permiso de Plomo' },
+      { label: 'Cantidad desperdiciada (LBP)' },
+      { label: 'Plan de trabajo de ABS' },
+      { label: 'Plan de trabajo de LBP' },
+      { label: 'Estudio Ambiental de ABS' },
+      { label: 'Estudio Ambiental de ABS Enmendado' },
+      { label: 'Estudio Ambiental de LBP' },
+      { label: 'Estudio Ambiental de LBP Enmendado' },
+      { label: 'Permiso de ABS' },
+      { label: 'Permiso de LBP' },
       { label: 'Cambios de Orden' },
       { label: 'Planos de Proyectos Ambientales' },
       { label: 'Planos de Proyectos de Demolición' },
@@ -83,6 +84,9 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
       { label: 'Clearence de LPB PDF' },
       { label: 'Fecha de Cambio de Orden' },
       { label: 'Días Adicionales por cambio de orden' },
+      { label: 'Certificado de no presencia ABS' },
+      { label: 'Certificado de no presencia LBP' },
+      { label: 'Manifiesto' },
       { label: 'Otros documentos' },
       { label: 'Fecha de inicio del Proyecto' },
       { label: 'Fecha de Finalización' },
@@ -474,7 +478,6 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                   {filteredCasos &&
                      Array.isArray(filteredCasos) &&
                      filteredCasos?.map((e: Caso) => {
-                        console.log(e);
                         return (
                            <Table.Row
                               key={e.id}
@@ -491,11 +494,12 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                                  {e?.nombreCliente}
                               </Table.Cell>
                               <Table.Cell>{e?.nombreProyecto}</Table.Cell>
+                              <Table.Cell>{e?.latitud}</Table.Cell>
+                              <Table.Cell>{e?.longitud}</Table.Cell>
                               <Table.Cell className="text-nowrap">
                                  {e?.direccionProyecto}
                               </Table.Cell>
-                              <Table.Cell>{e?.latitud}</Table.Cell>
-                              <Table.Cell>{e?.longitud}</Table.Cell>
+                              <Table.Cell>{e?.zipCode}</Table.Cell>
                               <Table.Cell>{e?.pueblo}</Table.Cell>
                               <Table.Cell className="text-nowrap">
                                  {e?.numeroProyecto}
@@ -617,6 +621,15 @@ function TableComp({ initialCols }: { initialCols: Caso[] | [] }) {
                                     format(e?.cambioOrden, 'dd/MM/yyyy')}
                               </Table.Cell>
                               <Table.Cell>{e?.diasAdicionales}</Table.Cell>
+                              <Table.Cell>
+                                 {getValue(e?.documento?.noPresenciaABS)}
+                              </Table.Cell>
+                              <Table.Cell>
+                                 {getValue(e?.documento?.noPresenciaLBP)}
+                              </Table.Cell>
+                              <Table.Cell>
+                                 {getValue(e?.documento?.manifiesto)}
+                              </Table.Cell>
                               <Table.Cell>
                                  {getValue(e?.documento?.otros)}
                               </Table.Cell>

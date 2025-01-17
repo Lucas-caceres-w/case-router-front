@@ -39,6 +39,14 @@ function UpCertificado({ refreshPersonal }: { refreshPersonal: () => void }) {
          name: 'licencia',
          label: 'Licencia de conducir PDF',
       },
+      {
+         name: 'carnet-ABS',
+         label: 'Carnet de ABS',
+      },
+      {
+         name: 'carnet-LBP',
+         label: 'Carnet de LBP',
+      },
       { name: 'otros', label: 'Otros documentos' },
    ];
    const [file, setFile] = useState<File | any>();
