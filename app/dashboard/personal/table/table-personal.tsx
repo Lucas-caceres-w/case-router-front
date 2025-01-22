@@ -90,7 +90,7 @@ function TablePersonal({
          name: 'Fecha de inicio de cerficiacion de asbesto',
          accessor: (e: Personal) => {
             const cert = e?.certificacions?.find(
-               (cert: any) => cert.tipoDocumento === 'asbesto'
+               (cert: any) => cert.tipoDocumento === 'carnet-abs'
             );
             return cert && cert.fechaInicio
                ? format(new Date(cert.fechaInicio), 'dd/MM/yyyy')
@@ -102,7 +102,7 @@ function TablePersonal({
          name: 'Fecha de caducidad de cerficiacion de asbesto',
          accessor: (e: Personal) => {
             const cert = e?.certificacions?.find(
-               (cert: any) => cert.tipoDocumento === 'asbesto'
+               (cert: any) => cert.tipoDocumento === 'carnet-abs'
             );
             return cert && cert.fechaExpiracion
                ? format(new Date(cert.fechaExpiracion), 'dd/MM/yyyy')
@@ -164,7 +164,7 @@ function TablePersonal({
          name: 'Fecha de inicio de cerficiacion de LBP',
          accessor: (e: Personal) => {
             const cert = e?.certificacions?.find(
-               (cert: any) => cert.tipoDocumento === 'plomo'
+               (cert: any) => cert.tipoDocumento === 'carnet-lbp'
             );
             return cert && cert.fechaInicio
                ? format(new Date(cert.fechaInicio), 'dd/MM/yyyy')
@@ -176,7 +176,7 @@ function TablePersonal({
          name: 'Fecha de caducidad de cerficiacion de LBP',
          accessor: (e: Personal) => {
             const cert = e?.certificacions?.find(
-               (cert: any) => cert.tipoDocumento === 'plomo'
+               (cert: any) => cert.tipoDocumento === 'carnet-lbp'
             );
             return cert && cert.fechaExpiracion
                ? format(new Date(cert.fechaExpiracion), 'dd/MM/yyyy')
