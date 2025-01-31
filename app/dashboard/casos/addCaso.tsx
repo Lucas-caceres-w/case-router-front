@@ -676,19 +676,19 @@ const inputs = [
    {
       name: 'cantidadEstimadaPlomoYardas',
       type: 'text',
-      label: 'Cantidad estimado a remover en yardas(LBL)',
+      label: 'Cantidad estimado a remover en yardas(LBP)',
       material: 'Plomo',
    },
    {
       name: 'cantidadEstimadaPlomoPiesCuad',
       type: 'text',
-      label: 'Cantidad estimado a remover en ft2(LBL)',
+      label: 'Cantidad estimado a remover en ft2(LBP)',
       material: 'Plomo',
    },
    {
       name: 'cantidadEstimadaPlomoPiesLineales',
       type: 'text',
-      label: 'Cantidad estimado a remover en ft LNL(LBL)',
+      label: 'Cantidad estimado a remover en ft LNL(LBP)',
       material: 'Plomo',
    },
    {
